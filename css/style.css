@@ -42,11 +42,11 @@ div.tab button.active {
 
 
 
-.fa-gray{
+.rightArrow-gray{
     margin: 0 2px;
     color: #9c9c9c;
 }
-.fa-orange{
+.rightArrow-orange{
     margin: 2px;
     color: #f40;
 }
@@ -59,7 +59,7 @@ div.tab button.active {
     float: left;
     margin: 0 3px;
 }
-.fa-loc{
+.rightArrow-loc{
     float: right;
     margin: 10px 5px 0 0;
 }
@@ -1085,7 +1085,7 @@ div.tab button.active {
     background: #E83E00;
     color: #fff;
 }
-.fa-user-loc{
+.rightArrow-user-loc{
     font-size: 14px;
     margin-right: 10px;
 }
