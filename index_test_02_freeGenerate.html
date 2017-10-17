@@ -222,8 +222,8 @@
     <div id="allContainer">
         <div id="left-side-nav-panel" class="leftSideNav">
             <div class="tab">
-                <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">London</button>
-                <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
+                <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">数据筛选</button>
+                <button class="tablinks" onclick="openCity(event, 'Paris')">收藏</button>
             </div>
 
             <div id="London" class="tabcontent">
@@ -1278,6 +1278,38 @@
         </div>
 
     </div>
+    <script>
+        loadJSON(function(response) {
+            // Parse JSON string into object
+            var actual_JSON = JSON.parse(response);
+            console.log(actual_JSON);
+        });
+        function loadJSON(callback) {
+            var xobj = new XMLHttpRequest();
+            xobj.overrideMimeType("application/json");
+            xobj.open('GET', 'ParkStructure.json', true); // Replace 'my_data' with the path to your file
+            xobj.onreadystatechange = function () {
+                if (xobj.readyState == 4 && xobj.status == "200") {
+                    // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+                    callback(xobj.responseText);
+                }
+            };
+            xobj.send(null);
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            var htmlGen = function() {
+                return '<li>1</li><li>2</li>';
+                }
+
+            $('<p/>', {
+                class: 'test',
+                html: $('<ul>', {html: htmlGen})
+            }).appendTo('#Paris');
+
+        });
+    </script>
     <script>
     $(document).ready(function(){
 

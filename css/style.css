@@ -586,7 +586,7 @@ div.tab button.active {
     line-height: 41px;
     text-align: center;
     font-size: 14px;
-    background: #f40;
+    background: #d3d3d347;
     color: #fff;
 }
 /*sidebar-info*/
@@ -773,7 +773,7 @@ div.tab button.active {
 .nav img{
     vertical-align: middle;
     border: none;
-    margin: 0 0px 0 40px;
+    margin: 0 0 0 40px;
 }
 .keep-a{
     font-size: 11px;
