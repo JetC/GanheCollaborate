@@ -225,7 +225,6 @@
                 <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">数据筛选</button>
                 <button class="tablinks" onclick="openCity(event, 'Paris')">收藏</button>
             </div>
-
             <div id="London" class="tabcontent">
                 <div class="content-top">
                     <!--sidebar-->
@@ -1264,7 +1263,6 @@
                     </div>
                 </div>
             </div>
-
             <div id="Paris" class="tabcontent">
                 <h3>Paris</h3>
                 <p>Paris is the capital of France.</p>
@@ -1299,14 +1297,15 @@
     </script>
     <script>
         $(document).ready(function() {
-            var htmlGen = function() {
-                return '<li>1</li><li>2</li>';
-                }
-
-            $('<p/>', {
-                class: 'test',
-                html: $('<ul>', {html: htmlGen})
-            }).appendTo('#Paris');
+            var generateContentOfTab = function() {
+                return '<p>tstst</p>';
+                };
+            
+            
+            $('<div>', {
+                class: 'tab1',
+                html: generateContentOfTab
+            }).appendTo('#left-side-nav-panel');
 
         });
     </script>
@@ -9900,3 +9899,19 @@ viewer.zoomTo(viewer.entities);
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
