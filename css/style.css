@@ -603,7 +603,6 @@ div.tab button.active {
     position: fixed;
     z-index: 4888;
     width: 709px;
-    height: 472px;
     padding: 10px;
     display: none;
     border: 1px solid #f40;
