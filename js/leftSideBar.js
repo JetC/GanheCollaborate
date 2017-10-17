@@ -95,7 +95,7 @@
     });
     $('.side-li > li').hover(function(){
         $(this).find('h3').css({border: 'none'})
-            .end().find('span').css({color: "#f40"});
+            .end().find('span').css({color: ""});
         classN = $(this).attr('class');
         num = classN.substring(2, classN.length);
         beginH = 41+50;
@@ -113,7 +113,7 @@
 
         $('.hiden-box').show()
             .css({
-                left: (windowWidth/4 ),
+                left: ($(window).width()/4 ),
                 top:  beginH
             }).animate({width: '729px'}, 300);
         $('.hiden-box > li').hide();
@@ -135,14 +135,14 @@
     },
         function(){
     //鼠标划出时的：隐藏显示代码
-    //     $('.s_'+num).css({
-    //         border: '',
-    //         borderRight: ''
-    //     }).find('h3').css({border: ''})
-    //         .end().find('span').css({color: ""});
-    //     $(this).animate({
-    //         width: 0
-    //     }, 200).hide(200);
+        $('.s_'+num).css({
+            border: '',
+            borderRight: ''
+        }).find('h3').css({border: ''})
+            .end().find('span').css({color: ""});
+        $(this).animate({
+            width: 0
+        }, 200).hide(200);
     });
 })();
 
