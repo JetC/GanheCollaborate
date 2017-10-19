@@ -232,11 +232,14 @@
 
     </div>
     <script>
-        loadJSON(function(response) {
+        var actual_JSON;
+        loadJSON(function (response) {
             // Parse JSON string into object
-            var actual_JSON = JSON.parse(response);
+            actual_JSON = JSON.parse(response);
             console.log(actual_JSON.park[1].name);
+            getFactors(16,17,18);
         });
+
         function loadJSON(callback) {
             var xobj = new XMLHttpRequest();
             xobj.overrideMimeType("application/json");
@@ -249,8 +252,45 @@
             };
             xobj.send(null);
         }
-    </script>
-    <script>
+
+        function getParks() {
+            var parkArray = [];
+            for (var i = 0; i < actual_JSON.park.length; i++) {
+                parkArray.push(actual_JSON.park[i]);
+            }
+            return parkArray;
+        }
+        function getParkNames() {
+            var parkArray = [];
+            for (var i = 0; i < actual_JSON.park.length; i++) {
+                parkArray.push(actual_JSON.park[i].name);
+            }
+            return parkArray;
+        }
+        function getSites(parkId) {
+            var parkBelongsTo = getParks().filter(function( singlePark ) {
+                return singlePark["id"] === parkId;
+            });
+            console.log(parkBelongsTo[0].sites);
+            return parkBelongsTo[0].sites;
+        }
+        function getInstruments(parkId, siteId) {
+            var siteBelongsTo = getSites(parkId).filter(function( singleSite ) {
+                return singleSite["id"] === siteId;
+            });
+            console.log(siteBelongsTo[0].instrument);
+            return siteBelongsTo[0].instrument;
+        }
+        function getFactors(parkId, siteId, instrumentId) {
+            var instrumentBelongsTo = getInstruments(parkId, siteId).filter(function( singleInstrument ) {
+                return singleInstrument["id"] === instrumentId;
+            });
+            console.log(instrumentBelongsTo[0].factor);
+            return instrumentBelongsTo[0].factor;
+        }
+
+
+
         $(document).ready(function () {
             var generateContentOfNavPanelTab = function () {
                 var content = generateTabLinksButton('openCity(event, \'London\')', 'defaultOpen', '数据筛选');
@@ -268,11 +308,11 @@
                 return generateContentOfTabcontent();
             };
             var generateContentOfTabcontent = function () {
-                var  generatedText = generateTag('div','','content-top','','',generateContentOfContentTop());
+                var generatedText = generateTag('div', '', 'content-top', '', '', generateContentOfContentTop());
                 return generatedText;
             };
             var generateContentOfContentTop = function () {
-                var  generatedText = generateTag('div','','sidebar','','',generateContentOfSidebar());
+                var generatedText = generateTag('div', '', 'sidebar', '', '', generateContentOfSidebar());
                 return generatedText;
             };
             var generateContentOfSidebar = function () {
@@ -293,10 +333,10 @@
             };
             var generateContentOfSideLi = function () {
                 var generatedText = '';
-                for (var i = 0; i <= 2; i++) {
-                    generatedText += generateTag('li', '', 's_'+i, '', '', generateContentOfSideLis_i());
+                for (var i = 1; i <= 3; i++) {
+                    generatedText += generateTag('li', '', 's_' + i, '', '', generateContentOfSideLis_i());
                 }
-                return generatedText; 
+                return generatedText;
             };
             var generateContentOfSideLis_i = function () {
                 site1OfPark1 = '站点1';
@@ -306,8 +346,6 @@
             var generateContentOfNavPanelRightContent = function () {
 
             };
-
-
 
 
             function generateTag(tag, tagId, tagClass, onclick, href, content) {
