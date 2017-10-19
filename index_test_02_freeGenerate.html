@@ -213,15 +213,35 @@
     </style>
 
     <!--By SUN Peifeng-->
+    <!--我注释了一些你的alert，记得恢复过来-->
     <link rel="stylesheet" href="css/reset.css"/>
     <link rel="stylesheet" href="css/style.css"/>
     <!--ends here By SUN Peifeng-->
+
+    <!-- Json2html -->
+    <script src="./js/json2html.js"></script>
+    <script src="./js/jquery.json2html.js"></script>
 
 </head>
 <body>
     <div id="allContainer">
         <div id="left-side-nav-panel" class="leftSideNav">
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">数据筛选</button>
+                <button class="tablinks" onclick="openCity(event, 'Paris')">收藏</button>
+            </div>
+            <div id="London" class="tabcontent">
+                <div class="content-top">
+                    <!--sidebar-->
+                    <div class="sidebar" id="sidebar">
 
+                    </div>
+                </div>
+            </div>
+            <div id="Paris" class="tabcontent">
+                <h3>Paris</h3>
+                <p>Paris is the capital of France.</p>
+            </div>
         </div>
         <div id="cesiumContainer">
             <div id = "test">
@@ -232,14 +252,12 @@
 
     </div>
     <script>
-        var actual_JSON;
+        var jsonData;
         loadJSON(function (response) {
             // Parse JSON string into object
-            actual_JSON = JSON.parse(response);
-            console.log(actual_JSON.park[1].name);
-            getFactors(16,17,18);
+            jsonData = JSON.parse(response);
+            console.log(jsonData.park[1].name);
         });
-
         function loadJSON(callback) {
             var xobj = new XMLHttpRequest();
             xobj.overrideMimeType("application/json");
@@ -252,145 +270,31 @@
             };
             xobj.send(null);
         }
-
-        function getParks() {
-            var parkArray = [];
-            for (var i = 0; i < actual_JSON.park.length; i++) {
-                parkArray.push(actual_JSON.park[i]);
-            }
-            return parkArray;
-        }
-        function getParkNames() {
-            var parkArray = [];
-            for (var i = 0; i < actual_JSON.park.length; i++) {
-                parkArray.push(actual_JSON.park[i].name);
-            }
-            return parkArray;
-        }
-        function getParkNameByIndex(parkIndex) {
-            var parkArray = [];
-            for (var i = 0; i < actual_JSON.park.length; i++) {
-                parkArray.push(actual_JSON.park[i].name);
-            }
-            return parkArray[parkIndex];
-        }
-        function getSites(parkId) {
-            var parkBelongsTo = getParks().filter(function( singlePark ) {
-                return singlePark["id"] === parkId;
-            });
-            console.log(parkBelongsTo[0].sites);
-            return parkBelongsTo[0].sites;
-        }
-        function getSiteNameByIndex(parkIndex,siteIndex) {
-            var siteArray = [];
-            for (var i = 0; i < actual_JSON.park.length; i++) {
-                parkArray.push(actual_JSON.park[i].name);
-            }
-            return parkArray[parkIndex];
-        }
-        function getInstruments(parkId, siteId) {
-            var siteBelongsTo = getSites(parkId).filter(function( singleSite ) {
-                return singleSite["id"] === siteId;
-            });
-            console.log(siteBelongsTo[0].instrument);
-            return siteBelongsTo[0].instrument;
-        }
-        function getFactors(parkId, siteId, instrumentId) {
-            var instrumentBelongsTo = getInstruments(parkId, siteId).filter(function( singleInstrument ) {
-                return singleInstrument["id"] === instrumentId;
-            });
-            console.log(instrumentBelongsTo[0].factor);
-            return instrumentBelongsTo[0].factor;
-        }
-
-
-
-        $(document).ready(function () {
-            var generateContentOfNavPanelTab = function () {
-                var content = generateTabLinksButton('openCity(event, \'London\')', 'defaultOpen', '数据筛选');
-                content += generateTabLinksButton('openCity(event, \'Paris\')', '', '收藏');
-                console.log(content);
-                return content;
-            };
-            var generateTabLinksButton = function (onclick, id, content) {
-                var generatedText = generateTag('button', id, 'tablinks', onclick, '', content);
-                return generatedText;
-            };
-
-
-            var generateContentOfNavPanelLeftContent = function () {
-                return generateContentOfTabcontent();
-            };
-            var generateContentOfTabcontent = function () {
-                var generatedText = generateTag('div', '', 'content-top', '', '', generateContentOfContentTop());
-                return generatedText;
-            };
-            var generateContentOfContentTop = function () {
-                var generatedText = generateTag('div', '', 'sidebar', '', '', generateContentOfSidebar());
-                return generatedText;
-            };
-            var generateContentOfSidebar = function () {
-                var parkName1 = '甘河东区';
-                var parkTag1 = '<h3>' + parkName1 + '</h3>';
-                var parkName2 = '甘河西区';
-                var parkTag2 = '<h3>' + parkName2 + '</h3>';
-                var generatedText = parkTag1;
-                generatedText += generateTag('div', '', 'sidebar-info', '', '', generateContentOfSideBarInfo());
-                generatedText += parkTag2;
-                generatedText += generateTag('div', '', 'sidebar-info', '', '', generateContentOfSideBarInfo());
-                return generatedText;
-            };
-
-            var generateContentOfSideBarInfo = function () {
-                var generatedText = generateTag('ul', '', 'side-li', '', '', generateContentOfSideLi());
-                return generatedText;
-            };
-            var generateContentOfSideLi = function () {
-                var generatedText = '';
-                for (var i = 1; i <= 3; i++) {
-                    generatedText += generateTag('li', '', 's_' + i, '', '', generateContentOfSideLis_i());
-                }
-                return generatedText;
-            };
-            var generateContentOfSideLis_i = function () {
-                site1OfPark1 = '站点1';
-                var generatedText = '<h3>' + site1OfPark1 + '<span class="rightArrow rightArrow-angle-right rightArrow-loc"></span></h3>';
-                return generatedText;
-            };
-            var generateContentOfNavPanelRightContent = function () {
-
-            };
-
-
-            function generateTag(tag, tagId, tagClass, onclick, href, content) {
-                var generatedText = '<' + tag + generateAttrForTag('id', tagId) + generateAttrForTag('class', tagClass) + generateAttrForTag('onclick', onclick) + generateAttrForTag('href', href) + '>' + content + '</' + tag + '>';
-                return generatedText;
-            }
-
-            function generateAttrForTag(attrKey, attrValue) {
-                if (attrValue === '' || attrValue === undefined) {
-                    return '';
-                }
-                return ' ' + attrKey + '="' + attrValue + '\"';
-            }
-
-
-            $('<div>', {
-                class: 'tab',
-                html: generateContentOfNavPanelTab
-            }).appendTo('#left-side-nav-panel');
-
-            $('<div>', {
-                class: 'tabcontent',
-                id: 'London',
-                html: generateContentOfNavPanelLeftContent
-            }).appendTo('#left-side-nav-panel');
-
-            $('<div>', {
-                class: 'tabcontent',
-                html: generateContentOfNavPanelRightContent
-            }).appendTo('#left-side-nav-panel');
+        //List item transform
+        var transform = {
+            "park":[{"<>":"h3","html":"${name}"},
+                {"<>":"div","class":"sidebar-info", "id":"sidebar-info",
+                "html":[{"<>":"ul","class":"side-li",
+                    "html":[{
+                    "<>":"li","class":"s_?",
+                        "html":[{
+                            "<>":"h3","children":function (){
+                                return (json2html.transform(this.sites,transform.site));
+                            }
+                        }]
+                    }]
+                }]
+            }],
+            "site":[{
+                "<>":"h5","html":"${name}"
+            }]
+        };
+        $(function(){
+            //Create the list
+            $('#sidebar').json2html(jsonData,transform.park);
+///            $('#sidebar-info').json2html(jsonData)
         });
+
 
         $(document).ready(function () {
 
@@ -10140,7 +10044,7 @@
         for (var i = 0; i < data.length; i++) {
             if (data[i]["stationID"] === 2 || data[i]["stationID"] === 6) {
                 var stationLineHeight = heightScaleForNearStation * baseLineHeight;
-                alert(data[i]["stationID"] === 2);
+//                alert(data[i]["stationID"] === 2);
             } else {
                 var stationLineHeight = baseLineHeight;
             }
@@ -10289,7 +10193,7 @@
             "title":"首页",
             click:function(){
 
-                alert("ok");
+//                alert("ok");
             }
         }).appendTo("#test");
     });
@@ -10330,7 +10234,7 @@
             "title":"数据加载",
             click:function(){
 
-                alert("ok");
+//                alert("ok");
             }
         }).appendTo("#test");
     });
@@ -10369,7 +10273,7 @@
             "title":"三维巡航",
             click:function(){
 
-                alert("ok");
+//                alert("ok");
             }
         }).appendTo("#test");
     });
@@ -18708,7 +18612,7 @@
     {
         if( data[i]["stationID"]===2|| data[i]["stationID"]===6){
            var stationLineHeight = heightScaleForNearStation*baseLineHeight;
-            alert(data[i]["stationID"]===2);
+//            alert(data[i]["stationID"]===2);
         }else{
             var stationLineHeight = baseLineHeight;
         }
