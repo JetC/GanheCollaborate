@@ -288,9 +288,21 @@
             };
 
             var generateContentOfSideBarInfo = function () {
-
+                var generatedText = generateTag('ul', '', 'side-li', '', '', generateContentOfSideLi());
+                return generatedText;
             };
-
+            var generateContentOfSideLi = function () {
+                var generatedText = '';
+                for (var i = 0; i <= 2; i++) {
+                    generatedText += generateTag('li', '', 's_'+i, '', '', generateContentOfSideLis_i());
+                }
+                return generatedText; 
+            };
+            var generateContentOfSideLis_i = function () {
+                site1OfPark1 = '站点1';
+                var generatedText = '<h3>' + site1OfPark1 + '<span class="rightArrow rightArrow-angle-right rightArrow-loc"></span></h3>';
+                return generatedText;
+            };
             var generateContentOfNavPanelRightContent = function () {
 
             };
