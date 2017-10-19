@@ -267,12 +267,26 @@
             }
             return parkArray;
         }
+        function getParkNameByIndex(parkIndex) {
+            var parkArray = [];
+            for (var i = 0; i < actual_JSON.park.length; i++) {
+                parkArray.push(actual_JSON.park[i].name);
+            }
+            return parkArray[parkIndex];
+        }
         function getSites(parkId) {
             var parkBelongsTo = getParks().filter(function( singlePark ) {
                 return singlePark["id"] === parkId;
             });
             console.log(parkBelongsTo[0].sites);
             return parkBelongsTo[0].sites;
+        }
+        function getSiteNameByIndex(parkIndex,siteIndex) {
+            var siteArray = [];
+            for (var i = 0; i < actual_JSON.park.length; i++) {
+                parkArray.push(actual_JSON.park[i].name);
+            }
+            return parkArray[parkIndex];
         }
         function getInstruments(parkId, siteId) {
             var siteBelongsTo = getSites(parkId).filter(function( singleSite ) {
