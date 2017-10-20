@@ -147,13 +147,6 @@
 })();
 
 
-//关二维码
-(function(){
-    $('.close-code').click(function(){
-        $('.two-code').fadeOut(200);
-    });
-})();
-
 //service
 (function(){
     $('.service-cell').hover(function(){
