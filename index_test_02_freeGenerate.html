@@ -273,20 +273,27 @@
         //List item transform
         var transform = {
             "park":[{"<>":"h3","html":"${name}"},
-                {"<>":"div","class":"sidebar-info", "id":"sidebar-info",
-                "html":[{"<>":"ul","class":"side-li",
-                    "html":[{
-                        "<>":"li","class":"s_${id}",
-                        "html":[{
-                            "<>":"h3","children":function (){
-                                return (json2html.transform(this.sites,transform.site));
-                            }
-                        }]
-                    }]
-                }]
+                {"<>":"div","class":"sidebar-info",
+                "html":function (){
+                            var side_li_content = "<ul class=\"side-li\">";
+                            var side_li_html = json2html.transform(this.sites,transform.siteLi);
+                            side_li_html += "</ul>";
+                            var hiden_box_content = "<ul class=\"hiden-box\">";
+                            var hiden_box_html = json2html.transform(this.sites,transform.siteHiddenBox);
+                            hiden_box_html += "</ul>";
+                            return (side_li_content+side_li_html+hiden_box_content+hiden_box_html);
+                        }
             }],
-            "site":[{
-                "<>":"h5","html":"${name}"
+            "siteLi":{"<>":"li", "class":"s_${inlevelIndex}",
+                    "html":[{"<>":"h3",
+                        "html":"${name}<span class=\"rightArrow rightArrow-angle-right rightArrow-loc\"></span>"
+                    }]
+            },
+            "siteHiddenBox":[{
+                "<>":"li","data-hidden":"li","id":"hiden-${inlevelIndex}","html":[
+                    {"<>":"div", "class":"sub-nav-right","html":""},
+                    {"<>":"div", "class":"sub-nav-left","html":""}
+                ]
             }]
         };
         $(function(){
