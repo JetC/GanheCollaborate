@@ -4,6 +4,7 @@
 		"sites": [{
 			"id": 2,
 			"name": "site1",
+			"inlevelIndex":1,
 			"instrument": [{
 				"id": 3,
 				"name": "instrument1",
@@ -28,6 +29,7 @@
 		}, {
 			"id": 9,
 			"name": "site2",
+			"inlevelIndex":2,
 			"instrument": [{
 				"id": 10,
 				"name": "instrument1",
@@ -56,6 +58,7 @@
 		"sites": [{
 			"id": 17,
 			"name": "site3",
+			"inlevelIndex":3,
 			"instrument": [{
 				"id": 18,
 				"name": "instrument1",
@@ -80,6 +83,7 @@
 		}, {
 			"id": 24,
 			"name": "site4",
+			"inlevelIndex":4,
 			"instrument": [{
 				"id": 25,
 				"name": "instrument1",
