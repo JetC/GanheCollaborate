@@ -256,7 +256,7 @@
         loadJSON(function (response) {
             // Parse JSON string into object
             jsonData = JSON.parse(response);
-            console.log(jsonData.park[1].name);
+            console.log(jsonData[1].name);
         });
         function loadJSON(callback) {
             var xobj = new XMLHttpRequest();
@@ -291,15 +291,33 @@
             },
             "siteHiddenBox":[{
                 "<>":"li","data-hidden":"li","id":"hiden-${inlevelIndex}","html":[
-                    {"<>":"div", "class":"sub-nav-right","html":""},
+                    {"<>":"div", "class":"sub-nav-right","html":function () {
+                        return json2html.transform(this.instrument,transform.sub_nav);
+                    }},
                     {"<>":"div", "class":"sub-nav-left","html":""}
                 ]
+            }],
+            "sub_nav":[
+                {"<>":"div","class":"cell-box","html":function () {
+                    return json2html.transform(this,transform.cell_box);
+                    }
+                }],
+            "cell_box":[{
+                "<>":"h1","html":"${name}"},{
+                "<>":"div","class":"a-box","html":function () {
+                    return json2html.transform(this.factor,transform.a_box);
+                }
+            }],
+            "a_box":[{
+                "<>":"a","href":"#","html":"${name}"
+            },{
+                "<>":"span","html":"|"
             }]
         };
+
         $(function(){
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
-///            $('#sidebar-info').json2html(jsonData)
         });
 
 
