@@ -17,7 +17,7 @@
     <link href="./css/navigation-mixin.css" rel="stylesheet">
    <!-- <script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
     <script src="./js/libs/require.js" ></script>
-    <script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>
+    <!--<script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>-->
     <script src="./js/libs/jquery.js" ></script>
     <script src="./js/PositionPick.js"></script>
     <script src="./js/navigation-mixin.js" ></script>
@@ -31,9 +31,6 @@
             height: 100%;
             overflow: auto;
         }
-
-
-
         #left-side-nav-panel {
             float:left;
             height:100%;
@@ -46,9 +43,7 @@
             height:100%;
             width:75%;
             background:lightslategray;
-
         }
-
         #test {
             position:absolute;
             float:right;
@@ -294,8 +289,7 @@
                 "<>":"li","data-hidden":"li","id":"hiden-${inlevelIndex}","html":[
                     {"<>":"div", "class":"sub-nav-right","html":function () {
                         return json2html.transform(this.instrument,transform.sub_nav);
-                    }},
-                    {"<>":"div", "class":"sub-nav-left","html":""}
+                    }}
                 ]
             }],
             "sub_nav":[

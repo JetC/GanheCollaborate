@@ -113,9 +113,9 @@
 
         $('.hiden-box').show()
             .css({
-                left: ($(window).width()/4 ),
+                left: ($(window).width()/4),
                 top:  beginH
-            }).animate({width: '729px'}, 300);
+                }).animate({width: '50%'}, 300);
         $('.hiden-box > li').hide();
         $('#hiden-'+num).fadeIn(200);
         //Detailed Position

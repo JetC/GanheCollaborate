@@ -612,11 +612,6 @@ div.tab button.active {
     width: 96%;
     margin: auto;
     height: 100%;
-    display: flex;
-    display: -webkit-flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
 }
 .right-box{
     margin: 0 40px 0 5px;
@@ -634,11 +629,16 @@ div.tab button.active {
 }
 /*sub-nav-right*/
 .sub-nav-right{
-    float: left;
+    /*float: left;*/
     padding-right: 10px;
     width: 340px;
     height: 420px;
     border-right: 1px solid #eee;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .sub-nav-left{
     float: right;
