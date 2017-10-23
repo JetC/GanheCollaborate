@@ -25,6 +25,76 @@
 					"id": 8,
 					"name": "factor2"
 				}]
+			}, {
+				"id": 6,
+				"name": "instrument2",
+				"factor": [{
+					"id": 7,
+					"name": "factor1"
+				}, {
+					"id": 8,
+					"name": "factor2"
+				}]
+			}, {
+				"id": 6,
+				"name": "instrument2",
+				"factor": [{
+					"id": 7,
+					"name": "factor1"
+				}, {
+					"id": 8,
+					"name": "factor2"
+				}]
+			}, {
+				"id": 6,
+				"name": "instrument2",
+				"factor": [{
+					"id": 7,
+					"name": "factor1"
+				}, {
+					"id": 8,
+					"name": "factor2"
+				}]
+			}, {
+				"id": 6,
+				"name": "instrument2",
+				"factor": [{
+					"id": 7,
+					"name": "factor1"
+				}, {
+					"id": 8,
+					"name": "factor2"
+				}]
+			}, {
+				"id": 6,
+				"name": "instrument2",
+				"factor": [{
+					"id": 7,
+					"name": "factor1"
+				}, {
+					"id": 8,
+					"name": "factor2"
+				}]
+			}, {
+				"id": 6,
+				"name": "instrument2",
+				"factor": [{
+					"id": 7,
+					"name": "factor1"
+				}, {
+					"id": 8,
+					"name": "factor2"
+				}]
+			}, {
+				"id": 6,
+				"name": "instrument2",
+				"factor": [{
+					"id": 7,
+					"name": "factor1"
+				}, {
+					"id": 8,
+					"name": "factor2"
+				}]
 			}]
 		}, {
 			"id": 9,
