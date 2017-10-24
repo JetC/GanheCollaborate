@@ -235,7 +235,6 @@
                 <div class="content-top">
                     <!--sidebar-->
                     <div class="sidebar" id="sidebar">
-                        <input id="datetimepicker" type="text" >
                     </div>
                 </div>
             </div>
@@ -322,6 +321,9 @@
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
             leftSideBarConf();
+            $('<input id=\"datetimepicker\" type=\"text\">').appendTo('#sidebar');
+            jQuery('#datetimepicker').datetimepicker();
+            jQuery.datetimepicker.setLocale('ch');
         });
 
 
@@ -10275,10 +10277,7 @@ function leftSideBarConf(){
 }
 
     </script>
-    <script>
-        jQuery('#datetimepicker').datetimepicker();
-        jQuery.datetimepicker.setLocale('de');
-    </script>
+
     <script>
     $(document).ready(function(){
 
@@ -18864,6 +18863,9 @@ viewer.zoomTo(viewer.entities);
 
         // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
+    </script>
+    <script>
+
     </script>
 
 
