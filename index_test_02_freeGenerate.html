@@ -16,8 +16,8 @@
     <link href="./Cesium/Release/Cesium/Widgets/widgets.css" rel="stylesheet">
     <link href="./css/navigation-mixin.css" rel="stylesheet">
    <!-- <script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
-    <script src="./js/libs/require.js" ></script>
-    <!--<script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>-->
+    <!--<script src="./js/libs/require.js" ></script>-->
+    <script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>
     <script src="./js/libs/jquery.js" ></script>
     <script src="./js/PositionPick.js"></script>
     <script src="./js/navigation-mixin.js" ></script>
@@ -211,11 +211,17 @@
     <!--我注释了一些你的alert，记得恢复过来-->
     <link rel="stylesheet" href="css/reset.css"/>
     <link rel="stylesheet" href="css/style.css"/>
-    <!--ends here By SUN Peifeng-->
-
     <!-- Json2html -->
     <script src="./js/json2html.js"></script>
     <script src="./js/jquery.json2html.js"></script>
+    <!--DateTimePicker-->
+    <script src="./js/jquery.datetimepicker.full.js"></script>
+    <script src="./js/jquery.mousewheel.js"></script>
+    <script src="js/php-date-formatter.js"></script>
+    <link rel="stylesheet" href="css/jquery.datetimepicker.css">
+    <!--ends here By SUN Peifeng-->
+
+
 
 </head>
 <body>
@@ -229,7 +235,7 @@
                 <div class="content-top">
                     <!--sidebar-->
                     <div class="sidebar" id="sidebar">
-
+                        <input id="datetimepicker" type="text" >
                     </div>
                 </div>
             </div>
@@ -237,6 +243,7 @@
                 <h3>Paris</h3>
                 <p>Paris is the capital of France.</p>
             </div>
+
         </div>
         <div id="cesiumContainer">
             <div id = "test">
@@ -247,6 +254,7 @@
 
     </div>
     <!--<script src="js/leftSideBar.js"></script>-->
+
     <script>
         var jsonData;
         loadJSON(function (response) {
@@ -10267,7 +10275,10 @@ function leftSideBarConf(){
 }
 
     </script>
-
+    <script>
+        jQuery('#datetimepicker').datetimepicker();
+        jQuery.datetimepicker.setLocale('de');
+    </script>
     <script>
     $(document).ready(function(){
 
@@ -18854,6 +18865,7 @@ viewer.zoomTo(viewer.entities);
         // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
     </script>
+
 
 </body>
 </html>
