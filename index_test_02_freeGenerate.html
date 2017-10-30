@@ -17,7 +17,7 @@
     <link href="./css/navigation-mixin.css" rel="stylesheet">
    <!-- <script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
     <!--<script src="./js/libs/require.js" ></script>-->
-    <script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>
+    <!--<script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>-->
     <script src="./js/libs/jquery.js" ></script>
     <script src="./js/PositionPick.js"></script>
     <script src="./js/navigation-mixin.js" ></script>
@@ -30,12 +30,14 @@
             width: 100%;
             height: 100%;
             overflow: auto;
+            background: #000000;
         }
         #left-side-nav-panel {
             float:left;
             height:100%;
             width:25%;
-            background: rgba(0,0,0,1);
+            background: #2a2a2ab3;
+            border: 1px solid #444;
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
         }
         #cesiumContainer {
@@ -253,13 +255,16 @@
 
     </div>
     <!--<script src="js/leftSideBar.js"></script>-->
-
+    <script>
+        function factorClicked() {
+            console.log('234444');
+        }
+    </script>
     <script>
         var jsonData;
         loadJSON(function (response) {
             // Parse JSON string into object
             jsonData = JSON.parse(response);
-            console.log(jsonData[1].name);
         });
         function loadJSON(callback) {
             var xobj = new XMLHttpRequest();
@@ -275,7 +280,7 @@
         }
         //List item transform
         var transform = {
-            "park":[{"<>":"h3","html":"${name}"},
+            "park":[{"<>":"h3","parkId":"${parkId}","html":"${name}"},
                 {"<>":"div","class":"sidebar-info",
                 "html":function (){
                             var side_li_content = "<ul class=\"side-li\">";
@@ -287,13 +292,13 @@
                             return (side_li_content+side_li_html+hiden_box_content+hiden_box_html);
                         }
             }],
-            "siteLi":{"<>":"li", "class":"s_${inlevelIndex}",
-                    "html":[{"<>":"h3",
+            "siteLi":{"<>":"li", "class":"s_${siteId}",
+                    "html":[{"<>":"h3", "siteId":"${siteId}",
                         "html":"${name}<span class=\"rightArrow rightArrow-angle-right rightArrow-loc\"></span>"
                     }]
             },
             "siteHiddenBox":[{
-                "<>":"li","data-hidden":"li","id":"hiden-${inlevelIndex}","html":[
+                "<>":"li","data-hidden":"li","id":"hiden-${siteId}","html":[
                     {"<>":"div", "class":"sub-nav-right","html":function () {
                         return json2html.transform(this.instrument,transform.sub_nav);
                     }}
@@ -305,13 +310,13 @@
                     }
                 }],
             "cell_box":[{
-                "<>":"h1","html":"${name}"},{
+                "<>":"h1","instrumentId":"${instrumentId}","html":"${name}"},{
                 "<>":"div","class":"a-box","html":function () {
                     return json2html.transform(this.factor,transform.a_box);
                 }
             }],
             "a_box":[{
-                "<>":"a","href":"#","html":"${name}"
+                "<>":"button","href":"#1","factorId":"${factorId}","html":"${name}"
             },{
                 "<>":"span","html":"|"
             }]
@@ -321,11 +326,15 @@
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
             leftSideBarConf();
-            $('<input id=\"datetimepicker\" type=\"text\">').appendTo('#sidebar');
-            jQuery('#datetimepicker').datetimepicker();
+            $('<div class="datetimePickerDiv"><label>起始时间：</label><input id=\"startDateTimepicker\" class=\"datetimepicker\" type=\"text\"><label>截止时间：</label><input id=\"endDateTimepicker\" class=\"datetimepicker\" type=\"text\"></div>').appendTo('#sidebar');
+            $('<div class="submitAndFavButton"><button class="submitButton">提交</button><button class="favButton">收藏</button></button>').appendTo('#sidebar');
+            jQuery('#startDateTimepicker').datetimepicker();
+            jQuery.datetimepicker.setLocale('ch');
+            jQuery('#endDateTimepicker').datetimepicker();
             jQuery.datetimepicker.setLocale('ch');
         });
-
+    </script>
+    <script>
 
         $(document).ready(function () {
             $("#header-left-container").classList.toggle("changeButtonBackground");
@@ -10275,8 +10284,8 @@ function leftSideBarConf(){
                 }, 200).hide(200);
             });
 }
-
     </script>
+
 
     <script>
     $(document).ready(function(){
@@ -18864,9 +18873,7 @@ viewer.zoomTo(viewer.entities);
         // Get the element with id="defaultOpen" and click on it
         document.getElementById("defaultOpen").click();
     </script>
-    <script>
 
-    </script>
 
 
 </body>

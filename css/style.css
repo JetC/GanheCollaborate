@@ -1803,3 +1803,44 @@ div.tab button.active {
     background: #BDC3C7;
     color: #fff;
 }
+
+.datetimePickerDiv{
+    width: 100%;
+    margin-top: 30px;
+    line-height: 3.3em;
+}
+
+.datetimepicker{
+    background: rgba(92, 92, 92, 0.39);
+    width: 69%;
+    line-height: 2em;
+    border-radius: 7px;
+}
+
+.datetimePickerDiv > label{
+    width: 29%;
+    display: inline-block;
+    font-size: 1.3em;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.submitAndFavButton {
+    width: 100%;
+    line-height: 2em;
+    margin-top: 10px;
+}
+
+.submitButton {
+    width: 50%;
+    font-size: 1.5em;
+    padding: 6px 14px;
+
+}
+
+.favButton {
+    width: 50%;
+    font-size: 1.5em;
+    padding: 6px 14px;
+
+}

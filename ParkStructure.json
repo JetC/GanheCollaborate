@@ -1,240 +1,260 @@
 [{
-		"id": 1,
-		"name": "甘河化工园区",
-		"sites": [{
-			"id": 2,
-			"name": "管委会站",
-			"inlevelIndex":1,
-			"instrument": [{
-				"id": 3,
-				"name": "傅立叶红外光谱分析仪",
-				"factor": [{
-					"id": 4,
-					"name": "NULL1"
-				}, {
-					"id": 5,
-					"name": "NULL2"
-				}]
-			}, {
-				"id": 6,
-				"name": "气象参数仪",
-				"factor": [{
-					"id": 7,
-					"name": "温度"
-				}, {
-					"id": 8,
-					"name": "相对湿度"
-				}, {
-					"id": 8,
-					"name": "气压"
-				}, {
-					"id": 8,
-					"name": "风"
-				}]
-			}, {
-				"id": 6,
-				"name": "instrument2",
-				"factor": [{
-					"id": 7,
-					"name": "factor1"
-				}, {
-					"id": 8,
-					"name": "factor2"
-				}]
-			}, {
-				"id": 6,
-				"name": "instrument2",
-				"factor": [{
-					"id": 7,
-					"name": "factor1"
-				}, {
-					"id": 8,
-					"name": "factor2"
-				}]
-			}, {
-				"id": 6,
-				"name": "instrument2",
-				"factor": [{
-					"id": 7,
-					"name": "factor1"
-				}, {
-					"id": 8,
-					"name": "factor2"
-				}]
-			}, {
-				"id": 6,
-				"name": "instrument2",
-				"factor": [{
-					"id": 7,
-					"name": "factor1"
-				}, {
-					"id": 8,
-					"name": "factor2"
-				}]
-			}, {
-				"id": 6,
-				"name": "instrument2",
-				"factor": [{
-					"id": 7,
-					"name": "factor1"
-				}, {
-					"id": 8,
-					"name": "factor2"
-				}]
-			}, {
-				"id": 6,
-				"name": "instrument2",
-				"factor": [{
-					"id": 7,
-					"name": "factor1"
-				}, {
-					"id": 8,
-					"name": "factor2"
-				}]
-			}, {
-				"id": 6,
-				"name": "instrument2",
-				"factor": [{
-					"id": 7,
-					"name": "factor1"
-				}, {
-					"id": 8,
-					"name": "factor2"
-				}]
-			}]
-		}, {
-			"id": 9,
-			"name": "海纳1号站",
-			"inlevelIndex":2,
-			"instrument": [{
-				"id": 10,
-				"name": "instrument1",
-				"factor": [{
-					"id": 11,
-					"name": "factor1"
-				}, {
-					"id": 12,
-					"name": "factor2"
-				}]
-			}, {
-				"id": 13,
-				"name": "instrument2",
-				"factor": [{
-					"id": 14,
-					"name": "factor1"
-				}, {
-					"id": 15,
-					"name": "factor2"
-				}]
-			}]
-		}]
-	}, {
-	"id": 16,
-	"name": "东川化工园区",
+	"parkId": 1,
+	"name": "青海省西宁市甘河化工园区",
 	"sites": [{
-		"id": 17,
-		"name": "site3",
-		"inlevelIndex":3,
+		"siteId": 1,
+		"name": "管委会站",
 		"instrument": [{
-			"id": 18,
-			"name": "instrument1",
+			"instrumentId": 22,
+			"name": "傅立叶红外光谱分析仪",
 			"factor": [{
-				"id": 19,
-				"name": "factor1"
+				"factorId": 15,
+				"name": "甲烷"
 			}, {
-				"id": 20,
-				"name": "factor2"
+				"factorId": 312,
+				"name": "氯乙烯"
+			}, {
+				"factorId": 12,
+				"name": "乙烯"
+			}, {
+				"factorId": 242,
+				"name": "二硫化碳"
+			}, {
+				"factorId": 467,
+				"name": "甲醇"
+			}, {
+				"factorId": 44,
+				"name": "正庚烷"
+			}, {
+				"factorId": 49,
+				"name": "正辛烷"
+			}, {
+				"factorId": 66,
+				"name": "氨"
+			}, {
+				"factorId": 258,
+				"name": "二氧化硫"
+			}, {
+				"factorId": 259,
+				"name": "六氟化硫"
 			}]
 		}, {
-			"id": 21,
-			"name": "instrument2",
+			"instrumentId": 2,
+			"name": "气象参数仪",
 			"factor": [{
-				"id": 22,
-				"name": "factor1"
+				"factorId": 382,
+				"name": "温度"
 			}, {
-				"id": 23,
-				"name": "factor2"
+				"factorId": 421,
+				"name": "气压"
+			}, {
+				"factorId": 417,
+				"name": "相对湿度"
+			}, {
+				"factorId": 380,
+				"name": "风速"
+			}, {
+				"factorId": 381,
+				"name": "风向"
+			}]
+		}, {
+			"instrumentId": 60,
+			"name": "大气重金属在线分析仪",
+			"factor": [{
+				"factorId": 7,
+				"name": "重金属"
+			}, {
+				"factorId": 423,
+				"name": "PM2.5"
+			}, {
+				"factorId": 456,
+				"name": "PM10"
 			}]
 		}]
 	}, {
-		"id": 24,
-		"name": "site4",
-		"inlevelIndex":4,
+		"siteId": 2,
+		"name": "海纳1号站",
 		"instrument": [{
-			"id": 25,
-			"name": "instrument1",
+			"instrumentId": 20,
+			"name": "差分吸收光谱分析仪器",
 			"factor": [{
-				"id": 26,
-				"name": "factor1"
+				"factorId": 382,
+				"name": "温度"
 			}, {
-				"id": 27,
-				"name": "factor2"
+				"factorId": 421,
+				"name": "气压"
+			}, {
+				"factorId": 417,
+				"name": "相对湿度"
+			}, {
+				"factorId": 380,
+				"name": "风速"
+			}, {
+				"factorId": 381,
+				"name": "风向"
 			}]
 		}, {
-			"id": 28,
-			"name": "instrument2",
+			"instrumentId": 25,
+			"name": "气象五参数仪",
 			"factor": [{
-				"id": 29,
-				"name": "factor1"
+				"factorId": 382,
+				"name": "温度"
 			}, {
-				"id": 30,
-				"name": "factor2"
+				"factorId": 421,
+				"name": "气压"
+			}, {
+				"factorId": 417,
+				"name": "相对湿度"
+			}, {
+				"factorId": 380,
+				"name": "风速"
+			}, {
+				"factorId": 381,
+				"name": "风向"
+			}]
+		}]
+	}, {
+		"siteId": 6,
+		"name": "海纳2号站"
+	}, {
+		"siteId": 7,
+		"name": "天泰站"
+	}, {
+		"siteId": 1007,
+		"name": "东区污水厂站"
+	}, {
+		"siteId": 1008,
+		"name": "苏锡子站"
+	}, {
+		"siteId": 1009,
+		"name": "西区污水厂站"
+	}, {
+		"siteId": 1010,
+		"name": "桂鲁站"
+	}]
+}, {
+	"parkId": 2,
+	"name": "青海省西宁市东川化工园区",
+	"sites": [{
+		"siteId": 3,
+		"name": "信禾站",
+		"instrument": [{
+			"instrumentId": 23,
+			"name": "傅里叶红外光谱分析仪",
+			"factor": [{
+				"factorId": 15,
+				"name": "甲烷"
+			}, {
+				"factorId": 312,
+				"name": "氯乙烯"
+			}, {
+				"factorId": 12,
+				"name": "乙烯"
+			}, {
+				"factorId": 242,
+				"name": "二硫化碳"
+			}, {
+				"factorId": 467,
+				"name": "甲醇"
+			}, {
+				"factorId": 44,
+				"name": "正庚烷"
+			}, {
+				"factorId": 49,
+				"name": "正辛烷"
+			}, {
+				"factorId": 66,
+				"name": "氨"
+			}, {
+				"factorId": 258,
+				"name": "二氧化硫"
+			}, {
+				"factorId": 259,
+				"name": "六氟化硫"
+			}]
+		}, {
+			"instrumentId": 24,
+			"name": "气象五参数仪",
+			"factor": [{
+				"factorId": 382,
+				"name": "温度"
+			}, {
+				"factorId": 421,
+				"name": "气压"
+			}, {
+				"factorId": 417,
+				"name": "相对湿度"
+			}, {
+				"factorId": 380,
+				"name": "风速"
+			}, {
+				"factorId": 381,
+				"name": "风向"
 			}]
 		}]
 	}]
 }, {
-	"id": 16,
-	"name": "北川化工园区",
+	"parkId": 3,
+	"name": "青海省西宁市北川化工园区",
 	"sites": [{
-		"id": 17,
-		"name": "site3",
-		"inlevelIndex":3,
+		"siteId": 4,
+		"name": "宜化1号站",
 		"instrument": [{
-			"id": 18,
-			"name": "instrument1",
+			"instrumentId": 43,
+			"name": "傅里叶变换红外光谱分析仪",
 			"factor": [{
-				"id": 19,
-				"name": "factor1"
+				"factorId": 15,
+				"name": "甲烷"
 			}, {
-				"id": 20,
-				"name": "factor2"
+				"factorId": 312,
+				"name": "氯乙烯"
+			}, {
+				"factorId": 12,
+				"name": "乙烯"
+			}, {
+				"factorId": 242,
+				"name": "二硫化碳"
+			}, {
+				"factorId": 467,
+				"name": "甲醇"
+			}, {
+				"factorId": 44,
+				"name": "正庚烷"
+			}, {
+				"factorId": 49,
+				"name": "正辛烷"
+			}, {
+				"factorId": 66,
+				"name": "氨"
+			}, {
+				"factorId": 258,
+				"name": "二氧化硫"
+			}, {
+				"factorId": 259,
+				"name": "六氟化硫"
 			}]
 		}, {
-			"id": 21,
-			"name": "instrument2",
+			"instrumentId": 44,
+			"name": "气象六参数仪",
 			"factor": [{
-				"id": 22,
-				"name": "factor1"
+				"factorId": 382,
+				"name": "温度"
 			}, {
-				"id": 23,
-				"name": "factor2"
-			}]
-		}]
-	}, {
-		"id": 24,
-		"name": "site4",
-		"inlevelIndex":4,
-		"instrument": [{
-			"id": 25,
-			"name": "instrument1",
-			"factor": [{
-				"id": 26,
-				"name": "factor1"
+				"factorId": 421,
+				"name": "气压"
 			}, {
-				"id": 27,
-				"name": "factor2"
-			}]
-		}, {
-			"id": 28,
-			"name": "instrument2",
-			"factor": [{
-				"id": 29,
-				"name": "factor1"
+				"factorId": 417,
+				"name": "相对湿度"
 			}, {
-				"id": 30,
-				"name": "factor2"
+				"factorId": 380,
+				"name": "风速"
+			}, {
+				"factorId": 381,
+				"name": "风向"
+			}, {
+				"factorId": 420,
+				"name": "降雨量"
 			}]
 		}]
 	}]
-}
-]
+}]
