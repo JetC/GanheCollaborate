@@ -1812,6 +1812,7 @@ div.tab button.active {
 
 .datetimepicker{
     background: rgba(92, 92, 92, 0.39);
+    color: #ffffff;
     width: 69%;
     line-height: 2em;
     border-radius: 7px;
