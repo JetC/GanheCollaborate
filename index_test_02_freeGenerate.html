@@ -285,25 +285,21 @@
         }
         //List item transform
         var transform = {
-            "panelHeading":[{"<>":"div",}
-
-            ],
-
             "park":[{"<>":"div","class":"panel-heading",
                 "html":[{"<>":"h4","class":"panel-title",
-                    "html":[{"<>":"a","data-toggle":"collapse","href":"collapse${parkId}","html":"${name}"}]
+                    "html":[{"<>":"a","data-toggle":"collapse","href":"#collapse${parkId}","html":"${name}"}]
                 }]
             },
-                {"<>":"div","class":"sidebar-info",
-                "html":function (){
-                            var side_li_content = "<ul class=\"side-li\">";
-                            var side_li_html = json2html.transform(this.sites,transform.siteLi);
-                            side_li_html += "</ul>";
-                            var hiden_box_content = "<ul class=\"hiden-box\">";
-                            var hiden_box_html = json2html.transform(this.sites,transform.siteHiddenBox);
-                            hiden_box_html += "</ul>";
-                            return (side_li_content+side_li_html+hiden_box_content+hiden_box_html);
-                        }
+                {"<>":"div","class":"sidebar-info panel-collapse collapse", "id":"collapse${parkId}",
+                "html": [{"<>":"div", "class":"panel-body", "html":function (){
+                    var side_li_content = "<ul class=\"side-li\">";
+                    var side_li_html = json2html.transform(this.sites,transform.siteLi);
+                    side_li_html += "</ul>";
+                    var hiden_box_content = "<ul class=\"hiden-box\">";
+                    var hiden_box_html = json2html.transform(this.sites,transform.siteHiddenBox);
+                    hiden_box_html += "</ul>";
+                    return (side_li_content+side_li_html+hiden_box_content+hiden_box_html);
+                }}]
             }],
             "siteLi":{"<>":"li", "class":"s_${siteId}",
                     "html":[{"<>":"h3", "siteId":"${siteId}",
