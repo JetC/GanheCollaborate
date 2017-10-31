@@ -34,8 +34,6 @@
 })(jQuery);
 
 
-
-
 //search-box
 (function(){
     $('.search-box').hover(function(){
@@ -135,14 +133,14 @@
     },
         function(){
     //鼠标划出时的：隐藏显示代码
-        $('.s_'+num).css({
-            border: '',
-            borderRight: ''
-        }).find('h3').css({border: ''})
-            .end().find('span').css({color: ""});
-        $(this).animate({
-            width: 0
-        }, 200).hide(200);
+    //     $('.s_'+num).css({
+    //         border: '',
+    //         borderRight: ''
+    //     }).find('h3').css({border: ''})
+    //         .end().find('span').css({color: ""});
+    //     $(this).animate({
+    //         width: 0
+    //     }, 200).hide(200);
     });
 })();
 

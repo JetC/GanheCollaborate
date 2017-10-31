@@ -221,6 +221,10 @@
     <script src="./js/jquery.mousewheel.js"></script>
     <script src="js/php-date-formatter.js"></script>
     <link rel="stylesheet" href="css/jquery.datetimepicker.css">
+    <!--BootStrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <!--ends here By SUN Peifeng-->
 
 
@@ -236,7 +240,8 @@
             <div id="London" class="tabcontent">
                 <div class="content-top">
                     <!--sidebar-->
-                    <div class="sidebar" id="sidebar">
+                    <div class="sidebar panel panel-default" id="sidebar">
+
                     </div>
                 </div>
             </div>
@@ -280,7 +285,15 @@
         }
         //List item transform
         var transform = {
-            "park":[{"<>":"h3","parkId":"${parkId}","html":"${name}"},
+            "panelHeading":[{"<>":"div",}
+
+            ],
+
+            "park":[{"<>":"div","class":"panel-heading",
+                "html":[{"<>":"h4","class":"panel-title",
+                    "html":[{"<>":"a","data-toggle":"collapse","href":"collapse${parkId}","html":"${name}"}]
+                }]
+            },
                 {"<>":"div","class":"sidebar-info",
                 "html":function (){
                             var side_li_content = "<ul class=\"side-li\">";
