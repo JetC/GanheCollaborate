@@ -322,7 +322,7 @@
                 }
             }],
             "a_box":[{
-                "<>":"button","href":"#1","factorId":"${factorId}", "html":"${name}", "onclick":function(){console.log("success");}
+                "<>":"button","href":"#1", "class":"factor","factorId":"${factorId}", "onclick":function(e){console.log(e.data);}, "html":"${name}"
             },{
                 "<>":"span","html":" "
             }]
@@ -338,7 +338,11 @@
             jQuery.datetimepicker.setLocale('ch');
             jQuery('#endDateTimepicker').datetimepicker();
             jQuery.datetimepicker.setLocale('ch');
+            $('.factor').click( function(e) {
+                console.log(e);
+            });
         });
+
     </script>
     <script>
 
