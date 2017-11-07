@@ -222,12 +222,9 @@
     <script src="js/php-date-formatter.js"></script>
     <link rel="stylesheet" href="css/jquery.datetimepicker.css">
     <!--BootStrap-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
     <!--ends here By SUN Peifeng-->
-
-
 
 </head>
 <body>
@@ -325,9 +322,9 @@
                 }
             }],
             "a_box":[{
-                "<>":"button","href":"#1","factorId":"${factorId}","html":"${name}"
+                "<>":"button","href":"#1","factorId":"${factorId}", "html":"${name}", "onclick":function(){console.log("success");}
             },{
-                "<>":"span","html":"|"
+                "<>":"span","html":" "
             }]
         };
 
