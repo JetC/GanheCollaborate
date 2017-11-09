@@ -322,7 +322,7 @@
                 }
             }],
             "a_box":[{
-                "<>":"button","href":"#1", "class":"factor","factorId":"${factorId}", "onclick":function(e){console.log(e.data);}, "html":"${name}"
+                "<>":"button","href":"#1", "class":"factor","factorId":"${factorId}", "html":"${name}"
             },{
                 "<>":"span","html":" "
             }]
@@ -339,7 +339,9 @@
             jQuery('#endDateTimepicker').datetimepicker();
             jQuery.datetimepicker.setLocale('ch');
             $('.factor').click( function(e) {
-                console.log(e);
+                console.log("factorid:" + $(this).attr("factorid"));
+                console.log("instrumentid:" + $(this).parent().prev().attr("instrumentid"));
+                
             });
         });
 
