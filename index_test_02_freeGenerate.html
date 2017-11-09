@@ -328,6 +328,8 @@
             }]
         };
 
+        var selectedFactorsInfo;
+        selectedFactorsInfo = [];
         $(function(){
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
@@ -339,10 +341,39 @@
             jQuery('#endDateTimepicker').datetimepicker();
             jQuery.datetimepicker.setLocale('ch');
             $('.factor').click( function(e) {
-                console.log("factorid:" + $(this).attr("factorid"));
-                console.log("instrumentid:" + $(this).parent().prev().attr("instrumentid"));
-                console.log("siteid:" + $(this).parent().parent().parent().parent().attr("id").split("-")[1]);
-                console.log("parkid:" + $(this).parent().parent().parent().parent().parent().parent().parent().attr("id").split("-")[1]);
+
+                var factorid = $(this).attr("factorid");
+                var instrumentid = $(this).parent().prev().attr("instrumentid");
+                var siteid = $(this).parent().parent().parent().parent().attr("id").split("-")[1];
+                var parkid = $(this).parent().parent().parent().parent().parent().parent().parent().attr("id").split("-")[1];
+//                console.log("factorid:" + factorid);
+//                console.log("instrumentid:" + instrumentid);
+//                console.log("siteid:" + siteid);
+//                console.log("parkid:" + factorid);
+
+                if ($(this).hasClass("selectedFactor")){
+                    $(this).removeClass("selectedFactor");
+                    $.grep(selectedFactorsInfo,function (obj) {
+                        console.log(obj.instrumentid);
+                        if ((obj.instrumentid === instrumentid) && (obj.factorid === factorid) && (obj.siteid === siteid) && (obj.parkid === parkid)) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    });
+//                    selectedFactorsInfo.filter();
+                    console.log("afterFilter:"+selectedFactorsInfo);
+                } else {
+                    $(this).addClass("selectedFactor");
+                }
+
+                var factorInfo = {"parkid":parkid,"siteid":siteid,"instrumentid":instrumentid,"factorid":factorid};
+                selectedFactorsInfo.push(factorInfo);
+                console.log(selectedFactorsInfo);
+
+
+                $.post( "http://localhost:8000/", { "name": "John", "time": "2pm" } );
+
             });
         });
 

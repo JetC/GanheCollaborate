@@ -1845,3 +1845,7 @@ div.tab button.active {
     padding: 6px 14px;
 
 }
+
+.selectedFactor {
+    background-color: green;
+}
