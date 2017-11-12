@@ -353,25 +353,24 @@
 
                 if ($(this).hasClass("selectedFactor")){
                     $(this).removeClass("selectedFactor");
-                    $.grep(selectedFactorsInfo,function (obj) {
+                    var afterFilter = [];
+                    afterFilter = $.grep(selectedFactorsInfo,function (obj) {
                         console.log(obj.instrumentid);
                         if ((obj.instrumentid === instrumentid) && (obj.factorid === factorid) && (obj.siteid === siteid) && (obj.parkid === parkid)) {
+                            //Old factor, Remove
                             return false;
                         } else {
+                            //New facotor, add
                             return true;
                         }
                     });
-//                    selectedFactorsInfo.filter();
-                    console.log("afterFilter:"+selectedFactorsInfo);
+                    selectedFactorsInfo = afterFilter;
                 } else {
                     $(this).addClass("selectedFactor");
+                    var factorInfo = {"parkid":parkid,"siteid":siteid,"instrumentid":instrumentid,"factorid":factorid};
+                    selectedFactorsInfo.push(factorInfo);
                 }
-
-                var factorInfo = {"parkid":parkid,"siteid":siteid,"instrumentid":instrumentid,"factorid":factorid};
-                selectedFactorsInfo.push(factorInfo);
-                console.log(selectedFactorsInfo);
-
-
+                console.log("selectedFactorsInfo: "+selectedFactorsInfo);
                 $.post( "http://localhost:8000/", { "name": "John", "time": "2pm" } );
 
             });
