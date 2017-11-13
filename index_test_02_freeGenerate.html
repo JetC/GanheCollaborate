@@ -371,9 +371,15 @@
                     selectedFactorsInfo.push(factorInfo);
                 }
                 console.log("selectedFactorsInfo: "+selectedFactorsInfo);
-                $.post( "http://localhost:8000/", { "name": "John", "time": "2pm" } );
 
             });
+            $(".submitButton").click( function () {
+                console.log("succvvvv");
+                $.post( "http://localhost:8000/", { "name": "John", "time": "2pm" } );
+            })
+            function generateDataToPost(){
+
+            }
         });
 
     </script>
