@@ -334,12 +334,14 @@
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
             leftSideBarConf();
+            
             $('<div class="datetimePickerDiv"><label>起始时间：</label><input id=\"startDateTimepicker\" class=\"datetimepicker\" type=\"text\"><label>截止时间：</label><input id=\"endDateTimepicker\" class=\"datetimepicker\" type=\"text\"></div>').appendTo('#sidebar');
             $('<div class="submitAndFavButton"><button class="submitButton">提交</button><button class="favButton">收藏</button></button>').appendTo('#sidebar');
             jQuery('#startDateTimepicker').datetimepicker();
             jQuery.datetimepicker.setLocale('ch');
             jQuery('#endDateTimepicker').datetimepicker();
             jQuery.datetimepicker.setLocale('ch');
+        
             $('.factor').click( function(e) {
 
                 var factorid = $(this).attr("factorid");
@@ -376,9 +378,12 @@
             $(".submitButton").click( function () {
                 console.log("succvvvv");
                 $.post( "http://localhost:8000/", { "name": "John", "time": "2pm" } );
+                generateDataToPost();
             })
             function generateDataToPost(){
-
+                var queryObj = [{"factorsQuery":selectedFactorsInfo}];
+                var string = JSON.stringify(queryObj);
+                console.log("jsonData:" + string);
             }
         });
 
