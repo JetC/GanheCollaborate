@@ -267,6 +267,20 @@
         loadJSON(function (response) {
             // Parse JSON string into object
             jsonData = JSON.parse(response);
+            var park, site, instrument, factor;
+            for (park in jsonData) {
+                for (site in jsonData[park]["sites"]) {
+                    for (instrument in jsonData[park]["sites"][site]["instrument"]) {
+                        for (factor in jsonData[park]["sites"][site]["instrument"][instrument]["factor"]) {
+                            jsonData[park]["sites"][site]["instrument"][instrument]["factor"].sort(function(a,b){
+                                return a["name"].localeCompare(b["name"], 'zh-Hans-CN', {sensitivity: 'accent'});
+                            });
+                        }
+                    }
+                }
+            }
+            
+            
         });
         function loadJSON(callback) {
             var xobj = new XMLHttpRequest();
