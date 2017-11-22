@@ -224,6 +224,9 @@
     <!--BootStrap-->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <!--ends here By SUN Peifeng-->
 
 </head>
@@ -245,6 +248,10 @@
             <div id="Paris" class="tabcontent">
                 <h3>Paris</h3>
                 <p>Paris is the capital of France.</p>
+                <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
+                    <option value="AL">Alabama</option>
+                    <option value="WY">Wyoming</option>
+                </select>
             </div>
 
         </div>
@@ -263,6 +270,7 @@
         }
     </script>
     <script>
+
         var jsonData;
         loadJSON(function (response) {
             // Parse JSON string into object
@@ -329,16 +337,16 @@
                     return json2html.transform(this,transform.cell_box);
                     }
                 }],
-            "cell_box":[{
-                "<>":"h1","instrumentId":"${instrumentId}","html":"${name}"},{
-                "<>":"div","class":"a-box","html":function () {
-                    return json2html.transform(this.factor,transform.a_box);
-                }
-            }],
-            "a_box":[{
-                "<>":"button","href":"#1", "class":"factor","factorId":"${factorId}", "html":"${name}"
-            },{
-                "<>":"span","html":" "
+            "cell_box":
+                [{"<>":"h1","instrumentId":"${instrumentId}","html":"${name}"},
+                {"<>":"div","class":"a-box","html":[{
+                            "<>":"select", "class":"js-example-basic-multiple", "name":"states[]", "multiple":"multiple", "html":function () {
+                            return json2html.transform(this.factor,transform.optionValue);
+                        }
+                    }]
+                }],
+            "optionValue":[{
+                "<>":"option", "value":"${name}","factorId":"${factorId}", "html":"${name}"
             }]
         };
 
@@ -348,6 +356,9 @@
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
             leftSideBarConf();
+            $(document).ready(function() {
+                $('.js-example-basic-multiple').select2();
+            });
             
             $('<div class="datetimePickerDiv"><label>起始时间：</label><input id=\"startDateTimepicker\" class=\"datetimepicker\" type=\"text\"><label>截止时间：</label><input id=\"endDateTimepicker\" class=\"datetimepicker\" type=\"text\"></div>').appendTo('#sidebar');
             $('<div class="submitAndFavButton"><button class="submitButton">提交</button><button class="favButton">收藏</button></button>').appendTo('#sidebar');
