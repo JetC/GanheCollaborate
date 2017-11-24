@@ -212,7 +212,6 @@
     <!--By SUN Peifeng-->
     <!--我注释了一些你的alert，记得恢复过来-->
     <link rel="stylesheet" href="css/reset.css"/>
-    <link rel="stylesheet" href="css/style.css"/>
     <!-- Json2html -->
     <script src="./js/json2html.js"></script>
     <script src="./js/jquery.json2html.js"></script>
@@ -224,35 +223,21 @@
     <!--BootStrap-->
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script text="text/javascript" src="./js/pinying.js" charset="GBK"></script>
+    <link rel="stylesheet" href="css/style.css"/>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <!--ends here By SUN Peifeng-->
 
 </head>
 <body>
     <div id="allContainer">
         <div id="left-side-nav-panel" class="leftSideNav">
-            <div class="tab">
-                <button class="tablinks" onclick="openCity(event, 'London')" id="defaultOpen">数据筛选</button>
-                <button class="tablinks" onclick="openCity(event, 'Paris')">收藏</button>
-            </div>
-            <div id="London" class="tabcontent">
                 <div class="content-top">
                     <!--sidebar-->
                     <div class="sidebar panel panel-default" id="sidebar">
 
                     </div>
                 </div>
-            </div>
-            <div id="Paris" class="tabcontent">
-                <h3>Paris</h3>
-                <p>Paris is the capital of France.</p>
-                <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
-                    <option value="AL">Alabama</option>
-                    <option value="WY">Wyoming</option>
-                </select>
-            </div>
 
         </div>
         <div id="cesiumContainer">
@@ -263,7 +248,6 @@
         </div>
 
     </div>
-    <!--<script src="js/leftSideBar.js"></script>-->
     <script>
         function factorClicked() {
             console.log('234444');
@@ -287,6 +271,7 @@
                     }
                 }
             }
+
             
             
         });
@@ -337,16 +322,16 @@
                     return json2html.transform(this,transform.cell_box);
                     }
                 }],
-            "cell_box":
-                [{"<>":"h1","instrumentId":"${instrumentId}","html":"${name}"},
-                {"<>":"div","class":"a-box","html":[{
-                            "<>":"select", "class":"js-example-basic-multiple", "name":"states[]", "multiple":"multiple", "html":function () {
-                            return json2html.transform(this.factor,transform.optionValue);
-                        }
-                    }]
-                }],
-            "optionValue":[{
-                "<>":"option", "value":"${name}","factorId":"${factorId}", "html":"${name}"
+            "cell_box":[{
+                "<>":"h1","instrumentId":"${instrumentId}","html":"${name}"},{
+                "<>":"div","class":"a-box","html":function () {
+                    return json2html.transform(this.factor,transform.a_box);
+                }
+            }],
+            "a_box":[{
+                "<>":"button","href":"#1", "class":"factor","factorId":"${factorId}", "html":"${name}"
+            },{
+                "<>":"span","html":" "
             }]
         };
 
@@ -356,10 +341,8 @@
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
             leftSideBarConf();
-            $(document).ready(function() {
-                $('.js-example-basic-multiple').select2();
-            });
-            
+
+
             $('<div class="datetimePickerDiv"><label>起始时间：</label><input id=\"startDateTimepicker\" class=\"datetimepicker\" type=\"text\"><label>截止时间：</label><input id=\"endDateTimepicker\" class=\"datetimepicker\" type=\"text\"></div>').appendTo('#sidebar');
             $('<div class="submitAndFavButton"><button class="submitButton">提交</button><button class="favButton">收藏</button></button>').appendTo('#sidebar');
             jQuery(function(){
@@ -10334,13 +10317,16 @@ function leftSideBarConf(){
                 default : beginH = 138;break;
             }
         });
-        $('.side-li > li').hover(function(){
+        $('.side-li > li').hover(
+            function(){
             $(this).find('h3').css({border: 'none'})
                 .end().find('span').css({color: ""});
             classN = $(this).attr('class');
             num = classN.substring(2, classN.length);
-            beginH = 41+50;
-
+            beginH = 50;
+            var parkIndex = ($(this).parent().parent().parent().index()-1)/2;
+            var siteIndex = $(this).index();
+            console.log('PARKINDEX:'+parkIndex);
             switch (scTop){
                 case 0: if(num > 14){ beginH += 120}else if(num >= 12){beginH += 41}; break;
                 case 100: if(num == 1){beginH -= 27}else if(num == 16){beginH += 7}; break;
@@ -10354,9 +10340,10 @@ function leftSideBarConf(){
 
             $('.hiden-box').show()
                 .css({
-                    left: ($(window).width()/4 ),
-                    top:  beginH
-                }).animate({width: '729px'}, 300);
+                    left: ($(window).width()/4),
+                    top:  beginH,
+                    height: ($(window).height()/2)
+                }).animate({width: ($(window).width()/2)}, 300);
             $('.hiden-box > li').hide();
             $('#hiden-'+num).fadeIn(200);
             //Detailed Position
@@ -10366,25 +10353,35 @@ function leftSideBarConf(){
                 .end().find('span').css({color: ""});
             $('.hiden-box').hide().css({width: '0'});
         });
-        $('.hiden-box').hover(function(){
+        $('.hiden-box').hover(
+            function(){
                 $('.s_'+num).css({
                     border: '1px solid #f40',
                     borderRight: '1px solid #fff'
                 }).find('h3').css({border: 'none'})
                     .end().find('span').css({color: "#f40"});
-                $(this).show().css({width: '729px'});
+                $(this).show().css({width: ($(window).width()/2)});
             },
             function(){
-                //鼠标划出时的：隐藏显示代码
-                $('.s_'+num).css({
-                    border: '',
-                    borderRight: ''
-                }).find('h3').css({border: ''})
-                    .end().find('span').css({color: ""});
-                $(this).animate({
-                    width: 0
-                }, 200).hide(200);
+                setTimeout(whenMouseOut(), 50);
+
+
             });
+
+}
+function whenMouseOut() {
+    //鼠标划出时的：隐藏显示代码
+    $('.s_'+num).css({
+        border: '',
+        borderRight: ''
+    }).find('h3').css({border: ''})
+        .end().find('span').css({color: ""});
+    if ($('.panel-body:hover').length == 0) {
+        return;
+    }
+    $(this).animate({
+        width: 0
+    }, 200).hide(200);
 }
     </script>
 

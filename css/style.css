@@ -578,7 +578,7 @@ div.tab button.active {
     width: 100%;
     height: 100%;
     box-shadow: 2px 2px 2px #e1e1e1;
-    background-color: #d3d3d347;
+    background-color: #222121;
 }
 .sidebar > h3{
     width: 100%;
@@ -597,6 +597,7 @@ div.tab button.active {
 .side-li{
     position: relative;
     z-index: 5000;
+    width:  100%;
 }
 /*hiden-box*/
 .hiden-box{
@@ -1848,4 +1849,20 @@ div.tab button.active {
 
 .selectedFactor {
     background-color: green;
+}
+
+.panel-default > .panel-heading {
+    /*background-color: #222121;*/
+    color: #4dd5d8;
+}
+
+.collapse.in {
+    /*background: #757575;*/
+}
+
+.panel-body {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-left: 0;
+    padding-right: 0;
 }
