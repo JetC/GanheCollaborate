@@ -10319,39 +10319,39 @@ function leftSideBarConf(){
         });
         $('.side-li > li').hover(
             function(){
-            $(this).find('h3').css({border: 'none'})
-                .end().find('span').css({color: ""});
-            classN = $(this).attr('class');
-            num = classN.substring(2, classN.length);
-            beginH = 50;
-            var parkIndex = ($(this).parent().parent().parent().index()-1)/2;
-            var siteIndex = $(this).index();
-            console.log('PARKINDEX:'+parkIndex);
-            switch (scTop){
-                case 0: if(num > 14){ beginH += 120}else if(num >= 12){beginH += 41}; break;
-                case 100: if(num == 1){beginH -= 27}else if(num == 16){beginH += 7}; break;
-                case 200: num < 5 ? beginH -= 60 : beginH -= 30; break;
-                case 300: num < 8 ? beginH -= 60 : beginH -= 40; break;
-                case 400: num <= 11 ? beginH -= 50 : beginH += 10; break;
-                case 500: num < 14 ? beginH -= 50 : ''; break;
-                case 600: num <= 16 ? beginH -= 50 : ''; break;
-                default : beginH = 138;break;
-            }
+                $(this).find('h3').css({border: 'none'})
+                    .end().find('span').css({color: ""});
+                classN = $(this).attr('class');
+                num = classN.substring(2, classN.length);
+                beginH = 50;
+                var parkIndex = ($(this).parent().parent().parent().index()-1)/2;
+                var siteIndex = $(this).index();
+                console.log('PARKINDEX:'+parkIndex);
+//                switch (scTop){
+//                    case 0: if(num > 14){ beginH += 120}else if(num >= 12){beginH += 41}; break;
+//                    case 100: if(num == 1){beginH -= 27}else if(num == 16){beginH += 7}; break;
+//                    case 200: num < 5 ? beginH -= 60 : beginH -= 30; break;
+//                    case 300: num < 8 ? beginH -= 60 : beginH -= 40; break;
+//                    case 400: num <= 11 ? beginH -= 50 : beginH += 10; break;
+//                    case 500: num < 14 ? beginH -= 50 : ''; break;
+//                    case 600: num <= 16 ? beginH -= 50 : ''; break;
+//                    default : beginH = 138;break;
+//                }
+//                var top = $('.side-li > li')[1].position.top;
 
-            $('.hiden-box').show()
-                .css({
-                    left: ($(window).width()/4),
-                    top:  beginH,
-                    height: ($(window).height()/2)
-                }).animate({width: ($(window).width()/4*3)}, 300);
-            $('.hiden-box > li').hide();
-            $('#hiden-'+num).fadeIn(200);
-            //Detailed Position
-            beginH = 0;
-        }, function(){
-            $(this).find('h3').css({border: ''})
-                .end().find('span').css({color: ""});
-            $('.hiden-box').hide().css({width: '0'});
+                $('.hiden-box').show()
+                    .css({
+                        left: ($(window).width()/4),
+                        top:  beginH
+                    }).animate({width: ($(window).width()/4*3)}, 300);
+                $('.hiden-box > li').hide();
+                $('#hiden-'+num).fadeIn(200);
+                //Detailed Position
+                beginH = 0;
+        },  function(){
+                $(this).find('h3').css({border: ''})
+                    .end().find('span').css({color: ""});
+                $('.hiden-box').hide().css({width: '0'});
         });
         $('.hiden-box').hover(
             function(){
@@ -10364,25 +10364,23 @@ function leftSideBarConf(){
             },
             function(){
                 setTimeout(whenMouseOut(), 50);
-
-
             });
-
-}
-function whenMouseOut() {
-    //鼠标划出时的：隐藏显示代码
-    $('.s_'+num).css({
-        border: '',
-        borderRight: ''
-    }).find('h3').css({border: ''})
-        .end().find('span').css({color: ""});
-    if ($('.panel-body:hover').length == 0) {
-        return;
+    function whenMouseOut() {
+        //鼠标划出时的：隐藏显示代码
+        $('.s_'+num).css({
+            border: '',
+            borderRight: ''
+        }).find('h3').css({border: ''})
+            .end().find('span').css({color: ""});
+        if ($('.panel-body:hover').length == 0) {
+            return;
+        }
+        $(this).animate({
+            width: 0
+        }, 200).hide(200);
     }
-    $(this).animate({
-        width: 0
-    }, 200).hide(200);
 }
+
     </script>
 
 
