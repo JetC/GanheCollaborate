@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9675c0b-2ec3-4999-943c-a096be1f88c1" name="Default" comment="把日期输入框内的颜色调成白色了">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/css/bootstrap.min.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index_test_02_freeGenerate.html" afterPath="$PROJECT_DIR$/index_test_02_freeGenerate.html" />
     </list>
@@ -24,17 +22,16 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index_test_02_freeGenerate.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index_test_02_freeGenerate.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index_test_02_freeGenerate.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10365" column="41" lean-forward="false" selection-start-line="10365" selection-start-column="41" selection-end-line="10365" selection-end-column="41" />
+            <state relative-caret-position="400">
+              <caret line="10362" column="43" lean-forward="false" selection-start-line="10362" selection-start-column="43" selection-end-line="10362" selection-end-column="43" />
               <folding>
                 <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="n#script#5;n#body#0;n#html#0;n#!!top" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -43,7 +40,7 @@
       <file leaf-file-name="jquery.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/libs/jquery.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
+            <state relative-caret-position="36">
               <caret line="2" column="24961" lean-forward="false" selection-start-line="2" selection-start-column="24961" selection-end-line="2" selection-end-column="24961" />
               <folding />
             </state>
@@ -53,7 +50,7 @@
       <file leaf-file-name="pinying.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/pinying.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="534">
+            <state relative-caret-position="972">
               <caret line="55" column="52" lean-forward="false" selection-start-line="55" selection-start-column="52" selection-end-line="55" selection-end-column="52" />
               <folding />
             </state>
@@ -70,7 +67,7 @@
       <file leaf-file-name="bootstrap.min.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/bootstrap.min.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
+            <state relative-caret-position="105516">
               <caret line="5862" column="23" lean-forward="false" selection-start-line="5862" selection-start-column="4" selection-end-line="5862" selection-end-column="23" />
               <folding />
             </state>
@@ -80,18 +77,18 @@
       <file leaf-file-name="jquery.datetimepicker.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/jquery.datetimepicker.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="18">
+            <state relative-caret-position="252">
               <caret line="14" column="22" lean-forward="false" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/css/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="1863" column="4" lean-forward="false" selection-start-line="1863" selection-start-column="4" selection-end-line="1863" selection-end-column="4" />
+            <state relative-caret-position="436">
+              <caret line="692" column="1" lean-forward="true" selection-start-line="692" selection-start-column="1" selection-end-line="692" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -100,7 +97,7 @@
       <file leaf-file-name="leftSideBar.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/leftSideBar.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
+            <state relative-caret-position="18">
               <caret line="100" column="8" lean-forward="false" selection-start-line="100" selection-start-column="8" selection-end-line="100" selection-end-column="8" />
               <folding />
             </state>
@@ -128,6 +125,13 @@
       <find>leftside</find>
       <find>height</find>
       <find>left</find>
+      <find>factor</find>
+      <find>a-box</find>
+      <find>600</find>
+      <find>hiden</find>
+      <find>cell-box</find>
+      <find>block</find>
+      <find>2em</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -144,9 +148,9 @@
         <option value="$PROJECT_DIR$/css/bootstrap.min.css" />
         <option value="chrome-extension://aohddidmgooofkgohkbkaohadkolgejj/lookup.js" />
         <option value="cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js" />
-        <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/js/leftSideBar.js" />
         <option value="$PROJECT_DIR$/index_test_02_freeGenerate.html" />
+        <option value="$PROJECT_DIR$/css/style.css" />
       </list>
     </option>
   </component>
@@ -178,7 +182,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -207,6 +210,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -328,15 +332,16 @@
       <workItem from="1511324135821" duration="555000" />
       <workItem from="1511337585844" duration="14746000" />
       <workItem from="1511511490085" duration="6650000" />
+      <workItem from="1511750842265" duration="7551000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87759000" />
+    <option name="totallyTimeSpent" value="95310000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="69" width="1280" height="1024" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17734376" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -378,13 +383,11 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/js/leftSideBar.js</url>
           <line>100</line>
-          <properties />
           <option name="timeStamp" value="28" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index_test_02_freeGenerate.html</url>
           <line>10379</line>
-          <properties />
           <option name="timeStamp" value="40" />
         </line-breakpoint>
       </breakpoints>
@@ -470,7 +473,6 @@
             <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#5;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -549,7 +551,6 @@
             <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#5;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -628,7 +629,6 @@
             <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#5;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -642,7 +642,6 @@
             <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#5;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -656,7 +655,6 @@
             <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#5;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -670,7 +668,6 @@
             <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#5;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -745,7 +742,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/css/bootstrap.min.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
+        <state relative-caret-position="105516">
           <caret line="5862" column="23" lean-forward="false" selection-start-line="5862" selection-start-column="4" selection-end-line="5862" selection-end-column="23" />
           <folding />
         </state>
@@ -753,24 +750,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/css/jquery.datetimepicker.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
+        <state relative-caret-position="252">
           <caret line="14" column="22" lean-forward="false" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="1863" column="4" lean-forward="false" selection-start-line="1863" selection-start-column="4" selection-end-line="1863" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/leftSideBar.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="100" column="8" lean-forward="false" selection-start-line="100" selection-start-column="8" selection-end-line="100" selection-end-column="8" />
           <folding />
         </state>
       </provider>
@@ -779,13 +760,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="41" lean-forward="true" selection-start-line="9" selection-start-column="41" selection-end-line="9" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/pinying.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="534">
+        <state relative-caret-position="972">
           <caret line="55" column="52" lean-forward="false" selection-start-line="55" selection-start-column="52" selection-end-line="55" selection-end-column="52" />
           <folding />
         </state>
@@ -793,23 +773,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/libs/jquery.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
+        <state relative-caret-position="36">
           <caret line="2" column="24961" lean-forward="false" selection-start-line="2" selection-start-column="24961" selection-end-line="2" selection-end-column="24961" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/leftSideBar.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="100" column="8" lean-forward="false" selection-start-line="100" selection-start-column="8" selection-end-line="100" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index_test_02_freeGenerate.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10365" column="41" lean-forward="false" selection-start-line="10365" selection-start-column="41" selection-end-line="10365" selection-end-column="41" />
+        <state relative-caret-position="400">
+          <caret line="10362" column="43" lean-forward="false" selection-start-line="10362" selection-start-column="43" selection-end-line="10362" selection-end-column="43" />
           <folding>
             <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
             <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#5;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="436">
+          <caret line="692" column="1" lean-forward="true" selection-start-line="692" selection-start-column="1" selection-end-line="692" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>

@@ -10343,7 +10343,7 @@ function leftSideBarConf(){
                     left: ($(window).width()/4),
                     top:  beginH,
                     height: ($(window).height()/2)
-                }).animate({width: ($(window).width()/2)}, 300);
+                }).animate({width: ($(window).width()/4*3)}, 300);
             $('.hiden-box > li').hide();
             $('#hiden-'+num).fadeIn(200);
             //Detailed Position
@@ -10360,7 +10360,7 @@ function leftSideBarConf(){
                     borderRight: '1px solid #fff'
                 }).find('h3').css({border: 'none'})
                     .end().find('span').css({color: "#f40"});
-                $(this).show().css({width: ($(window).width()/2)});
+                $(this).show().css({width: $(window).width()/4*3});
             },
             function(){
                 setTimeout(whenMouseOut(), 50);
