@@ -10337,12 +10337,12 @@ function leftSideBarConf(){
 //                    case 600: num <= 16 ? beginH -= 50 : ''; break;
 //                    default : beginH = 138;break;
 //                }
-//                var top = $('.side-li > li')[1].position.top;
+                var top = $('.side-li > li')[1].position.top;
 
                 $('.hiden-box').show()
                     .css({
                         left: ($(window).width()/4),
-                        top:  beginH
+                        top:  top
                     }).animate({width: ($(window).width()/4*3)}, 300);
                 $('.hiden-box > li').hide();
                 $('#hiden-'+num).fadeIn(200);
