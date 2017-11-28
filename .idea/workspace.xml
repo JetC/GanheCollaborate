@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e9675c0b-2ec3-4999-943c-a096be1f88c1" name="Default" comment="把日期输入框内的颜色调成白色了">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/FactorCategorize.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/HardCode_index_test_02_freeGenerate.html" afterPath="$PROJECT_DIR$/HardCode_index_test_02_freeGenerate.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/style.css" afterPath="$PROJECT_DIR$/css/style.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index_test_02_freeGenerate.html" afterPath="$PROJECT_DIR$/index_test_02_freeGenerate.html" />
     </list>
     <list id="df389348-ba95-4d2a-bfdc-e9095a8894f3" name="Rejected commit: Default" comment="把日期输入框内的颜色调成白色了" />
@@ -24,11 +24,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index_test_02_freeGenerate.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index_test_02_freeGenerate.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index_test_02_freeGenerate.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="10344" column="33" lean-forward="false" selection-start-line="10344" selection-start-column="33" selection-end-line="10344" selection-end-column="33" />
+            <state relative-caret-position="247">
+              <caret line="10340" column="67" lean-forward="true" selection-start-line="10340" selection-start-column="67" selection-end-line="10340" selection-end-column="67" />
               <folding>
                 <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
                 <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
@@ -40,16 +40,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HardCode_index_test_02_freeGenerate.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="HardCode_index_test_02_freeGenerate.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/HardCode_index_test_02_freeGenerate.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="589" column="0" lean-forward="false" selection-start-line="589" selection-start-column="2" selection-end-line="607" selection-end-column="9" />
+            <state relative-caret-position="234">
+              <caret line="683" column="12" lean-forward="true" selection-start-line="683" selection-start-column="12" selection-end-line="683" selection-end-column="12" />
               <folding>
-                <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-                <element signature="e#46240#46607#0" expanded="false" />
-                <element signature="e#46628#47662#0" expanded="false" />
-                <element signature="e#47684#48018#0" expanded="false" />
+                <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#script#3;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="e#46405#46772#0" expanded="false" />
+                <element signature="e#46793#47827#0" expanded="false" />
+                <element signature="e#47849#48183#0" expanded="false" />
                 <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -70,40 +72,17 @@
                 <element signature="n#style#0;n#button#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <marker date="1511839394492" expanded="true" signature="32861:33616" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="33028:33602" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="33082:33590" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="33166:33574" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="33272:33554" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="33387:33528" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="34272:36806" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="34292:35429" ph="[...]" />
-                <marker date="1511839394492" expanded="true" signature="34293:34572" ph="{&quot;&lt;&gt;&quot;: &quot;div&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="34370:34560" ph="[...]" />
-                <marker date="1511839394492" expanded="true" signature="34371:34559" ph="{&quot;&lt;&gt;&quot;: &quot;h4&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="34588:35428" ph="{&quot;id&quot;: &quot;collapse-${parkId}&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="34724:35412" ph="[...]" />
-                <marker date="1511839394492" expanded="true" signature="34725:35411" ph="{&quot;&lt;&gt;&quot;: &quot;div&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="34805:35391" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="35451:35717" ph="{&quot;&lt;&gt;&quot;: &quot;li&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="35525:35705" ph="[...]" />
-                <marker date="1511839394492" expanded="true" signature="35526:35704" ph="{&quot;&lt;&gt;&quot;: &quot;h3&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="35746:36088" ph="[...]" />
-                <marker date="1511839394492" expanded="true" signature="35747:36087" ph="{&quot;id&quot;: &quot;hiden-${siteId}&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="35829:36075" ph="[...]" />
-                <marker date="1511839394492" expanded="true" signature="35849:36059" ph="{&quot;&lt;&gt;&quot;: &quot;div&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="35932:36039" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="36111:36307" ph="[...]" />
-                <marker date="1511839394492" expanded="true" signature="36127:36306" ph="{&quot;&lt;&gt;&quot;: &quot;div&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="36201:36290" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="36331:36599" ph="[...]" />
-                <marker date="1511839394492" expanded="true" signature="36332:36424" ph="{&quot;&lt;&gt;&quot;: &quot;h1&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="36426:36598" ph="{&quot;&lt;&gt;&quot;: &quot;div&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="36493:36586" ph="{...}" />
-                <marker date="1511839394492" expanded="true" signature="36620:36798" ph="[...]" />
-                <marker date="1511839394492" expanded="true" signature="36621:36742" ph="{&quot;&lt;&gt;&quot;: &quot;button&quot;...}" />
-                <marker date="1511839394492" expanded="true" signature="36744:36797" ph="{&quot;&lt;&gt;&quot;: &quot;span&quot;...}" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FactorCategorize.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/FactorCategorize.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="14" column="42" lean-forward="false" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -161,7 +140,7 @@
             <state relative-caret-position="10674">
               <caret line="593" column="23" lean-forward="false" selection-start-line="593" selection-start-column="23" selection-end-line="593" selection-end-column="23" />
               <folding>
-                <marker date="1511772908000" expanded="true" signature="31205:31207" ph="{...}" />
+                <marker date="1511839434375" expanded="true" signature="31206:31208" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -225,8 +204,8 @@
         <option value="cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js" />
         <option value="$PROJECT_DIR$/js/leftSideBar.js" />
         <option value="$PROJECT_DIR$/css/style.css" />
-        <option value="$PROJECT_DIR$/index_test_02_freeGenerate.html" />
         <option value="$PROJECT_DIR$/HardCode_index_test_02_freeGenerate.html" />
+        <option value="$PROJECT_DIR$/index_test_02_freeGenerate.html" />
       </list>
     </option>
   </component>
@@ -280,6 +259,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GanheCollaborate" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GanheCollaborate" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -299,7 +292,12 @@
     <property name="restartRequiresConfirmation" value="false" />
     <property name="FullScreen" value="true" />
   </component>
-  <component name="RunManager" selected="JavaScript Debug.HardCode_index_test_02_freeGenerate.html">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/js" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JavaScript Debug.index_test_02_freeGenerate.html">
     <configuration default="false" name="index_test_02_freeGenerate.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/GanheCollaborate/index_test_02_freeGenerate.html">
       <method />
     </configuration>
@@ -375,8 +373,8 @@
     </list>
     <recent_temporary>
       <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.HardCode_index_test_02_freeGenerate.html" />
-        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.index_test_02_freeGenerate.html" />
+        <item index="0" class="java.lang.String" itemvalue="JavaScript Debug.index_test_02_freeGenerate.html" />
+        <item index="1" class="java.lang.String" itemvalue="JavaScript Debug.HardCode_index_test_02_freeGenerate.html" />
         <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.untitled.html" />
       </list>
     </recent_temporary>
@@ -409,12 +407,12 @@
       <workItem from="1511337585844" duration="14746000" />
       <workItem from="1511511490085" duration="6650000" />
       <workItem from="1511750842265" duration="7551000" />
-      <workItem from="1511835755082" duration="1362000" />
+      <workItem from="1511835755082" duration="7584000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97026000" />
+    <option name="totallyTimeSpent" value="103248000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="69" width="1280" height="1024" extended-state="0" />
@@ -464,28 +462,19 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/index_test_02_freeGenerate.html</url>
-          <line>10379</line>
-          <option name="timeStamp" value="40" />
+          <line>10341</line>
+          <properties />
+          <option name="timeStamp" value="45" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="41" />
+      <option name="time" value="46" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="32940">
-          <caret line="1830" column="21" lean-forward="false" selection-start-line="1830" selection-start-column="21" selection-end-line="1830" selection-end-column="21" />
-          <folding>
-            <marker date="1511772908000" expanded="true" signature="31205:31207" ph="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/navigation-mixin.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -562,7 +551,7 @@
         <state relative-caret-position="32940">
           <caret line="1830" column="21" lean-forward="false" selection-start-line="1830" selection-start-column="21" selection-end-line="1830" selection-end-column="21" />
           <folding>
-            <marker date="1511772908000" expanded="true" signature="31205:31207" ph="{...}" />
+            <marker date="1511839434375" expanded="true" signature="31206:31208" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -643,7 +632,7 @@
         <state relative-caret-position="32940">
           <caret line="1830" column="21" lean-forward="false" selection-start-line="1830" selection-start-column="21" selection-end-line="1830" selection-end-column="21" />
           <folding>
-            <marker date="1511772908000" expanded="true" signature="31205:31207" ph="{...}" />
+            <marker date="1511839434375" expanded="true" signature="31206:31208" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -874,34 +863,30 @@
         <state relative-caret-position="10674">
           <caret line="593" column="23" lean-forward="false" selection-start-line="593" selection-start-column="23" selection-end-line="593" selection-end-column="23" />
           <folding>
-            <marker date="1511772908000" expanded="true" signature="31205:31207" ph="{...}" />
+            <marker date="1511839434375" expanded="true" signature="31206:31208" ph="{...}" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index_test_02_freeGenerate.html">
+    <entry file="file://$PROJECT_DIR$/js/FactorCategorize.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="10344" column="33" lean-forward="false" selection-start-line="10344" selection-start-column="33" selection-end-line="10344" selection-end-column="33" />
-          <folding>
-            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#script#5;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
+        <state relative-caret-position="252">
+          <caret line="14" column="42" lean-forward="false" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/HardCode_index_test_02_freeGenerate.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="589" column="0" lean-forward="false" selection-start-line="589" selection-start-column="2" selection-end-line="607" selection-end-column="9" />
+        <state relative-caret-position="234">
+          <caret line="683" column="12" lean-forward="true" selection-start-line="683" selection-start-column="12" selection-end-line="683" selection-end-column="12" />
           <folding>
-            <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#46240#46607#0" expanded="false" />
-            <element signature="e#46628#47662#0" expanded="false" />
-            <element signature="e#47684#48018#0" expanded="false" />
+            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#3;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="e#46405#46772#0" expanded="false" />
+            <element signature="e#46793#47827#0" expanded="false" />
+            <element signature="e#47849#48183#0" expanded="false" />
             <element signature="n#style#0;n#button#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#1;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -922,39 +907,20 @@
             <element signature="n#style#0;n#button#0;n#div#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#1;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1511839394492" expanded="true" signature="32861:33616" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="33028:33602" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="33082:33590" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="33166:33574" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="33272:33554" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="33387:33528" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="34272:36806" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="34292:35429" ph="[...]" />
-            <marker date="1511839394492" expanded="true" signature="34293:34572" ph="{&quot;&lt;&gt;&quot;: &quot;div&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="34370:34560" ph="[...]" />
-            <marker date="1511839394492" expanded="true" signature="34371:34559" ph="{&quot;&lt;&gt;&quot;: &quot;h4&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="34588:35428" ph="{&quot;id&quot;: &quot;collapse-${parkId}&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="34724:35412" ph="[...]" />
-            <marker date="1511839394492" expanded="true" signature="34725:35411" ph="{&quot;&lt;&gt;&quot;: &quot;div&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="34805:35391" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="35451:35717" ph="{&quot;&lt;&gt;&quot;: &quot;li&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="35525:35705" ph="[...]" />
-            <marker date="1511839394492" expanded="true" signature="35526:35704" ph="{&quot;&lt;&gt;&quot;: &quot;h3&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="35746:36088" ph="[...]" />
-            <marker date="1511839394492" expanded="true" signature="35747:36087" ph="{&quot;id&quot;: &quot;hiden-${siteId}&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="35829:36075" ph="[...]" />
-            <marker date="1511839394492" expanded="true" signature="35849:36059" ph="{&quot;&lt;&gt;&quot;: &quot;div&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="35932:36039" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="36111:36307" ph="[...]" />
-            <marker date="1511839394492" expanded="true" signature="36127:36306" ph="{&quot;&lt;&gt;&quot;: &quot;div&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="36201:36290" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="36331:36599" ph="[...]" />
-            <marker date="1511839394492" expanded="true" signature="36332:36424" ph="{&quot;&lt;&gt;&quot;: &quot;h1&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="36426:36598" ph="{&quot;&lt;&gt;&quot;: &quot;div&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="36493:36586" ph="{...}" />
-            <marker date="1511839394492" expanded="true" signature="36620:36798" ph="[...]" />
-            <marker date="1511839394492" expanded="true" signature="36621:36742" ph="{&quot;&lt;&gt;&quot;: &quot;button&quot;...}" />
-            <marker date="1511839394492" expanded="true" signature="36744:36797" ph="{&quot;&lt;&gt;&quot;: &quot;span&quot;...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index_test_02_freeGenerate.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="10340" column="67" lean-forward="true" selection-start-line="10340" selection-start-column="67" selection-end-line="10340" selection-end-column="67" />
+          <folding>
+            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#2;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#4;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#script#5;n#body#0;n#html#0;n#!!top" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -253,6 +253,7 @@
             console.log('234444');
         }
     </script>
+
     <script>
 
         var jsonData;
@@ -10337,12 +10338,21 @@ function leftSideBarConf(){
 //                    case 600: num <= 16 ? beginH -= 50 : ''; break;
 //                    default : beginH = 138;break;
 //                }
-                var top = $('.side-li > li')[1].position.top;
+                var hidenBoxHeight = $('.hiden-box').innerHeight();
+                var top = function () {
+                    var calculatedValue = $('.s_'+num).offset().top-20;
+                    if (calculatedValue < 0) {
+                        calculatedValue += 20;
+                    } else if(calculatedValue+hidenBoxHeight>$(window).height()) {
+                        calculatedValue = $(window).height()-hidenBoxHeight-10;
+                    }
+                    return calculatedValue;
+                }
 
                 $('.hiden-box').show()
                     .css({
                         left: ($(window).width()/4),
-                        top:  top
+                        top:  top,
                     }).animate({width: ($(window).width()/4*3)}, 300);
                 $('.hiden-box > li').hide();
                 $('#hiden-'+num).fadeIn(200);
@@ -10363,7 +10373,7 @@ function leftSideBarConf(){
                 $(this).show().css({width: $(window).width()/4*3});
             },
             function(){
-                setTimeout(whenMouseOut(), 50);
+                setTimeout(whenMouseOut(), 5000);
             });
     function whenMouseOut() {
         //鼠标划出时的：隐藏显示代码
