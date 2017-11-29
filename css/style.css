@@ -5,6 +5,8 @@ div.tab {
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #f1f1f1;
+
+    
 }
 
 /* Style the buttons inside the tab */
@@ -578,7 +580,7 @@ div.tab button.active {
     width: 100%;
     height: 100%;
     box-shadow: 2px 2px 2px #e1e1e1;
-    background-color: rgba(0, 0, 0, 0.31);
+    /* background-color: rgba(0, 0, 0, 0.31); */
 }
 .sidebar > h3{
     width: 100%;
@@ -677,17 +679,17 @@ div.tab button.active {
 .side-li > li{
     width: 100%;
     margin: auto;
-    height: 31px;
-    line-height: 32px;
+    line-height: 33px;
     text-align: center;
     cursor: pointer;
+    vertical-align: middle;
 }
 .sidebar-info h3{
     width: 100%;
     height: 100%;
     margin: 0 auto;
     padding: 0;
-    border-bottom: 1px solid #dedede;
+    border-bottom: 1px solid #135C96;
     color: #ffffff;
 }
 .side-li > li:hover{
@@ -754,7 +756,7 @@ div.tab button.active {
     width: 720px;
     height: 500px;
 }
-/*******************************图片轮播**********************************/
+/*******************************å›¾ç‰‡è½®æ’­**********************************/
 
 /*content*/
 .content,
@@ -1774,22 +1776,22 @@ div.tab button.active {
 .some-info{
     margin-top: 10px;
 }
-/***********************回到顶部***************************/
+/***********************å›žåˆ°é¡¶éƒ¨***************************/
 /*backtoTop*/
 .backtoTop{
     clear: both;
     height: 60px;
     width: 40px;
-    position: absolute; //绝对定位
+    position: absolute; //ç»å¯¹å®šä½
     padding: 5px 0;
     right: 15px;
     /*z-index: 9999;*/
-    /*避免闪烁*/
+    /*é¿å…é—ªçƒ*/
     -moz-transition: all .6s ease;
     -webkit-transition: all .6s ease;
     -o-transition: all .6s ease;
     transition: all .6s ease;
-    /*避免闪烁*/
+    /*é¿å…é—ªçƒ*/
     border-radius: 5px;
     overflow: hidden;
     background: #f5f5f5;
@@ -1819,6 +1821,7 @@ div.tab button.active {
     width: 69%;
     line-height: 2em;
     border-radius: 7px;
+    border: 1px solid #41719C;
 }
 
 .datetimePickerDiv > label{
@@ -1836,10 +1839,14 @@ div.tab button.active {
 }
 
 .submitButton {
-    width: 50%;
-    font-size: 1.5em;
+    width: 100%;
+    font-size: 1.3em;
     padding: 6px 14px;
-
+    background-color:  #0266B3;
+    color:  white;
+    border-radius:  10px;
+    margin: 0 0;
+    border-color:  black;
 }
 
 .favButton {
@@ -1865,8 +1872,9 @@ div.tab button.active {
 }
 
 .panel-default > .panel-heading {
-    /*background-color: #222121;*/
-    color: black;
+    background-color: #526171;
+    color: #ffffff;
+    padding: 13px 15px;
 }
 
 .collapse.in {
@@ -1875,6 +1883,8 @@ div.tab button.active {
 
 .panel-title {
     text-align: center;
+    font-weight: normal;
+    -webkit-user-select: none;
 }
 
 .panel-body {
@@ -1882,16 +1892,17 @@ div.tab button.active {
     padding-bottom: 10px;
     padding-left: 0;
     padding-right: 0;
+    background-color: #203449;
 }
 
 a:focus, a:hover {
-    color: #23527c;
+    /* color: #23527c; */
     text-decoration: none;
 }
 
 h {
     font-family: Georgia, "Times New Roman",
-    "Microsoft YaHei", "微软雅黑",
-    STXihei, "华文细黑",
+    "Microsoft YaHei", "å¾®è½¯é›…é»‘",
+    STXihei, "åŽæ–‡ç»†é»‘",
     serif;
 }
