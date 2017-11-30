@@ -608,7 +608,7 @@ div.tab button.active {
     padding: 10px;
     display: none;
     overflow: hidden;
-    background: #fff;
+    background: rgba(13, 29, 50, 0.5);
 }
 .hiden-box > li{
     width: 100%;
@@ -658,6 +658,8 @@ div.tab button.active {
     margin-bottom: 10px;
     font-size: 1.5em;
     line-height: 2em;
+    color: white;
+    font-weight: normal;
 }
 /*a-box*/
 .a-box{
@@ -679,7 +681,7 @@ div.tab button.active {
 .side-li > li{
     width: 100%;
     margin: auto;
-    line-height: 33px;
+    line-height: 36px;
     text-align: center;
     cursor: pointer;
     vertical-align: middle;
@@ -693,8 +695,13 @@ div.tab button.active {
     color: #ffffff;
 }
 .side-li > li:hover{
-   border: 1px solid #f40;
-   border-right: 1px solid #fff;
+   /* border: 1px solid #f40; */
+   /* border-right: 1px solid #fff; */
+   background-color:  #927916;
+}
+
+.sideLiHover {
+    background-color:  #927916;
 }
 
 /*right-con*/
@@ -1818,14 +1825,16 @@ div.tab button.active {
 .datetimepicker{
     background: rgba(92, 92, 92, 0.39);
     color: #ffffff;
-    width: 69%;
-    line-height: 2em;
+    width: 60%;
+    line-height: 2.5em;
     border-radius: 7px;
     border: 1px solid #41719C;
+    font-size: 1em;
+    padding: 2px 10px;
 }
 
 .datetimePickerDiv > label{
-    width: 29%;
+    width: 30%;
     display: inline-block;
     font-size: 1.3em;
     text-align: center;

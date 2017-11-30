@@ -15,9 +15,9 @@
     <link href="./css/font-awesome.min.css" rel="stylesheet">
     <link href="./Cesium/Release/Cesium/Widgets/widgets.css" rel="stylesheet">
     <link href="./css/navigation-mixin.css" rel="stylesheet">
-   <!-- <script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
+    <!--<script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
     <!--<script src="./js/libs/require.js" ></script>-->
-    <!--<script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>-->
+    <script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>
     <script src="./js/libs/jquery.js" ></script>
     <script src="./js/PositionPick.js"></script>
     <script src="./js/navigation-mixin.js" ></script>
@@ -249,13 +249,6 @@
 
     </div>
     <script>
-        function factorClicked() {
-            console.log('234444');
-        }
-    </script>
-
-    <script>
-
         var jsonData;
         loadJSON(function (response) {
             // Parse JSON string into object
@@ -272,9 +265,6 @@
                     }
                 }
             }
-
-            
-            
         });
         function loadJSON(callback) {
             var xobj = new XMLHttpRequest();
@@ -342,7 +332,6 @@
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
             leftSideBarConf();
-
 
             $('<div class="datetimePickerDiv"><label>起始时间：</label><input id=\"startDateTimepicker\" class=\"datetimepicker\" type=\"text\"><label>截止时间：</label><input id=\"endDateTimepicker\" class=\"datetimepicker\" type=\"text\"></div>').appendTo('#sidebar');
             $('<div class="submitAndFavButton"><button class="submitButton">提交</button></div>').appendTo('#sidebar');
@@ -10299,89 +10288,90 @@
         viewer.zoomTo(viewer.entities);
     </script>
     <script>
-function leftSideBarConf(){
-        var scTop = 0,
-            //Initial position
-            beginH = 0,
-            windowWidth = $(window).width(),
-            classN,
-            num;
-        $(window).scroll(function(){
-            scTop = $(window).scrollTop();
-            beginH = 138;
-            switch (scTop){
-                case 600: beginH -= 45;break;
-                case 500: beginH -= 50;break;
-                case 400: beginH -= 55;break;
-                case 300: beginH -= 60;break;
-                case 200: beginH -= 65;break;
-                default : beginH = 138;break;
-            }
-        });
-        $('.side-li > li').hover(
-            function(){
-                $(this).find('h3').css({border: 'none'})
-                    .end().find('span').css({color: ""});
-                classN = $(this).attr('class');
-                num = classN.substring(2, classN.length);
-                beginH = 50;
-                var parkIndex = ($(this).parent().parent().parent().index()-1)/2;
-                var siteIndex = $(this).index();
-                console.log('PARKINDEX:'+parkIndex);
-
-                var hidenBoxHeight = $(window).height()/2;
-                var top = function () {
-                    var calculatedValue = $('.s_'+num).offset().top-20;
-                    if (calculatedValue < 0) {
-                        calculatedValue += 20;
-                    } else if(calculatedValue+hidenBoxHeight>$(window).height()) {
-                        calculatedValue = $(window).height()-hidenBoxHeight-10;
-                    }
-                    return calculatedValue;
-                };
-
-                $('.hiden-box').show()
-                    .css({
-                        left: ($(window).width()/4),
-                        top:  top
-                    }).animate({width: ($(window).width()/4*3)}, 100);
-
-                $('.hiden-box > li').hide();
-                $('#hiden-'+num).fadeIn(100);
-                //Detailed Position
-                beginH = 0;
-                console.log('side-li > li - hover-enter');
-            },
-            function(){
-                $(this).find('h3').css({border: ''})
-                    .end().find('span').css({color: ""});
-                $('.hiden-box').hide().css({width: '0'});
-                console.log('side-li > li - hover-exit');
-        });
-        $('.hiden-box').hover(
-            function(){
-                $('.s_'+num).css({
-                    border: '1px solid #f40',
-                    borderRight: '1px solid #fff'
-                }).find('h3').css({border: 'none'})
-                    .end().find('span').css({color: "#f40"});
-                $(this).show().css({width: $(window).width()/4*3});
-                console.log('hiden-box-hover-enter');
-            },
-            function(){
-                $('.s_'+num).css({
-                    border: '',
-                    borderRight: ''
-                }).find('h3').css({border: ''})
-                    .end().find('span').css({color: ""});
-
-                $(this).animate({
-                    width: 0
-                }, 0).hide(0);
-                console.log('hiden-box-hover-exit');
+        function leftSideBarConf(){
+            var scTop = 0,
+                //Initial position
+                beginH = 0,
+                windowWidth = $(window).width(),
+                classN,
+                num;
+            $(window).scroll(function(){
+                scTop = $(window).scrollTop();
+                beginH = 138;
+                switch (scTop){
+                    case 600: beginH -= 45;break;
+                    case 500: beginH -= 50;break;
+                    case 400: beginH -= 55;break;
+                    case 300: beginH -= 60;break;
+                    case 200: beginH -= 65;break;
+                    default : beginH = 138;break;
+                }
             });
+            $('.side-li > li').hover(
+                function(){
+                    $(this).find('h3').css({border: 'none'})
+                        .end().find('span').css({color: ""});
+                    classN = $(this).attr('class');
+                    num = classN.substring(2, classN.length);
+                    beginH = 50;
+                    var parkIndex = ($(this).parent().parent().parent().index()-1)/2;
+                    var siteIndex = $(this).index();
+                    console.log('PARKINDEX:'+parkIndex);
 
-}
+                    var hidenBoxHeight = $(window).height()/2;
+                    var top = function () {
+                        var calculatedValue = $('.s_'+num).offset().top-20;
+                        if (calculatedValue < 0) {
+                            calculatedValue += 20;
+                        } else if(calculatedValue+hidenBoxHeight>$(window).height()) {
+                            calculatedValue = $(window).height()-hidenBoxHeight-10;
+                        }
+                        return calculatedValue;
+                    };
+
+                    $('.hiden-box').show()
+                        .css({
+                            left: ($(window).width()/4),
+                            top:  top
+                        }).animate({width: ($(window).width()/4*3)}, 100);
+
+                    $('.hiden-box > li').hide();
+                    $('#hiden-'+num).fadeIn(100);
+                    //Detailed Position
+                    beginH = 0;
+                    console.log('side-li > li - hover-enter');
+                },
+                function(){
+                    $(this).find('h3').css({border: ''})
+                        .end().find('span').css({color: ""});
+                    $('.hiden-box').hide().css({width: '0'});
+                    console.log('side-li > li - hover-exit');
+                }
+            );
+            $('.hiden-box').hover(
+                function(){
+                    $('.s_'+num).addClass("sideLiHover");
+                    $('.s_'+num).find('h3').css({border: 'none'})
+                    $(this).show().css({width: $(window).width()/4*3});
+                    console.log('hiden-box-hover-enter');
+                },
+
+                function(){
+                    $('.s_'+num).removeClass("sideLiHover");
+
+                    $('.s_'+num).css({
+                        border: '',
+                        borderRight: ''
+                    }).find('h3').css({border: ''})
+                        .end().find('span').css({color: ""});
+
+                    $(this).animate({
+                        width: 0
+                    }, 0).hide(0);
+                    console.log('hiden-box-hover-exit');
+                }
+            );
+        }
 
     </script>
 
