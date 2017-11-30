@@ -290,6 +290,8 @@
                     var side_li_content = "<ul class=\"side-li\">";
                     var side_li_html = json2html.transform(this.sites,transform.siteLi);
                     side_li_html += "</ul>";
+                    var parkId = this.parkId;
+                    var hidenboxIdString = 'hiden-box'+parkId;
                     var hiden_box_content = "<ul class=\"hiden-box\">";
                     var hiden_box_html = json2html.transform(this.sites,transform.siteHiddenBox);
                     hiden_box_html += "</ul>";
