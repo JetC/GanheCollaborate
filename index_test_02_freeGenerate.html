@@ -17,7 +17,7 @@
     <link href="./css/navigation-mixin.css" rel="stylesheet">
     <!--<script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
     <!--<script src="./js/libs/require.js" ></script>-->
-    <script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>
+    <!--<script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>-->
     <script src="./js/libs/jquery.js" ></script>
     <script src="./js/PositionPick.js"></script>
     <script src="./js/navigation-mixin.js" ></script>
@@ -10334,12 +10334,13 @@
                     $('.hiden-box').show()
                         .css({
                             left: ($(window).width()/4),
-                            top:  top
-                        }).animate({width: ($(window).width()/4*3)}, 100);
-
+                            top:  top,
+                            height: ($(window).height()*0.75)
+                        }).animate({width: ($(window).width()/4*3*0.75)}, 100);
+                    $('.hiden-box > ').find('h3').css({border: ''})
                     $('.hiden-box > li').hide();
                     $('#hiden-'+num).fadeIn(100);
-                    //Detailed Position
+                    //Detailed Posi tion
                     beginH = 0;
                     console.log('side-li > li - hover-enter');
                 },
@@ -10354,7 +10355,7 @@
                 function(){
                     $('.s_'+num).addClass("sideLiHover");
                     $('.s_'+num).find('h3').css({border: 'none'})
-                    $(this).show().css({width: $(window).width()/4*3});
+                    $(this).show().css({width: $(window).width()/4*3*0.75});
                     console.log('hiden-box-hover-enter');
                 },
 
