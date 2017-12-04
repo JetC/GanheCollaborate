@@ -35,10 +35,10 @@
         }
         #left-side-nav-panel {
             float:left;
-            height:100%;
+            height:75%;
             width:25%;
-
             background:#071D34;
+            overflow:scroll;
         }
         #cesiumContainer {
             float:right;
@@ -334,9 +334,8 @@
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
             leftSideBarConf();
+            $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">提交</button></div></div>').appendTo('#sidebar');
 
-            $('<div class="datetimePickerDiv"><label>起始时间：</label><input id=\"startDateTimepicker\" class=\"datetimepicker\" type=\"text\"><label>截止时间：</label><input id=\"endDateTimepicker\" class=\"datetimepicker\" type=\"text\"></div>').appendTo('#sidebar');
-            $('<div class="submitAndFavButton"><button class="submitButton">提交</button></div>').appendTo('#sidebar');
             jQuery(function(){
                 jQuery('#startDateTimepicker').datetimepicker({
                     format:'Y-m-d H:i',
