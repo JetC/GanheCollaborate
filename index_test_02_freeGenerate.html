@@ -16,8 +16,8 @@
     <link href="./Cesium/Release/Cesium/Widgets/widgets.css" rel="stylesheet">
     <link href="./css/navigation-mixin.css" rel="stylesheet">
     <!--<script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
-    <!--<script src="./js/libs/require.js" ></script>-->
-    <!--<script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>-->
+    <script src="./js/libs/require.js" ></script>
+    <script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>
     <script src="./js/libs/jquery.js" ></script>
     <script src="./js/PositionPick.js"></script>
     <script src="./js/navigation-mixin.js" ></script>
@@ -28,8 +28,7 @@
     <link rel="stylesheet" href="css/toolBars.css"/>
     <link rel="stylesheet" href="css/reset.css"/>
     <link rel="stylesheet" href="css/style.css"/>
-    <link rel="stylesheet" href="css/modal.css"/>
-    <link rel="stylesheet" href="css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="css/modalForTools.css"/>
     <!-- Json2html -->
     <script src="./js/json2html.js"></script>
     <script src="./js/jquery.json2html.js"></script>
@@ -52,19 +51,21 @@
 <body>
     <div id="allContainer">
         <div id="left-side-nav-panel" class="leftSideNav">
-            <!--sidebar-->
-            <div class="sidebar panel panel-default" id="sidebar">
+                <div class="content-top">
+                    <!--sidebar-->
+                    <div class="sidebar panel panel-default" id="sidebar">
 
-            </div>
+                    </div>
+                </div>
+
         </div>
         <div id="cesiumContainer">
-            <div id = "test">
-            </div>
+            <div id = "test"></div>
             <div id="tool-bar-append" ></div>
             <div id="position" ></div>
-        </div>
-
-    </div>
+            <div id="dataTable" class="modalHide"></div>
+            <div id="flyTable" class="modalHide">
+            </div>
     <script>
         var jsonData;
         loadJSON(function (response) {
@@ -151,7 +152,7 @@
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
             leftSideBarConf();
-            $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">提交</button></div></div>').appendTo('#left-side-nav-panel');
+            $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">提交</button></div></div>').appendTo('#sidebar');
 
             jQuery(function(){
                 jQuery('#startDateTimepicker').datetimepicker({
@@ -275,312 +276,382 @@
         });
 
 
-        $(function(){
-            $('<i />',{
-                id:'dataPicker',
-                "class":"fa fa-database",
-                "aria-hidden":"true",
-                "color":'#08ABD5',
-                'background':'#888',
-                "title":"数据加载",
-                click:function(){
+        $(function() {
+            // viewer.dataSources.add(Cesium.KmlDataSource.load('./json/dataLayer.json'));
+            //  var promise = Cesium.GeoJsonDataSource.load(top_src);
+            //promise.then(function(dataSource) {});
+            $.getJSON("json/dataLayer.json", function (data) {
+                var items = [];
+                $.each(data.categories, function (key, val) {
+                    items.push("<li class=\"modalLi\" style=\"position: relative; display:inline-block\">" +
+                        "<div class=\"checkBocContainer\"><input id=\"permitted" + key + "\"" + " type=\"checkbox\"><label for=\"permitted" + key + "\"" + " class=\"side-label\"></label>" +
+                        "</div>" +
+                        "<div id=\"dataTable-content1\" class=\"modalContent\">" + val + "</div></li></br>\n");
+                });
 
-                    $("#TTT").draggable();
+                //数据头
+                var html = "<li style=\"position: relative\">" +
+                    "<div id=\"dataTable-title\" class=\"modalTitle\">矢量与栅格数据集</div><div class=\"errorButton\">&times;</div>" +
+                    "</li>\n" + items.join("");
+                $("<ul/>", {
+                    html: html
+                }).appendTo("#dataTable");
+                //checkbox选择加载数据事件
 
-                    var html = " <input type=\"range\" min=\"-1\" max=\"1\" step=\"0.01\" data-bind=\"value: brightnessShift, valueUpdate: 'input'\">"
+                var $checkbox =$("li input[type=\"checkbox\"]");
+                $checkbox.click(function(){
+                    var id = this.id;
+                    var index = parseInt(id.substr(id.length-1,1));
+                    var key = data.categories[index];
 
-                    var html2 = "<table><tbody>\n" +
-                        "                        <tr>\n" +
-                        "                        <td><input type=\"checkbox\" data-bind=\"checked: show\"></td>\n" +
-                        "                        <td>\n" +
-                        "                        <span data-bind=\"text\": \"矢量切片数据\"></span>\n" +
-                        "                    </td>\n" +
-                        "                    </tr>\n" +
-                        "                    </tbody></table>"
-                    $("#TTT").append(html2);
+                    if(($(this).prop('checked'))){
+                        $(this).prop('checked',true);
+                        loadDataLayer(key);
+                    }else {
+                        $(this).prop('checked',false);
+                        removeDataLayer(key);
 
-                }
-            }).appendTo("#test");
-        });
+                    }
+                    function loadDataLayer(key){
 
-        $(function(){
-            $("<input />",{
-                id:'toolbarsCheckbox',
-                "class":"toolbarsDis",
-                "type":"checkbox",
-                "z-index": "3000"
-            }).appendTo("#test");
-        });
-        $(function(){
-            $("<label />",{
-                id:'toolbarsLabel',
-                "for":"toolbarsCheckbox",
-                "class": "fa fa-wrench",
-                "display":"block",
+
+                        var url = data[key][0].url;
+                        var type = data[key][0].type;
+                        var method = data[key][0].method;
+                        //加载不同格式数据
+                        if ((type === "png") && (method === "tms")) {
+
+                            alert("影像数据数据加载");
+                        }
+                        else if (type === "kml") {
+
+                            var options = {
+                                camera : viewer.scene.camera,
+                                canvas : viewer.scene.canvas
+                            };
+                            var extent = Cesium.Rectangle.fromDegrees(101.432053, 36.403152,102.101701, 36.96018);
+                            Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
+                            Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
+                            viewer.dataSources.add(Cesium.KmlDataSource.load(url, options));
+                            viewer.camera.setView({destination: extent});
+
+                        } else if (type === "png") {
+                        }
+
+                    }
+                    function removeDataLayer(key){
+                        if ((type === "png") && (method === "tms")) {
+
+                            alert("影像数据数据加载");
+                        }
+                        else if (type === "kml") {
+
+                            viewer.dataSources.remove();
+
+                        } else if (type === "png") {
+                        }
+
+                    }
+
+                });
+
+
+            });
+
+
+                $('<i />', {
+                    id: 'dataPicker',
+                    "class": "fa fa-database",
+                    "aria-hidden": "true",
+                    "color": '#08ABD5',
+                    'background': '#888',
+                    "title": "数据加载",
+                    click: function () {
+
+                        $("#dataTable").removeClass("modalHide");
+                        $(".errorButton").click(function () {
+                            $("#dataTable").addClass("modalHide");
+                        });
+                    }
+                }).appendTo("#test");
+            });
+
+            $(function () {
+                $("<input />", {
+                    id: 'toolbarsCheckbox',
+                    "class": "toolbarsDis",
+                    "type": "checkbox",
+                    "z-index": "3000"
+                }).appendTo("#test");
+            });
+            $(function () {
+                $("<label />", {
+                    id: 'toolbarsLabel',
+                    "for": "toolbarsCheckbox",
+                    "class": "fa fa-wrench",
+                    "display": "block",
+                    "aria-hidden": "true",
+                    "color": '#08ABD5',
+                    'background': '#888',
+                    "title": "工具集",
+                    "z-index": "2000"
+                }).appendTo("#test");
+            });
+
+
+            $(function () {
+
+                $('<i />', {
+                    id: 'roamHelper',
+                    "class": "fa fa-plane buttonMove roamAnimation",
+                    "aria-hidden": "true",
+                    "color": '#08ABD5',
+                    'background': '#888',
+                    "title": "三维巡航",
+                    click: function () {
+
+                        alert("ok");
+                    }
+                }).appendTo("#test");
+            });
+            /*********************************绘图工具********************************/
+            $(function () {
+                $('<i />', {
+                    id: 'drawHelper',
+                    "class": "fa fa-pencil buttonMove drawAnimation",
+                    "aria-hidden": "true",
+                    "color": '#08ABD5',
+                    'background': '#888',
+                    "title": "绘图工具",
+                    click: function () {
+                        if ($(this).hasClass("active")) {
+                            $("#drawToolsContainer").hide();
+                            $(this).removeClass("active");
+
+                        } else {
+                            $("#drawToolsContainer").show();
+                            $(this).addClass("active");
+                        }
+
+
+                    }
+                }).appendTo("#test");
+            });
+            $('<div />', {
+                id: 'drawToolsContainer',
+                "class": "drawToolsContainer toolsContainerDis"
+            }).appendTo("#cesiumContainer");
+
+            $('<i />', {
+                id: 'delectPoly',
+                "class": "fa fa-trash toolsContainer",
                 "aria-hidden": "true",
                 "color": '#08ABD5',
                 'background': '#888',
-                "title": "工具集",
-                "z-index": "2000"
-            }).appendTo("#test");
-        });
-
-
-        $(function(){
-
-            $('<i />',{
-                id:'roamHelper',
-                "class":"fa fa-plane buttonMove roamAnimation",
-                "aria-hidden":"true",
-                "color":'#08ABD5',
-                'background':'#888',
-                "title":"三维巡航",
-                click:function(){
-
-                    alert("ok");
+                "title": "删除",
+                click: function () {
+                    alert("删除");
                 }
-            }).appendTo("#test");
-        });
-        /*********************************绘图工具********************************/
-        $(function(){
-            $('<i />',{
-                id:'drawHelper',
-                "class":"fa fa-pencil buttonMove drawAnimation",
-                "aria-hidden":"true",
-                "color":'#08ABD5',
-                'background':'#888',
-                "title":"绘图工具",
-                click:function(){
-                    if($(this).hasClass("active")){
-                        $("#drawToolsContainer").hide();
-                        $(this).removeClass("active");
+            }).appendTo("#drawToolsContainer");
 
-                    }else{
-                        $("#drawToolsContainer").show();
-                        $(this).addClass("active");
+            $('<i />', {
+                id: 'drawPolygon',
+                "class": "fa fa-marker toolsContainer",
+                "aria-hidden": "true",
+                "color": '#08ABD5',
+                'background': '#888',
+                "title": "绘制多边形",
+                click: function () {
+                    alert("绘制多边形");
+                }
+            }).appendTo("#drawToolsContainer");
+
+            $('<i />', {
+                id: 'drawExtent',
+                "class": "fa fa-marker toolsContainer",
+                "aria-hidden": "true",
+                "color": '#08ABD5',
+                'background': '#888',
+                "title": "绘制多方形",
+                click: function () {
+                    alert("绘制方形");
+                }
+            }).appendTo("#drawToolsContainer");
+
+
+            $('<i />', {
+                id: 'drawPolyline',
+                "class": "fa fa-marker toolsContainer",
+                "aria-hidden": "true",
+                "color": '#08ABD5',
+                'background': '#888',
+                "title": "绘制线",
+                click: function () {
+                    alert("绘制线");
+                }
+            }).appendTo("#drawToolsContainer");
+
+            $('<i />', {
+                id: 'drawPin',
+                "class": "fa fa-map-marker toolsContainer",
+                "aria-hidden": "true",
+                "color": '#08ABD5',
+                'background': '#888',
+                "title": "图标",
+                click: function () {
+                    alert("创建图标");
+                }
+            }).appendTo("#drawToolsContainer");
+
+
+            /*******************************测量工具********************************/
+            $(function () {
+                $('<div />', {
+                    id: 'measureHelper',
+                    "class": "fa fa-pencil buttonMove measureAnimation",
+                    "background-image": "url(images/measure.png)",
+                    "color": '#08ABD5',
+                    'background-color': '#888',
+                    "title": "测量工具",
+                    click: function () {
+
+                        alert("ok");
                     }
+                }).appendTo("#test");
+            });
+            $(function () {
 
+                $('<i />', {
+                    id: 'statisticsHelper',
+                    "class": "fa fa-bar-chart buttonMove statAnimation",
+                    "aria-hidden": "true",
+                    "color": '#08ABD5',
+                    'background': '#888',
+                    "title": "统计工具",
+                    click: function () {
 
-                }
-            }).appendTo("#test");
-        });
-        $('<div />',{
-            id:'drawToolsContainer',
-            "class":"drawToolsContainer toolsContainerDis"
-        }).appendTo("#cesiumContainer");
-
-        $('<i />',{
-            id:'delectPoly',
-            "class":"fa fa-trash toolsContainer",
-            "aria-hidden":"true",
-            "color":'#08ABD5',
-            'background':'#888',
-            "title":"删除",
-            click:function(){
-                alert("删除");
-            }
-        }).appendTo("#drawToolsContainer");
-
-        $('<i />',{
-            id:'drawPolygon',
-            "class":"fa fa-marker toolsContainer",
-            "aria-hidden":"true",
-            "color":'#08ABD5',
-            'background':'#888',
-            "title":"绘制多边形",
-            click:function(){
-                alert("绘制多边形");
-            }
-        }).appendTo("#drawToolsContainer");
-
-        $('<i />',{
-            id:'drawExtent',
-            "class":"fa fa-marker toolsContainer",
-            "aria-hidden":"true",
-            "color":'#08ABD5',
-            'background':'#888',
-            "title":"绘制多方形",
-            click:function(){
-                alert("绘制方形");
-            }
-        }).appendTo("#drawToolsContainer");
-
-
-
-        $('<i />',{
-            id:'drawPolyline',
-            "class":"fa fa-marker toolsContainer",
-            "aria-hidden":"true",
-            "color":'#08ABD5',
-            'background':'#888',
-            "title":"绘制线",
-            click:function(){
-                alert("绘制线");
-            }
-        }).appendTo("#drawToolsContainer");
-
-        $('<i />',{
-            id:'drawPin',
-            "class":"fa fa-map-marker toolsContainer",
-            "aria-hidden":"true",
-            "color":'#08ABD5',
-            'background':'#888',
-            "title":"图标",
-            click:function(){
-                alert("创建图标");
-            }
-        }).appendTo("#drawToolsContainer");
-
-
-        /*******************************测量工具********************************/
-        $(function(){
-            $('<div />',{
-                id:'measureHelper',
-                "class":"fa fa-pencil buttonMove measureAnimation",
-                "background-image":"url(images/measure.png)",
-                "color":'#08ABD5',
-                'background-color':'#888',
-                "title":"测量工具",
-                click:function(){
-
-                    alert("ok");
-                }
-            }).appendTo("#test");
-        });
-        $(function(){
-
-            $('<i />',{
-                id:'statisticsHelper',
-                "class":"fa fa-bar-chart buttonMove statAnimation",
-                "aria-hidden":"true",
-                "color":'#08ABD5',
-                'background':'#888',
-                "title":"统计工具",
-                click:function(){
-
-                    alert("ok");
-                }
-            }).appendTo("#test");
-        });
-        $(function(){
-            $('<i />',{
-                id:'situationMap',
-                "class":"fa fa-cubes",
-                "aria-hidden":"true",
-                "color":'#08ABD5',
-                'background':'#888',
-                "title":"实时可视化层",
-                click:function(){
-                    if($(this).hasClass("fa-cubes")){
-                        $(this).removeClass("fa-cubes");
-                        $(this).addClass("fa-tasks");
-                        $(this).attr("title","态势分析层");
-                        alert("切换为态势分析层，执行heatMap以及态势标签显示");
-                        viewer.entities.removeAll();
-                        taiShiLegendDraw();
-                        alert("OK");
-                        //drawHeatMap();
-                    }else if($(this).hasClass("fa-tasks")){
-                        $(this).removeClass("fa-tasks");
-                        $(this).addClass("fa-exclamation-triangle");
-                        $(this).attr("title","诊断分析层");
-                        alert("切换为诊断分析层");
-                    }else{
-                        $(this).removeClass("fa-exclamation-triangle");
-                        $(this).addClass("fa-cubes");
-                        $(this).attr("title","实时可视化层");
-
+                        alert("ok");
                     }
-                }
-            }).appendTo("#test");
-        });
+                }).appendTo("#test");
+            });
+            $(function () {
+                $('<i />', {
+                    id: 'situationMap',
+                    "class": "fa fa-cubes",
+                    "aria-hidden": "true",
+                    "color": '#08ABD5',
+                    'background': '#888',
+                    "title": "实时可视化层",
+                    click: function () {
+                        if ($(this).hasClass("fa-cubes")) {
+                            $(this).removeClass("fa-cubes");
+                            $(this).addClass("fa-tasks");
+                            $(this).attr("title", "态势分析层");
+                            alert("切换为态势分析层，执行heatMap以及态势标签显示");
+                            viewer.entities.removeAll();
+                            taiShiLegendDraw();
+                            alert("OK");
+                            //drawHeatMap();
+                        } else if ($(this).hasClass("fa-tasks")) {
+                            $(this).removeClass("fa-tasks");
+                            $(this).addClass("fa-exclamation-triangle");
+                            $(this).attr("title", "诊断分析层");
+                            alert("切换为诊断分析层");
+                        } else {
+                            $(this).removeClass("fa-exclamation-triangle");
+                            $(this).addClass("fa-cubes");
+                            $(this).attr("title", "实时可视化层");
 
-        $(function(){
-            $('<i />',{
-                id:'situationMap',
-                "class":"fa fa-question",
-                "aria-hidden":"true",
-                "color":'#08ABD5',
-                'background':'#888',
-                "title":"帮助",
-                click:function(){
+                        }
+                    }
+                }).appendTo("#test");
+            });
 
-                    alert("ok");
-                }
-            }).appendTo("#test");
-        });
+            $(function () {
+                $('<i />', {
+                    id: 'situationMap',
+                    "class": "fa fa-question",
+                    "aria-hidden": "true",
+                    "color": '#08ABD5',
+                    'background': '#888',
+                    "title": "帮助",
+                    click: function () {
 
-        var viewer = new Cesium.Viewer('cesiumContainer',{
-            baseLayerPicker:true,//图层控制显示
+                        alert("ok");
+                    }
+                }).appendTo("#test");
+            });
 
-            geocoder:true,//地名查找显示
+            var viewer = new Cesium.Viewer('cesiumContainer', {
+                baseLayerPicker: true,//图层控制显示
 
-            timeline:true,//时间线显示
+                geocoder: true,//地名查找显示
 
-            sceneModePicker:false, //投影方式显示
+                timeline: true,//时间线显示
 
-            navigationHelpButton:false,//帮助键不显示
+                sceneModePicker: false, //投影方式显示
 
-            homeButton:false//Home键不显示
-        });
-        //去掉Cesium下角的商标
+                navigationHelpButton: false,//帮助键不显示
 
-        viewer._cesiumWidget._creditContainer.style.display="none";
-        //buttonControl = new ButtonControl('cesiumContainer', options);
-        viewer.scene.globe.enableLighting = true;
-        /*选择控件按钮
+                homeButton: false//Home键不显示
+            });
+            //去掉Cesium下角的商标
+
+            viewer._cesiumWidget._creditContainer.style.display = "none";
+            //buttonControl = new ButtonControl('cesiumContainer', options);
+            viewer.scene.globe.enableLighting = true;
+            /*选择控件按钮
 
          that.useNavigationMixin = Cesium.defaultValue(options.useNavigationMixin, true);
          if (that.useNavigationMixin) {
          viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
          }*/
-        viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
-        /********************************加载实时经纬度坐标********************************/
-        position(viewer);
-        /*******************************导入json数据********************************/
-        Cesium.loadJson('./json/exampleData.json').then(function(data) {
+            viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
+            /********************************加载实时经纬度坐标********************************/
+            position(viewer);
+            /*******************************导入json数据********************************/
+            Cesium.loadJson('./json/exampleData.json').then(function (data) {
 
-            var baseLineHeight = 10000.0;
-            var scene = viewer.scene;
-            var entities = viewer.entities;
-            var polylineWith = 1;
-            var polylineColor = Cesium.Color.GRAY;
-            var stationSphereRadius = 700;
-            var machineSphereRadius = 350;
-            var factorSphereRadius =50;
-            var stationSphereColor = Cesium.Color.BLUE.withAlpha(0.8);
-            var machineSphereColor = Cesium.Color.YELLOW.withAlpha(0.8);
-            //  var factorSphereColor = Cesium.Color.LIGHTSKYBLUE.withAlpha(0.5);
-            var factorSphereColor = Cesium.Color.fromRandom();
-            var heightScaleForNearStation = 2;
+                var baseLineHeight = 10000.0;
+                var scene = viewer.scene;
+                var entities = viewer.entities;
+                var polylineWith = 1;
+                var polylineColor = Cesium.Color.GRAY;
+                var stationSphereRadius = 700;
+                var machineSphereRadius = 350;
+                var factorSphereRadius = 50;
+                var stationSphereColor = Cesium.Color.BLUE.withAlpha(0.8);
+                var machineSphereColor = Cesium.Color.YELLOW.withAlpha(0.8);
+                //  var factorSphereColor = Cesium.Color.LIGHTSKYBLUE.withAlpha(0.5);
+                var factorSphereColor = Cesium.Color.fromRandom();
+                var heightScaleForNearStation = 2;
 
-            //计算每一个factor的运动轨迹的点
+                //计算每一个factor的运动轨迹的点
 
-            var start = Cesium.JulianDate.fromDate(new Date(2017,9,30,12));
+                var start = Cesium.JulianDate.fromDate(new Date(2017, 9, 30, 12));
 
-            var stop = Cesium.JulianDate.addHours(start,360,new Cesium.JulianDate());
-            viewer.clock.startTime = start.clone();
-            viewer.clock.stopTime = stop.clone();
-            viewer.clock.currentTime = start.clone();
-            viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
-            viewer.clock.mutiplier = 60;
-            viewer.timeline.zoomTo(start,stop);
+                var stop = Cesium.JulianDate.addHours(start, 360, new Cesium.JulianDate());
+                viewer.clock.startTime = start.clone();
+                viewer.clock.stopTime = stop.clone();
+                viewer.clock.currentTime = start.clone();
+                viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+                viewer.clock.mutiplier = 60;
+                viewer.timeline.zoomTo(start, stop);
 
-            for (var i=0;i<data.length;i++)
-            {
-                if( data[i]["stationID"]===2|| data[i]["stationID"]===6){
-                    stationLineHeight = (i+5)*baseLineHeight/20+1800;
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i]["stationID"] === 2 || data[i]["stationID"] === 6) {
+                        stationLineHeight = (i + 5) * baseLineHeight / 20 + 1800;
 
-                }else{
-                    stationLineHeight = (i+5)*baseLineHeight/20;
-                }
-
-
-                var lat = data[i]["Latitude"];
-                var log = data[i]["Logitude"];
+                    } else {
+                        stationLineHeight = (i + 5) * baseLineHeight / 20;
+                    }
 
 
-                /*     var extent = Cesium.Rectangle.fromDegrees(100.334056, 3.522957,101.586551, 38.203119);
+                    var lat = data[i]["Latitude"];
+                    var log = data[i]["Logitude"];
+
+
+                    /*     var extent = Cesium.Rectangle.fromDegrees(100.334056, 3.522957,101.586551, 38.203119);
                      Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
                      Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
                      viewer.camera.setView({
@@ -588,107 +659,106 @@
                      });
 
         */
-                var surfacePosition = Cesium.Cartesian3.fromDegrees(log,lat,0);
-                var heightPosition = Cesium.Cartesian3.fromDegrees(log, lat, stationLineHeight);
+                    var surfacePosition = Cesium.Cartesian3.fromDegrees(log, lat, 0);
+                    var heightPosition = Cesium.Cartesian3.fromDegrees(log, lat, stationLineHeight);
 
-                var positions = new Cesium.ConstantProperty([surfacePosition, heightPosition]);
+                    var positions = new Cesium.ConstantProperty([surfacePosition, heightPosition]);
 
-                var stationNodeLine = viewer.entities.add({
-                    name:"stationPolyline",
-                    polyline:{
-                        positions:positions,
-                        width:polylineWith,
-                        material:new Cesium.ColorMaterialProperty(polylineColor)
-                    }
-                });
-                // stationNodeLine.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(heightPosition, new Cesium.HeadingPitchRoll(heading,pitch,roll)));
-                var stationNode = viewer.entities.add({
-                    name:"stationSphere"+data[i]["stationName"],
-                    position:heightPosition,
-                    ellipsoid:{
-                        radii:new Cesium.Cartesian3(stationSphereRadius,stationSphereRadius,stationSphereRadius),
-                        outline:false,
-                        material:stationSphereColor
-                    }
-                });
-                //Add the entity to the collection.
-                // entities.add(entity);
-                // stationNode.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(heightPosition, new Cesium.HeadingPitchRoll(heading,pitch,roll)));
-
-                for (var j=0;j<data[i]["list"].length;j++){
-                    //控制仪器节点
-
-                    var degreeInterval = Cesium.Math.toRadians(360)/data[i]["list"].length;
-
-                    var radians = degreeInterval*j;
-
-                    var startPosition = heightPosition;
-                    var machineHeight = 1000;
-
-                    //var endPosition = Cesium.Cartesian3.fromDegrees(log+, lat, 2*baseLineHeight);
-                    var radius = 0.01;
-
-                    var endPosition = Cesium.Cartesian3.fromDegrees(log+radius*Math.cos(radians), lat+radius*Math.sin(radians), stationLineHeight+Math.sin(Cesium.Math.toRadians(30))* machineHeight);
-
-                    var machinePositions = new Cesium.ConstantProperty([startPosition, endPosition]);
-                    var heading = Cesium.Math.PI_OVER_TWO;
-                    var pitch = Cesium.Math.PI_OVER_FOUR;
-                    var roll = 0.0;
-                    var hpr = new Cesium.HeadingPitchRoll(heading,pitch,roll);
-
-
-
-                    var orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(startPosition,hpr));
-                    //var machinePosition =  Cesium.Cartesian3.fromDegrees(log,lat,750);
-                    var machineNodeLine = viewer.entities.add({
-                        name:"machinePolyline"+data[i]["list"][j]["machine"],
-                        polyline:{
-                            positions:machinePositions,
-                            width:polylineWith,
-                            material:new Cesium.ColorMaterialProperty(polylineColor)
+                    var stationNodeLine = viewer.entities.add({
+                        name: "stationPolyline",
+                        polyline: {
+                            positions: positions,
+                            width: polylineWith,
+                            material: new Cesium.ColorMaterialProperty(polylineColor)
                         }
                     });
-
-                    machineNodeLine.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(Cesium.Cartesian3.fromDegrees(log,lat,500),hpr));
-                    var scale = 0.5;
-                    var machineNode = viewer.entities.add({
-                        name:"machineSphere"+data[i]["list"][j]["machine"],
-                        position: endPosition,
-                        //orientation:orientation,
+                    // stationNodeLine.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(heightPosition, new Cesium.HeadingPitchRoll(heading,pitch,roll)));
+                    var stationNode = viewer.entities.add({
+                        name: "stationSphere" + data[i]["stationName"],
+                        position: heightPosition,
                         ellipsoid: {
-                            radii: new Cesium.Cartesian3(machineSphereRadius, machineSphereRadius, machineSphereRadius),
+                            radii: new Cesium.Cartesian3(stationSphereRadius, stationSphereRadius, stationSphereRadius),
                             outline: false,
-                            material: machineSphereColor
+                            material: stationSphereColor
                         }
-
                     });
+                    //Add the entity to the collection.
+                    // entities.add(entity);
+                    // stationNode.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(heightPosition, new Cesium.HeadingPitchRoll(heading,pitch,roll)));
 
-                    for (var k=0;k<data[i]["list"][j]["machineData"].length;k++){
+                    for (var j = 0; j < data[i]["list"].length; j++) {
+                        //控制仪器节点
 
-                        var property = computeCircularFlight(log+radius*Math.cos(radians), lat+radius*Math.sin(radians),  stationLineHeight+Math.sin(Cesium.Math.toRadians(30))* machineHeight);
-                        //  alert(property);
+                        var degreeInterval = Cesium.Math.toRadians(360) / data[i]["list"].length;
 
-                        var factorEntity = viewer.entities.add({
+                        var radians = degreeInterval * j;
 
-                            //设置entity生存时间与
-                            availability : new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
-                                start : start,
-                                stop : stop
-                            })]),
+                        var startPosition = heightPosition;
+                        var machineHeight = 1000;
 
-                            //Use our computed positions
-                            position : property,
+                        //var endPosition = Cesium.Cartesian3.fromDegrees(log+, lat, 2*baseLineHeight);
+                        var radius = 0.01;
 
-                            //Automatically compute orientation based on position movement.
-                            orientation : new Cesium.VelocityOrientationProperty(property),
+                        var endPosition = Cesium.Cartesian3.fromDegrees(log + radius * Math.cos(radians), lat + radius * Math.sin(radians), stationLineHeight + Math.sin(Cesium.Math.toRadians(30)) * machineHeight);
 
-                            //Load the Cesium plane model to represent the entity
-                            ellipsoid: {
-                                radii: new Cesium.Cartesian3(factorSphereRadius,factorSphereRadius, factorSphereRadius),
-                                outline: false,
-                                material:  Cesium.Color.fromRandom()
+                        var machinePositions = new Cesium.ConstantProperty([startPosition, endPosition]);
+                        var heading = Cesium.Math.PI_OVER_TWO;
+                        var pitch = Cesium.Math.PI_OVER_FOUR;
+                        var roll = 0.0;
+                        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+
+                        var orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(startPosition, hpr));
+                        //var machinePosition =  Cesium.Cartesian3.fromDegrees(log,lat,750);
+                        var machineNodeLine = viewer.entities.add({
+                            name: "machinePolyline" + data[i]["list"][j]["machine"],
+                            polyline: {
+                                positions: machinePositions,
+                                width: polylineWith,
+                                material: new Cesium.ColorMaterialProperty(polylineColor)
                             }
-                            /*
+                        });
+
+                        machineNodeLine.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(Cesium.Cartesian3.fromDegrees(log, lat, 500), hpr));
+                        var scale = 0.5;
+                        var machineNode = viewer.entities.add({
+                            name: "machineSphere" + data[i]["list"][j]["machine"],
+                            position: endPosition,
+                            //orientation:orientation,
+                            ellipsoid: {
+                                radii: new Cesium.Cartesian3(machineSphereRadius, machineSphereRadius, machineSphereRadius),
+                                outline: false,
+                                material: machineSphereColor
+                            }
+
+                        });
+
+                        for (var k = 0; k < data[i]["list"][j]["machineData"].length; k++) {
+
+                            var property = computeCircularFlight(log + radius * Math.cos(radians), lat + radius * Math.sin(radians), stationLineHeight + Math.sin(Cesium.Math.toRadians(30)) * machineHeight);
+                            //  alert(property);
+
+                            var factorEntity = viewer.entities.add({
+
+                                //设置entity生存时间与
+                                availability: new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
+                                    start: start,
+                                    stop: stop
+                                })]),
+
+                                //Use our computed positions
+                                position: property,
+
+                                //Automatically compute orientation based on position movement.
+                                orientation: new Cesium.VelocityOrientationProperty(property),
+
+                                //Load the Cesium plane model to represent the entity
+                                ellipsoid: {
+                                    radii: new Cesium.Cartesian3(factorSphereRadius, factorSphereRadius, factorSphereRadius),
+                                    outline: false,
+                                    material: Cesium.Color.fromRandom()
+                                }
+                                /*
                             ,
 
                             //Show the path as a pink line sampled in 1 second increments.
@@ -701,14 +771,14 @@
                                 width : 1
                             }
                             */
-                        });
+                            });
 
-                        factorEntity.position.setInterpolationOptions({
-                            interpolationDegree : 2,
-                            interpolationAlgorithm : Cesium.LagrangePolynomialApproximation
-                        });
+                            factorEntity.position.setInterpolationOptions({
+                                interpolationDegree: 2,
+                                interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
+                            });
 
-                        /*
+                            /*
                         var Pai = Cesium.Math.PI;
                         var factorNode;
 
@@ -771,34 +841,34 @@
                             });
                         }
                         */
+                        }
                     }
+
+
                 }
 
+                function computeCircularFlight(lon, lat, height) {
 
-            }
+                    var property = new Cesium.SampledPositionProperty();
+                    //计算标准圆形轨道的9个差值点
+                    var originalPositionsArray = calculatePositions();
 
-            function computeCircularFlight(lon, lat, height) {
+                    //对于传进来的仪器位置，随机生成空间旋转圆形轨道的旋转角度
+                    var randomRotationAngel = generateRandomRotationAngel();
 
-                var property = new Cesium.SampledPositionProperty();
-                //计算标准圆形轨道的9个差值点
-                var originalPositionsArray = calculatePositions();
+                    //返回一个3x3的标准差值点矩阵
+                    var rotationMatrix = caculateRotationMatrix(randomRotationAngel);
 
-                //对于传进来的仪器位置，随机生成空间旋转圆形轨道的旋转角度
-                var randomRotationAngel = generateRandomRotationAngel();
+                    //计算旋转后的9x3的空间差值点坐标
+                    var positionsArray = squareMatrixMultiply(originalPositionsArray, rotationMatrix);
 
-                //返回一个3x3的标准差值点矩阵
-                var rotationMatrix = caculateRotationMatrix(randomRotationAngel);
+                    for (var i = 0; i < positionsArray.length; i++) {
+                        var time = Cesium.JulianDate.addSeconds(start, i * 360 / positionsArray.length, new Cesium.JulianDate());
+                        var position = Cesium.Cartesian3.fromDegrees(lon + positionsArray[i][0], lat + positionsArray[i][1], height + positionsArray[i][2] * 1115);
+                        property.addSample(time, position);
 
-                //计算旋转后的9x3的空间差值点坐标
-                var positionsArray = squareMatrixMultiply(originalPositionsArray, rotationMatrix);
-
-                for (var i = 0; i <positionsArray.length; i++) {
-                    var time = Cesium.JulianDate.addSeconds(start, i*360/positionsArray.length, new Cesium.JulianDate());
-                    var position = Cesium.Cartesian3.fromDegrees(lon + positionsArray[i][0], lat + positionsArray[i][1], height+positionsArray[i][2]*1115);
-                    property.addSample(time, position);
-
-                    //Also create a point for each sample we generate.
-                    /*viewer.entities.add({
+                        //Also create a point for each sample we generate.
+                        /*viewer.entities.add({
                         position : position,
                         point : {
                             pixelSize : 8,
@@ -808,129 +878,130 @@
                         }
                     });
                     */
+                    }
+                    return property;
                 }
-                return property;
-            }
 
-            //随机生成一组绕轴旋转的角度值，分别为Log方向：α，lat方向：β，z方向：γ
-            function generateRandomRotationAngel(){
-                var α = Cesium.Math.randomBetween(0,1)*Cesium.Math.PI;
-                var β= Cesium.Math.randomBetween(0,1)*Cesium.Math.PI;
-                var γ = Cesium.Math.randomBetween(0,1)*Cesium.Math.PI;
-                var randomRotationAngelArray = new Array(3);
-                randomRotationAngelArray[0]=α;
-                randomRotationAngelArray[1]=β;
-                randomRotationAngelArray[2]=γ;
+                //随机生成一组绕轴旋转的角度值，分别为Log方向：α，lat方向：β，z方向：γ
+                function generateRandomRotationAngel() {
+                    var α = Cesium.Math.randomBetween(0, 1) * Cesium.Math.PI;
+                    var β = Cesium.Math.randomBetween(0, 1) * Cesium.Math.PI;
+                    var γ = Cesium.Math.randomBetween(0, 1) * Cesium.Math.PI;
+                    var randomRotationAngelArray = new Array(3);
+                    randomRotationAngelArray[0] = α;
+                    randomRotationAngelArray[1] = β;
+                    randomRotationAngelArray[2] = γ;
 
-                return randomRotationAngelArray;
-            }
-            /*******************************计算factor围绕小球旋转矩阵********************************/
-            /*传入随机角度α，β，γ计算其对应旋转矩阵*/
-            function caculateRotationMatrix(randomRotationAngelArray){
-                var α = randomRotationAngelArray[0];
-                var β= randomRotationAngelArray[1];
-                var γ = randomRotationAngelArray[2];
-                var cosα = Math.cos(α);
-                var sinα = Math.sin(α);
-                var cosβ = Math.cos(β);
-                var sinβ = Math.sin(β);
-                var cosγ = Math.cos(γ);
-                var sinγ = Math.sin(γ);
+                    return randomRotationAngelArray;
+                }
 
-                var a1 = cosα*cosγ-cosβ*sinα*sinγ;
-                var a2 = sinα*cosγ+cosβ*cosα*sinγ;
-                var a3 = sinβ*sinγ;
-                var a4 = -cosα*sinγ-cosβ*sinα*cosγ;
-                var a5 = -sinα*sinγ+cosβ*cosα*cosγ;
-                var a6 = sinβ*cosγ;
-                var a7 = sinβ*sinα;
-                var a8 = -sinβ*cosα;
-                var a9= cosβ;
+                /*******************************计算factor围绕小球旋转矩阵********************************/
 
-                var rotationMatrix = new Array(new Array(3), new Array(3), new Array(3));
+                /*传入随机角度α，β，γ计算其对应旋转矩阵*/
+                function caculateRotationMatrix(randomRotationAngelArray) {
+                    var α = randomRotationAngelArray[0];
+                    var β = randomRotationAngelArray[1];
+                    var γ = randomRotationAngelArray[2];
+                    var cosα = Math.cos(α);
+                    var sinα = Math.sin(α);
+                    var cosβ = Math.cos(β);
+                    var sinβ = Math.sin(β);
+                    var cosγ = Math.cos(γ);
+                    var sinγ = Math.sin(γ);
 
-                rotationMatrix[0][0] = a1;
-                rotationMatrix[0][1] = a2;
-                rotationMatrix[0][2] = a3;
-                rotationMatrix[1][0] = a4;
-                rotationMatrix[1][1] = a5;
-                rotationMatrix[1][2] = a6;
-                rotationMatrix[2][0] = a7;
-                rotationMatrix[2][1] = a8;
-                rotationMatrix[2][2] = a9;
+                    var a1 = cosα * cosγ - cosβ * sinα * sinγ;
+                    var a2 = sinα * cosγ + cosβ * cosα * sinγ;
+                    var a3 = sinβ * sinγ;
+                    var a4 = -cosα * sinγ - cosβ * sinα * cosγ;
+                    var a5 = -sinα * sinγ + cosβ * cosα * cosγ;
+                    var a6 = sinβ * cosγ;
+                    var a7 = sinβ * sinα;
+                    var a8 = -sinβ * cosα;
+                    var a9 = cosβ;
 
-                return rotationMatrix;
-            }
+                    var rotationMatrix = new Array(new Array(3), new Array(3), new Array(3));
 
-            /*生成在标准坐标系中的9个z轴值为零的均分差值点的坐标，第9个值为起始值，使形成闭合环路*/
-            function calculatePositions(){
-                var arry = new Array(new Array(3), new Array(3), new Array(3),new Array(3), new Array(3), new Array(3),new Array(3), new Array(3), new Array(3));
+                    rotationMatrix[0][0] = a1;
+                    rotationMatrix[0][1] = a2;
+                    rotationMatrix[0][2] = a3;
+                    rotationMatrix[1][0] = a4;
+                    rotationMatrix[1][1] = a5;
+                    rotationMatrix[1][2] = a6;
+                    rotationMatrix[2][0] = a7;
+                    rotationMatrix[2][1] = a8;
+                    rotationMatrix[2][2] = a9;
 
-                var number = 0.006;
-                arry[0][0] = number;
-                arry[0][1] = 0;
-                arry[0][2] = 0;
-                arry[1][0] = Math.sqrt(2)/2*number;
-                arry[1][1] = Math.sqrt(2)/2*number;
-                arry[1][2] = 0;
-                arry[2][0] = 0;
-                arry[2][1] = number;
-                arry[2][2] = 0;
-                arry[3][0] = -Math.sqrt(2)/2*number;
-                arry[3][1] = Math.sqrt(2)/2*number;
-                arry[3][2] = 0;
-                arry[4][0] = -number;
-                arry[4][1] = 0;
-                arry[4][2] = 0;
-                arry[5][0] = -Math.sqrt(2)/2*number;
-                arry[5][1] = -Math.sqrt(2)/2*number;
-                arry[5][2] = 0;
-                arry[6][0] = 0;
-                arry[6][1] = -number;
-                arry[6][2] = 0;
-                arry[7][0] = Math.sqrt(2)/2*number;
-                arry[7][1] = -Math.sqrt(2)/2*number;
-                arry[7][2] = 0;
-                arry[8][0] = number;
-                arry[8][1] = 0;
-                arry[8][2] = 0;
+                    return rotationMatrix;
+                }
 
-                return arry;
-            }
+                /*生成在标准坐标系中的9个z轴值为零的均分差值点的坐标，第9个值为起始值，使形成闭合环路*/
+                function calculatePositions() {
+                    var arry = new Array(new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3));
 
+                    var number = 0.006;
+                    arry[0][0] = number;
+                    arry[0][1] = 0;
+                    arry[0][2] = 0;
+                    arry[1][0] = Math.sqrt(2) / 2 * number;
+                    arry[1][1] = Math.sqrt(2) / 2 * number;
+                    arry[1][2] = 0;
+                    arry[2][0] = 0;
+                    arry[2][1] = number;
+                    arry[2][2] = 0;
+                    arry[3][0] = -Math.sqrt(2) / 2 * number;
+                    arry[3][1] = Math.sqrt(2) / 2 * number;
+                    arry[3][2] = 0;
+                    arry[4][0] = -number;
+                    arry[4][1] = 0;
+                    arry[4][2] = 0;
+                    arry[5][0] = -Math.sqrt(2) / 2 * number;
+                    arry[5][1] = -Math.sqrt(2) / 2 * number;
+                    arry[5][2] = 0;
+                    arry[6][0] = 0;
+                    arry[6][1] = -number;
+                    arry[6][2] = 0;
+                    arry[7][0] = Math.sqrt(2) / 2 * number;
+                    arry[7][1] = -Math.sqrt(2) / 2 * number;
+                    arry[7][2] = 0;
+                    arry[8][0] = number;
+                    arry[8][1] = 0;
+                    arry[8][2] = 0;
 
-
-            function squareMatrixMultiply(A, B) {
-                var n = A.length;
-                var C = new Array(new Array(3), new Array(3), new Array(3),new Array(3), new Array(3), new Array(3),new Array(3), new Array(3), new Array(3));
-
-                for (var i = 0; i < n; i++) {
-
-                    for (var j = 0; j < A[i].length; j++) {
-                        C[i][j]=0;
-                        for (var k = 0; k < A[i].length; k++) {
+                    return arry;
+                }
 
 
-                            C[i][j]+= A[i][k] * B[k][j];
+                function squareMatrixMultiply(A, B) {
+                    var n = A.length;
+                    var C = new Array(new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3));
+
+                    for (var i = 0; i < n; i++) {
+
+                        for (var j = 0; j < A[i].length; j++) {
+                            C[i][j] = 0;
+                            for (var k = 0; k < A[i].length; k++) {
+
+
+                                C[i][j] += A[i][k] * B[k][j];
+                            }
                         }
                     }
+                    return C;
                 }
-                return C;
-            }
 
-            function calculateExplosionFlight(lon, lat, height){
-                var property = new Cesium.SampledPositionProperty();
-                var α = new  Cesium.Math.randomBetween(0,2)*Cesium.Math.PI;
-                var β = new  Cesium.Math.randomBetween(-1,1)*Cesium.Math.PI_OVER_TWO;
+                function calculateExplosionFlight(lon, lat, height) {
+                    var property = new Cesium.SampledPositionProperty();
+                    var α = new Cesium.Math.randomBetween(0, 2) * Cesium.Math.PI;
+                    var β = new Cesium.Math.randomBetween(-1, 1) * Cesium.Math.PI_OVER_TWO;
 
 
-                for (var i = 0; i <positionsArray.length; i++) {
-                    var time = Cesium.JulianDate.addSeconds(start, i*360/positionsArray.length, new Cesium.JulianDate());
-                    var position = Cesium.Cartesian3.fromDegrees(lon + positionsArray[i][0], lat + positionsArray[i][1], height+positionsArray[i][2]*1115);
-                    property.addSample(time, position);
+                    for (var i = 0; i < positionsArray.length; i++) {
+                        var time = Cesium.JulianDate.addSeconds(start, i * 360 / positionsArray.length, new Cesium.JulianDate());
+                        var position = Cesium.Cartesian3.fromDegrees(lon + positionsArray[i][0], lat + positionsArray[i][1], height + positionsArray[i][2] * 1115);
+                        property.addSample(time, position);
 
-                    //Also create a point for each sample we generate.
-                    /*viewer.entities.add({
+                        //Also create a point for each sample we generate.
+                        /*viewer.entities.add({
                         position : position,
                         point : {
                             pixelSize : 8,
@@ -940,220 +1011,333 @@
                         }
                     });
                     */
-                }
-                return property;
+                    }
+                    return property;
 
-            }
+                }
+
 //var result = squareMatrixMultiply(calculatePositions(), caculateRotationMatrix());
 
-            viewer.zoomTo(viewer.entities);
-        }).otherwise(function(error) {
-            alert(error);
-        });
-        function getDataForHeatMap(){
-            var points = [];
-            var maxValue = 0,minValue = 0;
-            for (var i = currentData.length - 1; i >= 0; i--) {
-                var x = currentData[i].lon;
-                var y = currentData[i].lat;
-                var value = currentData[i].aqiValue;
-                maxValue = Math.max(maxValue, value);
-                minValue = Math.min(minValue,value);
-                points.push({
-                    x : x,
-                    y : y,
-                    value : value
-                });
+                viewer.zoomTo(viewer.entities);
+            }).otherwise(function (error) {
+                alert(error);
+            });
+
+            function getDataForHeatMap() {
+                var points = [];
+                var maxValue = 0, minValue = 0;
+                for (var i = currentData.length - 1; i >= 0; i--) {
+                    var x = currentData[i].lon;
+                    var y = currentData[i].lat;
+                    var value = currentData[i].aqiValue;
+                    maxValue = Math.max(maxValue, value);
+                    minValue = Math.min(minValue, value);
+                    points.push({
+                        x: x,
+                        y: y,
+                        value: value
+                    });
+                }
+                var data = {max: maxValue, points: points, min: minValue};
+                return data;
             }
-            var data = {max: maxValue, points: points,min : minValue};
-            return data;
-        }
-        function getBoundsForHeatMap(){
-            var bounds = {
-                north : currentRectangle.north * 180.0 / Math.PI,
-                west : currentRectangle.west* 180.0 / Math.PI,
-                south : currentRectangle.south* 180.0 / Math.PI,
-                east : currentRectangle.east* 180.0 / Math.PI
+
+            function getBoundsForHeatMap() {
+                var bounds = {
+                    north: currentRectangle.north * 180.0 / Math.PI,
+                    west: currentRectangle.west * 180.0 / Math.PI,
+                    south: currentRectangle.south * 180.0 / Math.PI,
+                    east: currentRectangle.east * 180.0 / Math.PI
+                };
+                return bounds;
+            }
+
+            function preToDrawHeatmap() {
+                var data = getDataForHeatMap();
+                var bounds = getBoundsForHeatMap();
+
+                var provider = createHeatmapImageryProvider(Cesium, {
+                    data: data,
+                    bounds: bounds,
+                    chInstance: CesiumHeatmap
+                });
+                var layer = viewer.imageryLayers.addImageryProvider(provider);
+                viewer.entities.removeAll();
+                if (heatLayer != null) {
+                    viewer.imageryLayers.remove(heatLayer);
+                    heatLayer = layer;
+                } else {
+                    heatLayer = layer;
+                }
+
             };
-            return bounds;
-        }
-        function preToDrawHeatmap(){
-            var data = getDataForHeatMap();
-            var bounds = getBoundsForHeatMap();
 
-            var provider = createHeatmapImageryProvider(Cesium,{
-                data : data,
-                bounds : bounds,
-                chInstance : CesiumHeatmap
-            });
-            var layer = viewer.imageryLayers.addImageryProvider(provider);
-            viewer.entities.removeAll();
-            if (heatLayer != null){
-                viewer.imageryLayers.remove(heatLayer);
-                heatLayer = layer;
-            }else{
-                heatLayer = layer;
+            function drawHeatmap() {
+                var heatLayer = null;
+
             }
 
-        };
-        function drawHeatmap(){
-            var heatLayer = null;
+            function taiShiLegendDraw() {
 
-        }
-        function taiShiLegendDraw(){
+                var data = [
+                    {
+                        'stationID': '1',
+                        'stationName': '管委会子站',
+                        "Latitude": 36.54695,
+                        "Logitude": 101.52028,
+                        'warning-level': '高报值',
+                        'color': '#f56048',
+                        'WsNum': '4',
+                        'wfactor': [{'factor-name': '氨气', 'overValue': '0.98mg'}]
+                    },
+                    {
+                        'stationID': '2',
+                        'stationName': '海纳1号站',
+                        "Latitude": 36.55809,
+                        "Logitude": 101.49935,
+                        'warning-level': '预警值',
+                        'color': "#60bdfa",
+                        'WsNum': '1',
+                        'wfactor': [{'factor-name': '甲烷', 'overValue': '0.11mg'}]
+                    },
+                    {
+                        'stationID': '3',
+                        'stationName': '信禾站',
+                        "Latitude": 36.55657,
+                        "Logitude": 101.87368,
+                        'warning-level': '预警值',
+                        'color': '#fbaa1b',
+                        'WsNum': '2',
+                        'wfactor': [{'factor-name': '氯气', 'overValue': '0.32mg'}]
+                    },
+                    {
+                        'stationID': '4',
+                        'stationName': '宜化1号站',
+                        "Latitude": 36.89864,
+                        "Logitude": 101.75441,
+                        'warning-level': '高报值',
+                        'color': '#E8D024',
+                        'WsNum': '4',
+                        'wfactor': [{'factor-name': '氨气', 'overValue': '0.98mg'}]
+                    },
+                    {
+                        'stationID': '5',
+                        'stationName': '宜化2号站',
+                        "Latitude": 36.89525,
+                        "Logitude": 101.75372,
+                        'warning-level': '预警值',
+                        'color': "#1c71f2",
+                        'WsNum': '1',
+                        'wfactor': [{'factor-name': '甲烷', 'overValue': '0.11mg'}]
+                    },
+                    {
+                        'stationID': '6',
+                        'stationName': '海纳2号站',
+                        "Latitude": 36.55789,
+                        "Logitude": 101.49936,
+                        'warning-level': '预警值',
+                        'color': '#00A67C',
+                        'WsNum': '2',
+                        'wfactor': [{'factor-name': '氯气', 'overValue': '0.32mg'}]
+                    },
+                    {
+                        'stationID': '7',
+                        'stationName': '天泰站',
+                        "Latitude": 36.51549,
+                        "Logitude": 101.52896,
+                        'warning-level': '高报值',
+                        'color': '#f56048',
+                        'WsNum': '4',
+                        'wfactor': [{'factor-name': '氨气', 'overValue': '0.98mg'}]
+                    },
+                    {
+                        'stationID': '8',
+                        'stationName': '湟中县子站',
+                        "Latitude": 36.49424,
+                        "Logitude": 101.56043,
+                        'warning-level': '预警值',
+                        'color': "#60bdfa",
+                        'WsNum': '1',
+                        'wfactor': [{'factor-name': '甲烷', 'overValue': '0.11mg'}]
+                    },
+                    {
+                        'stationID': '9',
+                        'stationName': '东区污水厂站',
+                        "Latitude": 36.58916,
+                        "Logitude": 101.52756,
+                        'warning-level': '预警值',
+                        'color': '#fbaa1b',
+                        'WsNum': '2',
+                        'wfactor': [{'factor-name': '氯气', 'overValue': '0.32mg'}]
+                    },
+                    {
+                        'stationID': '10',
+                        'stationName': '苏锡子站',
+                        "Latitude": 36.50519,
+                        "Logitude": 101.53191,
+                        'warning-level': '高报值',
+                        'color': '#f56048',
+                        'WsNum': '4',
+                        'wfactor': [{'factor-name': '氨气', 'overValue': '0.98mg'}]
+                    },
+                    {
+                        'stationID': '11',
+                        'stationName': '西区污水厂站',
+                        "Latitude": 36.63168,
+                        "Logitude": 101.50297,
+                        'warning-level': '预警值',
+                        'color': "#1c71f2",
+                        'WsNum': '1',
+                        'wfactor': [{'factor-name': '甲烷', 'overValue': '0.11mg'}]
+                    },
+                    {
+                        'stationID': '12',
+                        'stationName': '桂鲁站',
+                        "Latitude": 36.54012,
+                        "Logitude": 101.48518,
+                        'warning-level': '预警值',
+                        'color': '#00A67C',
+                        'WsNum': '2',
+                        'wfactor': [{'factor-name': '氯气', 'overValue': '0.32mg'}]
+                    }
 
-            var data = [
-                {'stationID':'1','stationName':'管委会子站',"Latitude":36.54695, "Logitude":101.52028,'warning-level':'高报值','color':'#f56048','WsNum':'4','wfactor':[{'factor-name':'氨气','overValue':'0.98mg'}]},
-                {'stationID':'2','stationName':'海纳1号站',"Latitude":36.55809,"Logitude":101.49935,'warning-level':'预警值','color':"#60bdfa",'WsNum':'1','wfactor':[{'factor-name':'甲烷','overValue':'0.11mg'}]},
-                {'stationID':'3','stationName':'信禾站',"Latitude":36.55657, "Logitude":101.87368,'warning-level':'预警值','color':'#fbaa1b','WsNum':'2','wfactor':[{'factor-name':'氯气','overValue':'0.32mg'}]},
-                {'stationID':'4','stationName':'宜化1号站',"Latitude":36.89864, "Logitude":101.75441,'warning-level':'高报值','color':'#E8D024','WsNum':'4','wfactor':[{'factor-name':'氨气','overValue':'0.98mg'}]},
-                {'stationID':'5','stationName':'宜化2号站',"Latitude":36.89525,"Logitude":101.75372,'warning-level':'预警值','color':"#1c71f2",'WsNum':'1','wfactor':[{'factor-name':'甲烷','overValue':'0.11mg'}]},
-                {'stationID':'6','stationName':'海纳2号站',"Latitude":36.55789, "Logitude":101.49936,'warning-level':'预警值','color':'#00A67C','WsNum':'2','wfactor':[{'factor-name':'氯气','overValue':'0.32mg'}]},
-                {'stationID':'7','stationName':'天泰站',"Latitude":36.51549, "Logitude":101.52896,'warning-level':'高报值','color':'#f56048','WsNum':'4','wfactor':[{'factor-name':'氨气','overValue':'0.98mg'}]},
-                {'stationID':'8','stationName':'湟中县子站',"Latitude":36.49424,"Logitude":101.56043,'warning-level':'预警值','color':"#60bdfa",'WsNum':'1','wfactor':[{'factor-name':'甲烷','overValue':'0.11mg'}]},
-                {'stationID':'9','stationName':'东区污水厂站',"Latitude":36.58916, "Logitude":101.52756,'warning-level':'预警值','color':'#fbaa1b','WsNum':'2','wfactor':[{'factor-name':'氯气','overValue':'0.32mg'}]},
-                {'stationID':'10','stationName':'苏锡子站',"Latitude":36.50519, "Logitude":101.53191,'warning-level':'高报值','color':'#f56048','WsNum':'4','wfactor':[{'factor-name':'氨气','overValue':'0.98mg'}]},
-                {'stationID':'11','stationName':'西区污水厂站',"Latitude":36.63168,"Logitude":101.50297,'warning-level':'预警值','color':"#1c71f2",'WsNum':'1','wfactor':[{'factor-name':'甲烷','overValue':'0.11mg'}]},
-                {'stationID':'12','stationName':'桂鲁站',"Latitude":36.54012, "Logitude":101.48518,'warning-level':'预警值','color':'#00A67C','WsNum':'2','wfactor':[{'factor-name':'氯气','overValue':'0.32mg'}]}
 
+                ];
+                var markers = [];
 
-            ];
-            var markers = [];
+                for (var i = 0; i < data.length; i++) {
+                    var canvas = document.getElementById("cesiumContainer");
+                    var marker = document.createElement("div");
+                    marker.className = "station-warning-info";
+                    marker.id = data[i].stationID + "station";
+                    marker.style.zIndex = 0;
+                    //marker.lat = data[i].Latitude;
+                    // marker.log = data[i].Logitude;
 
-            for (var i=0;i<data.length;i++){
-                var canvas = document.getElementById("cesiumContainer");
-                var marker = document.createElement("div");
-                marker.className="station-warning-info";
-                marker.id = data[i].stationID+"station";
-                marker.style.zIndex = 0;
-                //marker.lat = data[i].Latitude;
-                // marker.log = data[i].Logitude;
+                    var dot = document.createElement("div");
+                    dot.className = "warning-position-dot";
+                    dot.innerHTML = "●";
+                    var factorNum = document.createElement("div");
+                    factorNum.className = "warning-factor-number";
+                    factorNum.innerHTML = data[i].WsNum;
+                    var stationName = document.createElement("div");
+                    stationName.className = "station-name";
+                    stationName.innerHTML = data[i].stationName;
+                    stationName.style.backgroundColor = data[i].color;
+                    canvas.appendChild(marker);
 
-                var dot = document.createElement("div");
-                dot.className="warning-position-dot";
-                dot.innerHTML="●";
-                var factorNum = document.createElement("div");
-                factorNum.className="warning-factor-number";
-                factorNum.innerHTML=data[i].WsNum;
-                var stationName = document.createElement("div");
-                stationName.className="station-name";
-                stationName.innerHTML = data[i].stationName;
-                stationName.style.backgroundColor = data[i].color;
-                canvas.appendChild(marker);
+                    marker.appendChild(dot);
+                    marker.appendChild(factorNum);
+                    marker.appendChild(stationName);
+                    var table = document.createElement("table");
+                    table.className = "station-warning-table";
+                    table.cellSpacing = 1;
+                    //table.border-collapse = "collapse";
+                    var thead = document.createElement("thead");
+                    var trhead = document.createElement("tr");
+                    var th = document.createElement("th");
+                    th.className = "station-name-head";
+                    th.innerHTML = data[i].stationName;
+                    th.style.backgroundColor = data[i].color;
+                    th.colspan = 2;
+                    thead.appendChild(trhead);
+                    trhead.appendChild(th);
+                    var tbody = document.createElement("tbody");
+                    tbody.className = "warning-info-title";
 
-                marker.appendChild(dot);
-                marker.appendChild(factorNum);
-                marker.appendChild(stationName);
-                var table = document.createElement("table");
-                table.className="station-warning-table";
-                table.cellSpacing = 1;
-                //table.border-collapse = "collapse";
-                var thead = document.createElement("thead");
-                var trhead=document.createElement("tr");
-                var th =document.createElement("th");
-                th.className="station-name-head";
-                th.innerHTML = data[i].stationName;
-                th.style.backgroundColor = data[i].color;
-                th.colspan = 2;
-                thead.appendChild(trhead);
-                trhead.appendChild(th);
-                var tbody = document.createElement("tbody");
-                tbody.className="warning-info-title";
+                    for (var p in data[i]) {
+                        if (p !== "color") {
+                            if (p !== "wfactor") {
 
-                for (var p in data[i])
-                {
-                    if(p!=="color"){
-                        if (p!=="wfactor"){
+                                var trbody = document.createElement("tr");
+                                var td1 = document.createElement("td");
+                                td1.innerHTML = p;
 
-                            var trbody = document.createElement("tr");
-                            var td1 = document.createElement("td");
-                            td1.innerHTML = p;
+                                var td2 = document.createElement("td");
+                                td2.innerHTML = data[i][p];
+                                trbody.appendChild(td1);
+                                trbody.appendChild(td2);
+                                tbody.appendChild(trbody);
+                            } else {
+                                var trFactor = document.createElement("tr");
+                                var tdFactor = document.createElement("td");
+                                tdFactor.colspan = 2;
+                                tdFactor.style.width = '190px';
+                                tdFactor.style.textAlign = "center";
+                                tdFactor.innerHTML = "预警因子";
 
-                            var td2 = document.createElement("td");
-                            td2.innerHTML = data[i][p];
-                            trbody.appendChild(td1);
-                            trbody.appendChild(td2);
-                            tbody.appendChild(trbody);
-                        }else{
-                            var trFactor = document.createElement("tr");
-                            var tdFactor = document.createElement("td");
-                            tdFactor.colspan = 2;
-                            tdFactor.style.width = '190px';
-                            tdFactor.style.textAlign = "center";
-                            tdFactor.innerHTML = "预警因子";
-
-                            trFactor.appendChild(tdFactor);
-                            tbody.appendChild(trFactor);
-
-                            for (var f in data[i][p]){
-                                trFacBody = document.createElement("tr");
-                                tdFacBody1 = document.createElement("td");
-                                tdFacBody1.innerHTML = data[i][p][f]['factor-name'];
-                                tdFacBody2 = document.createElement("td");
-                                tdFacBody2.innerHTML = data[i][p][f]['overValue'];
-
-                                trFacBody.appendChild(tdFacBody1);
-                                trFacBody.appendChild(tdFacBody2);
-
-                                trFactor.appendChild(trFacBody);
+                                trFactor.appendChild(tdFactor);
                                 tbody.appendChild(trFactor);
-                            }
 
+                                for (var f in data[i][p]) {
+                                    trFacBody = document.createElement("tr");
+                                    tdFacBody1 = document.createElement("td");
+                                    tdFacBody1.innerHTML = data[i][p][f]['factor-name'];
+                                    tdFacBody2 = document.createElement("td");
+                                    tdFacBody2.innerHTML = data[i][p][f]['overValue'];
+
+                                    trFacBody.appendChild(tdFacBody1);
+                                    trFacBody.appendChild(tdFacBody2);
+
+                                    trFactor.appendChild(trFacBody);
+                                    tbody.appendChild(trFactor);
+                                }
+
+                            }
                         }
+
+                        table.appendChild(thead);
+                        table.appendChild(tbody);
+                        marker.appendChild(table);
+                    }
+                    markers.push(marker);
+                }
+
+                var htmlOverlay = [];
+                var htmlLogitude = [];
+                var htmlLatitude = [];
+                var scratch = [];
+                var position = [];
+                var canvasPosition = [];
+                var avalibleWidth = document.body.clientWidth;
+                var canvasXBias = avalibleWidth * 0.25;
+                viewer.scene.preRender.addEventListener(function () {
+                    for (var i = 0; i < data.length; i++) {
+                        htmlOverlay[i] = markers[i];
+                        htmlLogitude[i] = data[i].Logitude;
+                        htmlLatitude[i] = data[i].Latitude;
+                        scratch[i] = new Cesium.Cartesian2();
+                        position[i] = Cesium.Cartesian3.fromDegrees(htmlLogitude[i], htmlLatitude[i]);
+                        canvasPosition[i] = viewer.scene.cartesianToCanvasCoordinates(position[i], scratch[i]);
+                        if (Cesium.defined(canvasPosition[i])) {
+                            htmlOverlay[i].style.top = canvasPosition[i].y + 'px';
+                            htmlOverlay[i].style.left = (canvasPosition[i].x + canvasXBias) + 'px';
+                        }
+
                     }
 
-                    table.appendChild(thead);
-                    table.appendChild(tbody);
-                    marker.appendChild(table);
-                }
-                markers.push(marker);
+                });
+
+
+                $(".station-warning-info").click(function () {
+                    var selected = $(this);
+                    $(this).find(".warning-factor-number,.station-name").hide("fast", function () {
+                        selected.find(".station-warning-table,.station-name-head,td").show();
+
+                    });
+                });
+                $(".station-name-head").click(function () {
+                    var selected = $(this);
+                    $(this).parents("table").hide("fast", function () {
+                        selected.parents("table").siblings("div").show();
+                    });
+                });
             }
 
-            var htmlOverlay=[];
-            var htmlLogitude=[];
-            var htmlLatitude=[];
-            var scratch=[];
-            var position=[];
-            var canvasPosition=[];
-            var avalibleWidth = document.body.clientWidth;
-            var canvasXBias = avalibleWidth*0.25;
-            viewer.scene.preRender.addEventListener(function() {
-                for(var i=0;i<data.length;i++){
-                    htmlOverlay[i] = markers[i];
-                    htmlLogitude[i] = data[i].Logitude;
-                    htmlLatitude[i] = data[i].Latitude;
-                    scratch[i] = new Cesium.Cartesian2();
-                    position[i] = Cesium.Cartesian3.fromDegrees(htmlLogitude[i], htmlLatitude[i]);
-                    canvasPosition[i] = viewer.scene.cartesianToCanvasCoordinates(position[i], scratch[i]);
-                    if (Cesium.defined(canvasPosition[i])) {
-                        htmlOverlay[i].style.top = canvasPosition[i].y + 'px';
-                        htmlOverlay[i].style.left = (canvasPosition[i].x+canvasXBias) + 'px';
-                    }
 
-                }
+            function taiShiLayerClick() {
 
-            });
-
-
-            $(".station-warning-info").click(function(){
-                var selected = $(this);
-                $(this).find(".warning-factor-number,.station-name").hide("fast",function(){
-                    selected.find(".station-warning-table,.station-name-head,td").show();
-
-                });
-            });
-            $(".station-name-head").click(function(){
-                var selected = $(this);
-                $(this).parents("table").hide("fast",function(){
-                    selected.parents("table").siblings("div").show();
-                });
-            });
-        }
-
-
-        function taiShiLayerClick(){
-
-        };
+            };
     </script>
     <script>
         function leftSideBarConf(){

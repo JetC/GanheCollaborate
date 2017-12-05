@@ -1,0 +1,116 @@
+#dataTable {
+    position:absolute;
+    top:15%;
+    right:7%;
+    background-color: rgba(13,29,50,0.9);
+    z-index:150;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.25);
+}
+.modalHide {
+    visibility: hidden;
+}
+.errorButton {
+    position:relative;
+    float:right;
+    width:30px;
+    height:30px;
+    background-color: rgba(0,112,192,0.5);
+    color: white;
+    font-weight: bold;
+    line-height: 30px;
+    cursor: pointer;
+    font-size: 22px;
+    text-align: center;
+}
+.errorButton:hover {
+    background-color:red;
+}
+.modalTitle {
+    color:white;
+    padding: 2px 50px;
+    position:relative;
+    float:left;
+    height:26px;
+    display:inline-block;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+    line-height: 26px;
+    vertical-align: bottom;
+    background-color: rgba(8,171,231,0.9);
+
+}
+.modalContent {
+    color:white;
+    padding: 2px 15px;
+    position:relative;
+    float:left;
+    height:26px;
+    display:inline-block;
+    font-size: 13px;
+    text-align: center;
+    text-decoration: none;
+    line-height: 26px;
+    vertical-align: bottom;
+    background-color: rgba(13,29,50,0)
+
+}
+input[type="checkbox"], input[type="radio"] {
+    position: absolute;
+    left: -9999px;
+}
+
+.side-label {
+    display: block;
+    position: absolute;
+    margin: 0;
+    padding-left: 35px;
+    cursor: pointer;
+}
+
+.side-label::before, .side-label::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+input[type="radio"] + .side-label::before,
+input[type="radio"] + .side-label::after {
+    border-radius: 50%;
+}
+
+.side-label::before {
+
+    position: absolute;
+    float:left;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #fff;
+    margin-left:10px;
+    margin-top:6px;
+}
+
+input:focus + .side-label::before {
+    background-color: rgba(8,171,231,0);
+}
+
+.side-label::after {
+    display: none;
+    width: 11px;
+    height: 11px;
+    margin: 10px 10px 10px 14px;
+    background-color: rgba(8,171,231,0.9);
+}
+
+input:checked + .side-label::after {
+    display: block;
+}
+.checkBocContainer
+{
+    position:relative;
+    float:left;
+    width:30px;
+    height:30px;
+    background-color: rgba(13,29,50,0);
+}

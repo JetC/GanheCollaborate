@@ -1,0 +1,27 @@
+{
+  "categories": [
+    "青海省甘河园区影像切片",
+    "地形切片",
+    "矢量切片",
+    "三维模型",
+    "青海省监测站点布局图.kml"
+  ],
+  "影像切片": [
+    {"name":"影像切片","type":"png","method":"tms","url":"dataSources/青海甘河园区影像切片","Description":"Image tiling service","demo":"loadTileImage.html"}
+   
+  ],
+  "地形切片": [
+    {"name":"地形切片","type":"terrain","url":"./demTile","Description":"Terrain tiling service","demo":"loadTileTerrain.html"}
+  ],
+  
+  "矢量切片": [
+    {"name":"矢量切片","type":"mvt","url":"./shapefileTile","Description":"Shapefile tiling service","demo":"shapefileTile.html"}
+  ],
+  "三维模型": [
+    {"name":"三维模型","type":"gltf","url":"./gltf","Description":"3DTransform service","demo":"load3D.html"}
+   
+  ],
+  "青海省监测站点布局图.kml": [
+    {"name":"青海省监测站点布局图.kml","type":"kml","url":"json/青海省监测站点布局图.kml","Description":"3DTransform service","demo":"load3D.html"}
+  ]
+}
