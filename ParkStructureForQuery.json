@@ -2,13 +2,13 @@
 	"factorsQuery": [{
 		"parkid": "1",
 		"siteid": "1",
-		"instrumentid": "22",
-		"factorid": "312"
+		"instrumentid": "3",
+		"factorid": ["312", "313"]
 	}, {
 		"parkid": "1",
 		"siteid": "1",
-		"instrumentid": "22",
-		"factorid": "12"
+		"instrumentid": "4",
+		"factorid": ["317", "318"]
 	}],
 	"startDate": "2017-11-08 19:40",
 	"endDate": "2017-11-22 21:40"

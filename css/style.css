@@ -580,7 +580,7 @@ div.tab button.active {
     width: 100%;
     height: 100%;
     /*box-shadow: 2px 2px 2px #e1e1e1;*/
-    /* background-color: rgba(0, 0, 0, 0.31); */
+    background-color: #203449;
 }
 .sidebar > h3{
     width: 100%;
@@ -1842,7 +1842,7 @@ div.tab button.active {
 .datetimePickerDiv > label{
     width: 30%;
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 1.5em;
     text-align: center;
     color: #FFFFFF;
 }

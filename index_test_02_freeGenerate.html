@@ -16,8 +16,8 @@
     <link href="./Cesium/Release/Cesium/Widgets/widgets.css" rel="stylesheet">
     <link href="./css/navigation-mixin.css" rel="stylesheet">
     <!--<script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
-    <script src="./js/libs/require.js" ></script>
-    <script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>
+    <!--<script src="./js/libs/require.js" ></script>-->
+    <!--<script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>-->
     <script src="./js/libs/jquery.js" ></script>
     <script src="./js/PositionPick.js"></script>
     <script src="./js/navigation-mixin.js" ></script>
@@ -52,13 +52,10 @@
 <body>
     <div id="allContainer">
         <div id="left-side-nav-panel" class="leftSideNav">
-                <div class="content-top">
-                    <!--sidebar-->
-                    <div class="sidebar panel panel-default" id="sidebar">
+            <!--sidebar-->
+            <div class="sidebar panel panel-default" id="sidebar">
 
-                    </div>
-                </div>
-
+            </div>
         </div>
         <div id="cesiumContainer">
             <div id = "test">
@@ -154,7 +151,7 @@
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
             leftSideBarConf();
-            $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">提交</button></div></div>').appendTo('#sidebar');
+            $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">提交</button></div></div>').appendTo('#left-side-nav-panel');
 
             jQuery(function(){
                 jQuery('#startDateTimepicker').datetimepicker({
