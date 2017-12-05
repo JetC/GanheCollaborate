@@ -12,16 +12,21 @@
     <title>中联兴环保项目</title>
     <!--网页标签前的shortCut logo,如有特殊需求，中联兴公司可自行定制-->
     <link rel="shortcut icon" href="./images/logo.png">
-    <link href="./css/font-awesome.min.css" rel="stylesheet">
-    <link href="./Cesium/Release/Cesium/Widgets/widgets.css" rel="stylesheet">
-    <link href="./css/navigation-mixin.css" rel="stylesheet">
-    <!--<script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
-    <script src="./js/libs/require.js" ></script>
-    <script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>
-    <script src="./js/libs/jquery.js" ></script>
-    <script src="./js/PositionPick.js"></script>
-    <script src="./js/navigation-mixin.js" ></script>
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="Cesium/Release/Cesium/Widgets/widgets.css" rel="stylesheet">
+    <link href="css/navigation-mixin.css" rel="stylesheet">
 
+    <!--<script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
+    <!--<script src="js/libs/require.js" ></script>-->
+    <!--<script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>-->
+    <script src="js/libs/jquery.js" ></script>
+    <script src="js/PositionPick.js"></script>
+    <script src="js/navigation-mixin.js" ></script>
+    <!--BootStrap-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!--By SUN Peifeng-->
     <!--我注释了一些你的alert，记得恢复过来-->
@@ -30,20 +35,15 @@
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/modalForTools.css"/>
     <!-- Json2html -->
-    <script src="./js/json2html.js"></script>
-    <script src="./js/jquery.json2html.js"></script>
+    <script src="js/json2html.js"></script>
+    <script src="js/jquery.json2html.js"></script>
     <!--DateTimePicker-->
-    <script src="./js/jquery.datetimepicker.full.js"></script>
-    <script src="./js/jquery.mousewheel.js"></script>
+    <script src="js/jquery.datetimepicker.full.js"></script>
+    <script src="js/jquery.mousewheel.js"></script>
     <script src="js/php-date-formatter.js"></script>
     <link rel="stylesheet" href="css/jquery.datetimepicker.css">
-    <!--BootStrap-->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script text="text/javascript" src="./js/pinying.js" charset="GBK"></script>
-    <link rel="stylesheet" href="css/style.css"/>
+
+    <script text="text/javascript" src="js/pinying.js" charset="GBK"></script>
 
     <!--ends here By SUN Peifeng-->
 
@@ -148,9 +148,9 @@
         $(function(){
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
-            leftSideBarConf();
-            // mergeHidenBoxes();
+
             $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">提交</button></div></div>').appendTo('#left-side-nav-panel');
+
             jQuery(function(){
                 jQuery('#startDateTimepicker').datetimepicker({
                     format:'Y-m-d H:i',
@@ -176,7 +176,8 @@
             });
             jQuery.datetimepicker.setLocale('ch');
 
-        
+            leftSideBarConf();
+            mergeHidenBoxes();
             $('.factor').click( function(e) {
 
                 var factorid = $(this).attr("factorid");
@@ -1423,7 +1424,10 @@
             );
         }
         function mergeHidenBoxes() {
-            $('.hiden-box').each().hide();
+            var hidenBoxesArray = $('hiden-box');
+            for (var i=1;i<hidenBoxesArray.length;i++) {
+                console.log(hidenBoxesArray[i]);
+            }
         }
 
     </script>
