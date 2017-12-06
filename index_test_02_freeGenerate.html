@@ -1424,9 +1424,13 @@
             );
         }
         function mergeHidenBoxes() {
-            var hidenBoxesArray = $('hiden-box');
-            for (var i=1;i<hidenBoxesArray.length;i++) {
-                console.log(hidenBoxesArray[i]);
+            var hidenBoxesArray = $('.hiden-box');
+            for (var i = 1;i < hidenBoxesArray.length;i++) {
+                var singleHidenBox = hidenBoxesArray[i];
+                for (var j=0; j < singleHidenBox.children.length; j++) {
+                    hidenBoxesArray[0].append(singleHidenBox.children[j]);
+                }
+                singleHidenBox.remove();
             }
         }
 

@@ -54,7 +54,7 @@ a {
     color: #6c6c6c;
 }
 a:hover{
-    color: #f40;
+    /*color: #f40;*/
     transition: color .2s ease-in-out;
 }
 /* change colours to suit your needs */
