@@ -182,13 +182,9 @@
             $('.factor').click( function(e) {
 
                 var factorid = $(this).attr("factorid");
-                var instrumentid = $(this).parent().prev().attr("instrumentid");
-                var siteid = $(this).parent().parent().parent().parent().attr("id").split("-")[1];
-                var parkid = $(this).parent().parent().parent().parent().parent().parent().parent().attr("id").split("-")[1];
-//                console.log("factorid:" + factorid);
-//                console.log("instrumentid:" + instrumentid);
-//                console.log("siteid:" + siteid);
-//                console.log("parkid:" + factorid);
+                var instrumentid = $(this).attr("instrumentId");
+                var siteid = $(this).attr("siteId");
+                var parkid = $(this).attr("parkId");
 
                 if ($(this).hasClass("selectedFactor")){
                     $(this).removeClass("selectedFactor");
@@ -1437,12 +1433,12 @@
             for (var i=0;i<allFactorsArr.length;i++) {
                  var singleFactor = allFactorsArr[i];
                  var instrumentId = $(singleFactor).parent().prev().attr("instrumentid");
-                 var siteid = $(singleFactor).parent().parent().parent().parent().attr("id").split("-")[1];
-                 var parkid = $(singleFactor).parent().parent().parent().parent().parent().parent().parent().attr("id").split("-")[1];
-                 console.log(instrumentId,siteid,parkid);
+                 var siteId = $(singleFactor).parent().parent().parent().parent().attr("id").split("-")[1];
+                 var parkId = $(singleFactor).parent().parent().parent().parent().parent().parent().parent().attr("id").split("-")[1];
+                 // console.log(instrumentId,siteId,parkId);
                  $(singleFactor).attr('instrumentId',instrumentId);
-                 $(singleFactor).attr('siteId',siteid);
-                 $(singleFactor).attr('parkId',parkid);
+                 $(singleFactor).attr('siteId',siteId);
+                 $(singleFactor).attr('parkId',parkId);
             }
 
         }
