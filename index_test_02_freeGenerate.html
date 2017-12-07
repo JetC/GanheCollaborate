@@ -177,6 +177,7 @@
             jQuery.datetimepicker.setLocale('ch');
 
             leftSideBarConf();
+            writeAttrsToFactors();
             mergeHidenBoxes();
             $('.factor').click( function(e) {
 
@@ -217,7 +218,7 @@
                 var startDate = document.getElementById('startDateTimepicker').value;
                 var endDate = document.getElementById('endDateTimepicker').value;
                 generateDataToPost(startDate, endDate);
-            })
+            });
             function generateDataToPost(startDate, endDate){
                 var queryObj = {"factorsQuery":selectedFactorsInfo,"startDate":startDate,"endDate":endDate};
                 var string = JSON.stringify(queryObj);
@@ -654,9 +655,7 @@
                      Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
                      viewer.camera.setView({
                          destination: extent
-                     });
-
-        */
+                     });*/
                     var surfacePosition = Cesium.Cartesian3.fromDegrees(log, lat, 0);
                     var heightPosition = Cesium.Cartesian3.fromDegrees(log, lat, stationLineHeight);
 
@@ -1385,7 +1384,7 @@
                             top:  top,
                             height: ($(window).height()*0.75)
                         }).animate({width: ($(window).width()/4*3*0.75)}, 100);
-                    $('.hiden-box > ').find('h3').css({border: ''})
+                    $('.hiden-box > ').find('h3').css({border: ''});
                     $('.hiden-box > li').hide();
                     $('#hiden-'+num).fadeIn(100);
                     //Detailed Posi tion
@@ -1402,7 +1401,7 @@
             $('.hiden-box').hover(
                 function(){
                     $('.s_'+num).addClass("sideLiHover");
-                    $('.s_'+num).find('h3').css({border: 'none'})
+                    $('.s_'+num).find('h3').css({border: 'none'});
                     $(this).show().css({width: $(window).width()/4*3*0.75});
                     console.log('hiden-box-hover-enter');
                 },
@@ -1432,6 +1431,20 @@
                 }
                 singleHidenBox.remove();
             }
+        }
+        function writeAttrsToFactors() {
+            var allFactorsArr = $('.factor');
+            for (var i=0;i<allFactorsArr.length;i++) {
+                 var singleFactor = allFactorsArr[i];
+                 var instrumentId = $(singleFactor).parent().prev().attr("instrumentid");
+                 var siteid = $(singleFactor).parent().parent().parent().parent().attr("id").split("-")[1];
+                 var parkid = $(singleFactor).parent().parent().parent().parent().parent().parent().parent().attr("id").split("-")[1];
+                 console.log(instrumentId,siteid,parkid);
+                 $(singleFactor).attr('instrumentId',instrumentId);
+                 $(singleFactor).attr('siteId',siteid);
+                 $(singleFactor).attr('parkId',parkid);
+            }
+
         }
 
     </script>
