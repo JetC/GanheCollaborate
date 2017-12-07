@@ -97,7 +97,7 @@
         var transform = {
             "park":[{"<>":"div","class":"panel-heading",
                 "html":[{"<>":"h4","class":"panel-title",
-                    "html":[{"<>":"a","data-toggle":"collapse","href":"#collapse-${parkId}","html":"${name}"}]
+                    "html":[{"<>":"a", "class":"parkToggle", "data-toggle":"collapse","href":"#collapse-${parkId}","html":"${name}"}]
                 }]
             },
                 {"<>":"div","class":"sidebar-info panel-collapse collapse", "id":"collapse-${parkId}",
@@ -179,6 +179,10 @@
             leftSideBarConf();
             writeAttrsToFactors();
             mergeHidenBoxes();
+            $($('.parkToggle').first()).trigger('click');
+            // $('.parkToggle').click (function () {
+            //     console.log('dsdf:'+ $(this).getAttribute('parkId'));
+            // });
             $('.factor').click( function(e) {
 
                 var factorid = $(this).attr("factorid");
