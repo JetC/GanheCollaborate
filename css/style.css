@@ -606,14 +606,14 @@ div.tab button.active {
 .hiden-box{
     position: fixed;
     z-index: 5888;
-    padding: 10px;
+    /* padding: 10px; */
     display: none;
     overflow: scroll;
     background: rgba(13, 29, 50, 0.5);
 }
 .hiden-box > li{
     width: 100%;
-    margin: auto;
+    /* margin: auto; */
     height: 100%;
     overflow:  scroll;
 }
@@ -633,10 +633,9 @@ div.tab button.active {
 }
 /*sub-nav-right*/
 .sub-nav-right{
-    /*float: left;*/
-    /* padding-right: 10px; */
-    width: 100%;
-    /*height: 420px;*/
+    padding: 20px 8px 0 28px;
+    /* width: 100%; */
+    height: 100%;
     /* border-right: 1px solid #eee; */
     display: flex;
     display: -webkit-flex;
@@ -652,11 +651,11 @@ div.tab button.active {
     height: 420px;
 }
 .cell-box{
-    width: 46.5%;
-    padding: 16px 10px;
+    width: 46%;
+    padding: 0 8px;
     /* border-bottom: 1px dashed #aaaaaa; */
     /* background-color: rgba(255,255,255,0.4); */
-    border: 1px darkcyan dashed;
+    /* border: 1px darkcyan dashed; */
     overflow:  scroll;
 }
 .cell-box > h1{
@@ -673,6 +672,7 @@ div.tab button.active {
     color: #dcdcdc;
     overflow:  auto;
     max-height: 250px;
+    background-color: rgba(242,242,242,0.23);
 }
 .a-box span{
     margin-right: 6px;

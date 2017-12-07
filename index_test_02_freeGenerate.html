@@ -1378,7 +1378,7 @@
                         .css({
                             left: ($(window).width()/4),
                             top:  top,
-                            height: ($(window).height()*0.75)
+                            maxHeight: ($(window).height()*0.75)
                         }).animate({width: ($(window).width()/4*3*0.75)}, 100);
                     $('.hiden-box > ').find('h3').css({border: ''});
                     $('.hiden-box > li').hide();
@@ -1390,7 +1390,7 @@
                 function(){
                     $(this).find('h3').css({border: ''})
                         .end().find('span').css({color: ""});
-                    $('.hiden-box').hide().css({width: '0'});
+                    // $('.hiden-box').hide().css({width: '0'});
                     console.log('side-li > li - hover-exit');
                 }
             );
@@ -1398,13 +1398,12 @@
                 function(){
                     $('.s_'+num).addClass("sideLiHover");
                     $('.s_'+num).find('h3').css({border: 'none'});
-                    $(this).show().css({width: $(window).width()/4*3*0.75});
+                    // $(this).show().css({width: $(window).width()/4*3*0.75});
                     console.log('hiden-box-hover-enter');
                 },
 
                 function(){
                     $('.s_'+num).removeClass("sideLiHover");
-
                     $('.s_'+num).css({
                         border: '',
                         borderRight: ''
