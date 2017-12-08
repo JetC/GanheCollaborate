@@ -658,12 +658,16 @@ div.tab button.active {
     /* border: 1px darkcyan dashed; */
     overflow:  scroll;
 }
-.cell-box > h1{
-    margin-bottom: 10px;
+.cell-box > div > h1{
+    /* margin-bottom: 75px; */
+    margin-left:  10px;
     font-size: 1.5em;
+    /* padding-bottom:  10px; */
     line-height: 2em;
     color: white;
     font-weight: normal;
+    display: inline;
+    /* vertical-align: middle; */
 }
 /*a-box*/
 .a-box{
@@ -673,6 +677,9 @@ div.tab button.active {
     overflow:  auto;
     max-height: 250px;
     background-color: rgba(242,242,242,0.23);
+    padding: 10px;
+    display: flow-root;
+    flex-direction:  row;
 }
 .a-box span{
     margin-right: 6px;
@@ -1926,4 +1933,29 @@ h {
 ::-webkit-scrollbar {
     width: 0;  /* remove scrollbar space */
     background: transparent;  /* optional: just make scrollbar invisible */
+}
+
+.pageHeader {
+    /*border-bottom: 1px solid transparent;*/
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-color: #ddd;
+    background-color: #24344D;
+    color: #ffffff;
+    padding: 13px 15px;
+}
+
+.pageHeader > .panel-title > .parkToggle {
+    color: #0266B3;
+}
+
+.instrumentLogoImg {
+    /* padding: 4px; */
+    width: 25px;
+    vertical-align: text-bottom;
+    height: 25px;
+}
+
+.instrumentLogoDiv {
+    padding-bottom: 5px;
 }

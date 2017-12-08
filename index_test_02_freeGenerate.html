@@ -131,7 +131,8 @@
                     }
                 }],
             "cell_box":[{
-                "<>":"h1","instrumentId":"${instrumentId}","html":"${name}"},{
+                "<>":"div", "class":"instrumentLogoDiv", "html":[{"<>":"img","src":"images/intrumentLogo.png", "class":"instrumentLogoImg", "float":"left"},{"<>":"h1","instrumentId":"${instrumentId}","html":"${name}"}]
+                    },{
                 "<>":"div","class":"a-box","html":function () {
                     return json2html.transform(this.factor,transform.a_box);
                 }
@@ -149,6 +150,7 @@
             //Create the list
             $('#sidebar').json2html(jsonData,transform.park);
 
+            $('<div class="pageHeader"><h4 class="panel-title"><a class="parkToggle">青海省甘河工业园区污染监测系统</a></h4></div>').prependTo('#sidebar');
             $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">提交</button></div></div>').appendTo('#left-side-nav-panel');
 
             jQuery(function(){
@@ -179,10 +181,10 @@
             leftSideBarConf();
             writeAttrsToFactors();
             mergeHidenBoxes();
-            $($('.parkToggle').first()).trigger('click');
-            // $('.parkToggle').click (function () {
-            //     console.log('dsdf:'+ $(this).getAttribute('parkId'));
-            // });
+            // $($('.parkToggle').first()).trigger('click');
+            $('.panel-heading').click(function () {
+                console.log('dsdf:'+ (($(this).index())/2+1));
+            });
             $('.factor').click( function(e) {
 
                 var factorid = $(this).attr("factorid");
@@ -1365,7 +1367,7 @@
                     beginH = 50;
                     var parkIndex = ($(this).parent().parent().parent().index()-1)/2;
                     var siteIndex = $(this).index();
-                    console.log('PARKINDEX:'+parkIndex);
+                    // console.log('PARKINDEX:'+parkIndex);
 
                     var hidenBoxHeight = $(window).height()/2;
                     var top = function () {
