@@ -680,6 +680,7 @@ div.tab button.active {
     padding: 10px;
     display: flow-root;
     flex-direction:  row;
+    margin: 5px 0 15px;
 }
 .a-box span{
     margin-right: 6px;
@@ -1963,4 +1964,9 @@ h {
 
 .instrumentLogoDiv {
     padding-bottom: 5px;
+}
+
+html
+{
+    overflow: -moz-scrollbars-none;
 }

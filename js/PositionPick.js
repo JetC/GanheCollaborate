@@ -2,9 +2,9 @@
 function position(viewer){
 	//reserved to be edited By Xiao Ling @2017/8/27----------
 	document.writeln("<div id=\"geoPosition\" style=\"z-index:10; position:absolute; bottom:35px; right:0px; visibility:visible;\">");
-    document.writeln("        <label style=\"color:#fff; font-size:14px; font-family:SimHei;\">经度：</label><input type=\"text\" id=\"longitude\" style=\"width:130px; border:none; font-family:SimHei; background-color:transparent; color:#fff; font-size:0.8em\" readonly>");
-    document.writeln("        <label style=\"color:#fff; font-size:14px; font-family:SimHei;\">纬度：</label><input type=\"text\" id=\"latitude\" style=\"width:130px; border:none; font-family:SimHei; background-color:transparent; color:#fff; font-size:0.8em\" readonly>");
-    document.writeln("        <label style=\"color:#fff; font-size:14px; font-family:SimHei;\">视野高度：</label><input type=\"text\" id=\"height\" style=\"width:130px; border:none; font-family:SimHei; background-color:transparent; color:#fff; font-size:0.8em\" readonly>");
+    document.writeln("        <label style=\"color:#fff; font-size:1.2em; font-family:SimHei;\">经度：</label><input type=\"text\" id=\"longitude\" style=\"width:130px; border:none; font-family:SimHei; background-color:transparent; color:#fff; font-size:1.2em\" readonly>");
+    document.writeln("        <label style=\"color:#fff; font-size:1.2em; font-family:SimHei;\">纬度：</label><input type=\"text\" id=\"latitude\" style=\"width:130px; border:none; font-family:SimHei; background-color:transparent; color:#fff; font-size:1.2em\" readonly>");
+    document.writeln("        <label style=\"color:#fff; font-size:1.2em; font-family:SimHei;\">视野高度：</label><input type=\"text\" id=\"height\" style=\"width:130px; border:none; font-family:SimHei; background-color:transparent; color:#fff; font-size:1.2em\" readonly>");
     document.writeln("    </div>");
 	console.log("2333333333");
 	//-------------------------------------------------------

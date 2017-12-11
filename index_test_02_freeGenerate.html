@@ -154,6 +154,14 @@
             $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">提交</button></div></div>').appendTo('#left-side-nav-panel');
 
             jQuery(function(){
+                // var d = new Date();
+                // var month = d.getMonth();
+                // var day = d.getDate();
+                // var year = d.getFullYear();
+                var today = new Date();
+                today.setHours(today.getHours()-1);
+                var startDate = today;
+                today = new Date();
                 jQuery('#startDateTimepicker').datetimepicker({
                     format:'Y-m-d H:i',
                     lang: 'ch',
@@ -162,7 +170,8 @@
                                     maxDate: jQuery('#endDateTimepicker').val() ? jQuery('#endDateTimepicker').val() : false
                                 })
                     },
-                    timepicker: true
+                    timePicker: true,
+                    value: startDate
                 });
 
                 jQuery('#endDateTimepicker').datetimepicker({
@@ -173,10 +182,10 @@
                             minDate: jQuery('#startDateTimepicker').val() ? jQuery('#startDateTimepicker').val() : false
                         })
                     },
-                    timepicker: true
+                    timePicker: true,
+                    value: today
                 });
             });
-            jQuery.datetimepicker.setLocale('ch');
 
             leftSideBarConf();
             writeAttrsToFactors();
