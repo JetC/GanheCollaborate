@@ -15,7 +15,7 @@ html, body {
     background: #2a2a2ab3;
     /* border: 1px solid #444;*/
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25);
-    z-index:1000;
+    z-index:1001;
 }
 #cesiumContainer {
     float:right;

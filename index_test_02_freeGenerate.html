@@ -183,7 +183,7 @@
             mergeHidenBoxes();
             // $($('.parkToggle').first()).trigger('click');
             $('.panel-heading').click(function () {
-                console.log('dsdf:'+ (($(this).index())/2+1));
+                console.log('dsdf:'+ (($(this).index()-1)/2+1));
             });
             $('.factor').click( function(e) {
 
@@ -1360,8 +1360,8 @@
             });
             $('.side-li > li').hover(
                 function(){
-                    $(this).find('h3').css({border: 'none'})
-                        .end().find('span').css({color: ""});
+                    // $(this).find('h3').css({border: 'none'})
+                    //     .end().find('span').css({color: ""});
                     classN = $(this).attr('class');
                     num = classN.substring(2, classN.length);
                     beginH = 50;
