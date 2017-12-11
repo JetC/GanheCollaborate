@@ -217,7 +217,7 @@
                     selectedFactorsInfo = afterFilter;
                 } else {
                     $(this).addClass("selectedFactor");
-                    var factorInfo = {"parkid":parkid,"siteid":siteid,"instrumentid":instrumentid,"factorid":factorid};
+                    var factorInfo = {"parkID":parkid,"stationID":siteid,"deviceID":instrumentid,"factorID":factorid};
                     selectedFactorsInfo.push(factorInfo);
                 }
                 console.log("selectedFactorsInfo: "+selectedFactorsInfo);
@@ -225,15 +225,44 @@
             });
             $(".submitButton").click( function () {
                 console.log("succvvvv");
-                // $.post( "http://localhost:8000/", { "name": "John", "time": "2pm" } );
                 var startDate = document.getElementById('startDateTimepicker').value;
                 var endDate = document.getElementById('endDateTimepicker').value;
-                generateDataToPost(startDate, endDate);
+                var stringToPost = generateDataToPost(startDate, endDate);
+                $.post( "http://localhost:8000/", stringToPost)
+                    .done(function( data ) {
+                        alert( "Data Loaded: " + data );
+                    });
+
             });
             function generateDataToPost(startDate, endDate){
                 var queryObj = {"factorsQuery":selectedFactorsInfo,"startDate":startDate,"endDate":endDate};
-                var string = JSON.stringify(queryObj);
+                var tempObj = {};
+                var outputObj = {"factorsQuery":[],"startDate":startDate,"endDate":endDate};
+                for (var i = 0; i<selectedFactorsInfo.length; i++) {
+                    var singleFactor = selectedFactorsInfo[i];
+                    singleFactor["key"] = singleFactor.parkID + singleFactor.stationID + singleFactor.deviceID;
+                    var keyString = singleFactor["key"];
+                    if (tempObj[keyString] === undefined) {
+                        tempObj[keyString] = [];
+                    }
+                    tempObj[keyString].push(singleFactor);
+                }
+                for (var i = 0; i<Object.keys(tempObj).length; i++) {
+                    var factorKey = Object.keys(tempObj)[i];
+                    var factorsInSameDevice = tempObj[factorKey];
+                    var factorIDs = [];
+                    for (var j=0; j<factorsInSameDevice.length; j++) {
+                        factorIDs.push(factorsInSameDevice[j].factorID);
+                    }
+                    var parkID = tempObj[factorKey][0].parkID;
+                    var stationID = tempObj[factorKey][0].stationID;
+                    var deviceID = tempObj[factorKey][0].deviceID;
+                    outputObj["factorsQuery"].push({"parkID":parkID,"stationID":stationID,"deviceID":deviceID,"factorID":factorIDs});
+                    // console.log(outputObj);
+                }
+                var string = JSON.stringify(outputObj);
                 console.log("jsonData:" + string);
+                return string;
             }
         });
 
@@ -1418,17 +1447,17 @@
                 },
 
                 function(){
-                    $('.s_'+num).removeClass("sideLiHover");
-                    $('.s_'+num).css({
-                        border: '',
-                        borderRight: ''
-                    }).find('h3').css({border: ''})
-                        .end().find('span').css({color: ""});
-
-                    $(this).animate({
-                        width: 0
-                    }, 0).hide(0);
-                    console.log('hiden-box-hover-exit');
+                    // $('.s_'+num).removeClass("sideLiHover");
+                    // $('.s_'+num).css({
+                    //     border: '',
+                    //     borderRight: ''
+                    // }).find('h3').css({border: ''})
+                    //     .end().find('span').css({color: ""});
+                    //
+                    // $(this).animate({
+                    //     width: 0
+                    // }, 0).hide(0);
+                    // console.log('hiden-box-hover-exit');
                 }
             );
         }
@@ -1446,7 +1475,7 @@
             var allFactorsArr = $('.factor');
             for (var i=0;i<allFactorsArr.length;i++) {
                  var singleFactor = allFactorsArr[i];
-                 var instrumentId = $(singleFactor).parent().prev().attr("instrumentid");
+                 var instrumentId = $(singleFactor).parent().prev().find("h1").attr("instrumentid");
                  var siteId = $(singleFactor).parent().parent().parent().parent().attr("id").split("-")[1];
                  var parkId = $(singleFactor).parent().parent().parent().parent().parent().parent().parent().attr("id").split("-")[1];
                  // console.log(instrumentId,siteId,parkId);
