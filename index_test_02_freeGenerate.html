@@ -163,7 +163,7 @@
                 var startDate = today;
                 today = new Date();
                 jQuery('#startDateTimepicker').datetimepicker({
-                    format:'Y-m-d H:i',
+                    format:'Y-m-d H:i:s',
                     lang: 'ch',
                     onShow:function( ct ){
                     this.setOptions({
@@ -175,7 +175,7 @@
                 });
 
                 jQuery('#endDateTimepicker').datetimepicker({
-                    format: 'Y-m-d H:i',
+                    format: 'Y-m-d H:i:s',
                     locale: 'ch',
                     onShow: function (ct) {
                         this.setOptions({
@@ -237,7 +237,7 @@
             function generateDataToPost(startDate, endDate){
                 var queryObj = {"factorsQuery":selectedFactorsInfo,"startDate":startDate,"endDate":endDate};
                 var tempObj = {};
-                var outputObj = {"factorsQuery":[],"startDate":startDate,"endDate":endDate};
+                var outputObj = {"factorsQuery":[],"startTime":startDate,"endTime":endDate};
                 for (var i = 0; i<selectedFactorsInfo.length; i++) {
                     var singleFactor = selectedFactorsInfo[i];
                     singleFactor["key"] = singleFactor.parkID + singleFactor.stationID + singleFactor.deviceID;
