@@ -228,11 +228,16 @@
                 var startDate = document.getElementById('startDateTimepicker').value;
                 var endDate = document.getElementById('endDateTimepicker').value;
                 var stringToPost = generateDataToPost(startDate, endDate);
-                $.post( "http://localhost:8000/", stringToPost)
-                    .done(function( data ) {
+                jQuery.ajax ({
+                    url: "http://localhost:8070/",
+                    type: "POST",
+                    data: stringToPost,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function(data){
                         alert( "Data Loaded: " + data );
-                    });
-
+                    }
+                });
             });
             function generateDataToPost(startDate, endDate){
                 var queryObj = {"factorsQuery":selectedFactorsInfo,"startDate":startDate,"endDate":endDate};
@@ -1447,17 +1452,17 @@
                 },
 
                 function(){
-                    // $('.s_'+num).removeClass("sideLiHover");
-                    // $('.s_'+num).css({
-                    //     border: '',
-                    //     borderRight: ''
-                    // }).find('h3').css({border: ''})
-                    //     .end().find('span').css({color: ""});
-                    //
-                    // $(this).animate({
-                    //     width: 0
-                    // }, 0).hide(0);
-                    // console.log('hiden-box-hover-exit');
+                    $('.s_'+num).removeClass("sideLiHover");
+                    $('.s_'+num).css({
+                        border: '',
+                        borderRight: ''
+                    }).find('h3').css({border: ''})
+                        .end().find('span').css({color: ""});
+
+                    $(this).animate({
+                        width: 0
+                    }, 0).hide(0);
+                    console.log('hiden-box-hover-exit');
                 }
             );
         }
