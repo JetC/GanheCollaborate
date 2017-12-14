@@ -70,10 +70,10 @@
             jsonData = JSON.parse(response);
             var park, site, instrument, factor;
             for (park in jsonData) {
-                for (site in jsonData[park]["sites"]) {
-                    for (instrument in jsonData[park]["sites"][site]["instrument"]) {
-                        for (factor in jsonData[park]["sites"][site]["instrument"][instrument]["factor"]) {
-                            jsonData[park]["sites"][site]["instrument"][instrument]["factor"].sort(function(a,b){
+                for (site in jsonData[park]["stations"]) {
+                    for (instrument in jsonData[park]["stations"][site]["device"]) {
+                        for (factor in jsonData[park]["stations"][site]["device"][instrument]["factor"]) {
+                            jsonData[park]["stations"][site]["device"][instrument]["factor"].sort(function(a,b){
                                 return a["name"].localeCompare(b["name"], 'zh-Hans-CN', {sensitivity: 'accent'});
                             });
                         }
@@ -97,31 +97,31 @@
         var transform = {
             "park":[{"<>":"div","class":"panel-heading",
                 "html":[{"<>":"h4","class":"panel-title",
-                    "html":[{"<>":"a", "class":"parkToggle", "data-toggle":"collapse","href":"#collapse-${parkId}","html":"${name}"}]
+                    "html":[{"<>":"a", "class":"parkToggle", "data-toggle":"collapse","href":"#collapse-${parkID}","html":"${name}"}]
                 }]
             },
-                {"<>":"div","class":"sidebar-info panel-collapse collapse", "id":"collapse-${parkId}",
+                {"<>":"div","class":"sidebar-info panel-collapse collapse", "id":"collapse-${parkID}",
                 "html": [{"<>":"div", "class":"panel-body", "html":function (){
                     var side_li_content = "<ul class=\"side-li\">";
-                    var side_li_html = json2html.transform(this.sites,transform.siteLi);
+                    var side_li_html = json2html.transform(this.stations,transform.siteLi);
                     side_li_html += "</ul>";
-                    var parkId = this.parkId;
-                    var hidenboxIdString = 'hiden-box'+parkId;
+                    var parkID = this.parkID;
+                    var hidenboxIdString = 'hiden-box'+parkID;
                     var hiden_box_content = "<ul class=\"hiden-box\">";
-                    var hiden_box_html = json2html.transform(this.sites,transform.siteHiddenBox);
+                    var hiden_box_html = json2html.transform(this.stations,transform.siteHiddenBox);
                     hiden_box_html += "</ul>";
                     return (side_li_content+side_li_html+hiden_box_content+hiden_box_html);
                 }}]
             }],
-            "siteLi":{"<>":"li", "class":"s_${siteId}",
-                    "html":[{"<>":"h3", "siteId":"${siteId}",
+            "siteLi":{"<>":"li", "class":"s_${stationID}",
+                    "html":[{"<>":"h3", "stationID":"${stationID}",
                         "html":"${name}<span class=\"rightArrow rightArrow-angle-right rightArrow-loc\"></span>"
                     }]
             },
             "siteHiddenBox":[{
-                "<>":"li","data-hidden":"li","id":"hiden-${siteId}","html":[
+                "<>":"li","data-hidden":"li","id":"hiden-${stationID}","html":[
                     {"<>":"div", "class":"sub-nav-right","html":function () {
-                        return json2html.transform(this.instrument,transform.sub_nav);
+                        return json2html.transform(this.device,transform.sub_nav);
                     }}
                 ]
             }],
@@ -131,7 +131,7 @@
                     }
                 }],
             "cell_box":[{
-                "<>":"div", "class":"instrumentLogoDiv", "html":[{"<>":"img","src":"images/intrumentLogo.png", "class":"instrumentLogoImg", "float":"left"},{"<>":"h1","instrumentId":"${instrumentId}","html":"${name}"}]
+                "<>":"div", "class":"instrumentLogoDiv", "html":[{"<>":"img","src":"images/intrumentLogo.png", "class":"instrumentLogoImg", "float":"left"},{"<>":"h1","deviceID":"${deviceID}","html":"${name}"}]
                     },{
                 "<>":"div","class":"a-box","html":function () {
                     return json2html.transform(this.factor,transform.a_box);
@@ -196,17 +196,17 @@
             });
             $('.factor').click( function(e) {
 
-                var factorid = $(this).attr("factorid");
-                var instrumentid = $(this).attr("instrumentId");
-                var siteid = $(this).attr("siteId");
-                var parkid = $(this).attr("parkId");
+                var factorID = $(this).attr("factorID");
+                var deviceID = $(this).attr("deviceID");
+                var stationID = $(this).attr("stationID");
+                var parkID = $(this).attr("parkID");
 
                 if ($(this).hasClass("selectedFactor")){
                     $(this).removeClass("selectedFactor");
                     var afterFilter = [];
                     afterFilter = $.grep(selectedFactorsInfo,function (obj) {
-                        console.log(obj.instrumentid);
-                        if ((obj.instrumentid === instrumentid) && (obj.factorid === factorid) && (obj.siteid === siteid) && (obj.parkid === parkid)) {
+                        console.log(obj.deviceID);
+                        if ((obj.deviceID === deviceID) && (obj.factorID === factorID) && (obj.stationID === stationID) && (obj.parkID === parkID)) {
                             //Old factor, Remove
                             return false;
                         } else {
@@ -217,7 +217,7 @@
                     selectedFactorsInfo = afterFilter;
                 } else {
                     $(this).addClass("selectedFactor");
-                    var factorInfo = {"parkID":parkid,"stationID":siteid,"deviceID":instrumentid,"factorID":factorid};
+                    var factorInfo = {"parkID":parkID,"stationID":stationID,"deviceID":deviceID,"factorID":factorID};
                     selectedFactorsInfo.push(factorInfo);
                 }
                 console.log("selectedFactorsInfo: "+selectedFactorsInfo);
@@ -1401,8 +1401,11 @@
                     default : beginH = 138;break;
                 }
             });
+            var originalWidth = 0;
+            originalWidth;
             $('.side-li > li').hover(
                 function(){
+                    originalWidth;
                     // $(this).find('h3').css({border: 'none'})
                     //     .end().find('span').css({color: ""});
                     classN = $(this).attr('class');
@@ -1422,14 +1425,13 @@
                         }
                         return calculatedValue;
                     };
-
                     $('.hiden-box').show()
                         .css({
                             left: ($(window).width()/4),
                             top:  top,
                             maxHeight: ($(window).height()*0.75)
                         }).animate({width: ($(window).width()/4*3*0.75)}, 100);
-                    $('.hiden-box > ').find('h3').css({border: ''});
+                    // $('.hiden-box > ').find('h3').css({border: ''});
                     $('.hiden-box > li').hide();
                     $('#hiden-'+num).fadeIn(100);
                     //Detailed Posi tion
@@ -1439,15 +1441,17 @@
                 function(){
                     $(this).find('h3').css({border: ''})
                         .end().find('span').css({color: ""});
-                    // $('.hiden-box').hide().css({width: '0'});
+                    originalWidth = $('.hiden-box').width();
+                    $('.hiden-box').hide().css({width: '0'});
                     console.log('side-li > li - hover-exit');
                 }
             );
             $('.hiden-box').hover(
                 function(){
+                    originalWidth;
                     $('.s_'+num).addClass("sideLiHover");
-                    $('.s_'+num).find('h3').css({border: 'none'});
-                    // $(this).show().css({width: $(window).width()/4*3*0.75});
+                    // $('.s_'+num).find('h3').css({border: 'none'});
+                    $(this).show().css({width: originalWidth});
                     console.log('hiden-box-hover-enter');
                 },
 
@@ -1480,13 +1484,13 @@
             var allFactorsArr = $('.factor');
             for (var i=0;i<allFactorsArr.length;i++) {
                  var singleFactor = allFactorsArr[i];
-                 var instrumentId = $(singleFactor).parent().prev().find("h1").attr("instrumentid");
-                 var siteId = $(singleFactor).parent().parent().parent().parent().attr("id").split("-")[1];
-                 var parkId = $(singleFactor).parent().parent().parent().parent().parent().parent().parent().attr("id").split("-")[1];
-                 // console.log(instrumentId,siteId,parkId);
-                 $(singleFactor).attr('instrumentId',instrumentId);
-                 $(singleFactor).attr('siteId',siteId);
-                 $(singleFactor).attr('parkId',parkId);
+                 var deviceID = $(singleFactor).parent().prev().find("h1").attr("deviceID");
+                 var stationID = $(singleFactor).parent().parent().parent().parent().attr("id").split("-")[1];
+                 var parkID = $(singleFactor).parent().parent().parent().parent().parent().parent().parent().attr("id").split("-")[1];
+                 // console.log(deviceID,stationID,parkID);
+                 $(singleFactor).attr('deviceID',deviceID);
+                 $(singleFactor).attr('stationID',stationID);
+                 $(singleFactor).attr('parkID',parkID);
             }
 
         }
