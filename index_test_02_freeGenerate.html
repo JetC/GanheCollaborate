@@ -154,10 +154,6 @@
             $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">提交</button></div></div>').appendTo('#left-side-nav-panel');
 
             jQuery(function(){
-                // var d = new Date();
-                // var month = d.getMonth();
-                // var day = d.getDate();
-                // var year = d.getFullYear();
                 var today = new Date();
                 today.setHours(today.getHours()-1);
                 var startDate = today;
@@ -229,7 +225,7 @@
                 var endDate = document.getElementById('endDateTimepicker').value;
                 var stringToPost = generateDataToPost(startDate, endDate);
                 jQuery.ajax ({
-                    url: "http://localhost:8070/",
+                    url: "http://localhost:8070/postjson",
                     type: "POST",
                     data: stringToPost,
                     dataType: "json",
@@ -263,7 +259,6 @@
                     var stationID = tempObj[factorKey][0].stationID;
                     var deviceID = tempObj[factorKey][0].deviceID;
                     outputObj["factorsQuery"].push({"parkID":parkID,"stationID":stationID,"deviceID":deviceID,"factorID":factorIDs});
-                    // console.log(outputObj);
                 }
                 var string = JSON.stringify(outputObj);
                 console.log("jsonData:" + string);
@@ -1387,31 +1382,20 @@
                 //Initial position
                 beginH = 0,
                 windowWidth = $(window).width(),
+                windowHeight = $(window).height(),
                 classN,
                 num;
-            $(window).scroll(function(){
-                scTop = $(window).scrollTop();
-                beginH = 138;
-                switch (scTop){
-                    case 600: beginH -= 45;break;
-                    case 500: beginH -= 50;break;
-                    case 400: beginH -= 55;break;
-                    case 300: beginH -= 60;break;
-                    case 200: beginH -= 65;break;
-                    default : beginH = 138;break;
-                }
-            });
-            var originalWidth = 0;
-            originalWidth;
+            var hidenBoxCalculatedWidth = 0;
+            hidenBoxCalculatedWidth;
             $('.side-li > li').hover(
                 function(){
-                    originalWidth;
+                    hidenBoxCalculatedWidth;
                     // $(this).find('h3').css({border: 'none'})
                     //     .end().find('span').css({color: ""});
                     classN = $(this).attr('class');
                     num = classN.substring(2, classN.length);
                     beginH = 50;
-                    var parkIndex = ($(this).parent().parent().parent().index()-1)/2;
+                    var parkIndex = ($(this).parent().parent().parent().index()-2)/2;
                     var siteIndex = $(this).index();
                     // console.log('PARKINDEX:'+parkIndex);
 
@@ -1425,33 +1409,37 @@
                         }
                         return calculatedValue;
                     };
+                    var maxHeight = $(window).height()*0.75;
+                    // if (top() + maxHeight > windowHeight) {
+                    //     top = windowHeight-maxHeight;
+                    // }
                     $('.hiden-box').show()
                         .css({
                             left: ($(window).width()/4),
                             top:  top,
-                            maxHeight: ($(window).height()*0.75)
-                        }).animate({width: ($(window).width()/4*3*0.75)}, 100);
+                            maxHeight: maxHeight
+                        }).animate({width: ($(window).width()/4*3*0.75)}, 0);
                     // $('.hiden-box > ').find('h3').css({border: ''});
                     $('.hiden-box > li').hide();
-                    $('#hiden-'+num).fadeIn(100);
-                    //Detailed Posi tion
+                    $('#hiden-'+num).fadeIn(0);
+                    //Detailed Position
                     beginH = 0;
                     console.log('side-li > li - hover-enter');
                 },
                 function(){
                     $(this).find('h3').css({border: ''})
                         .end().find('span').css({color: ""});
-                    originalWidth = $('.hiden-box').width();
+                    hidenBoxCalculatedWidth = $('.hiden-box').width();
                     $('.hiden-box').hide().css({width: '0'});
                     console.log('side-li > li - hover-exit');
                 }
             );
             $('.hiden-box').hover(
                 function(){
-                    originalWidth;
+                    hidenBoxCalculatedWidth;
                     $('.s_'+num).addClass("sideLiHover");
                     // $('.s_'+num).find('h3').css({border: 'none'});
-                    $(this).show().css({width: originalWidth});
+                    $(this).show().css({width: hidenBoxCalculatedWidth});
                     console.log('hiden-box-hover-enter');
                 },
 
