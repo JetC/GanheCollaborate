@@ -1410,9 +1410,13 @@
                         return calculatedValue;
                     };
                     var maxHeight = $(window).height()*0.75;
-                    // if (top() + maxHeight > windowHeight) {
-                    //     top = windowHeight-maxHeight;
-                    // }
+                    var actualHeight = $('.hiden-box').css('maxHeight', maxHeight).height();
+                    console.log("scrollHeight()"+actualHeight);
+                    if (top() + actualHeight > windowHeight) {
+                        top = windowHeight-actualHeight;
+                    }
+                    // var scrollHeight = $('.hiden-box')[0].scrollHeight;
+
                     $('.hiden-box').show()
                         .css({
                             left: ($(window).width()/4),
