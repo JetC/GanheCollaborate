@@ -18,7 +18,7 @@
 
     <!--<script src="./js/libs/require.js" data-main="./js/main.js"></script>-->
     <!--<script src="js/libs/require.js" ></script>-->
-    <!--<script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>-->
+    <script src="./Cesium/Release/CesiumUn/Cesium.js" ></script>
     <script src="js/libs/jquery.js" ></script>
     <script src="js/PositionPick.js"></script>
     <script src="js/navigation-mixin.js" ></script>
@@ -61,8 +61,9 @@
             <div id="tool-bar-append" ></div>
             <div id="position" ></div>
             <div id="dataTable" class="modalHide"></div>
-            <div id="flyTable" class="modalHide">
-            </div>
+            <div id="flyTable" class="modalHide"></div>
+        </div>
+    </div>
     <script>
         var jsonData;
         loadJSON(function (response) {
@@ -138,11 +139,264 @@
                 }
             }],
             "a_box":[{
-                "<>":"button","href":"#1", "class":"factor","factorId":"${factorId}", "html":"${name}"
+                "<>":"button","href":"#1", "class":"factor","factorID":"${factorID}", "html":"${name}"
             },{
                 "<>":"span","html":" "
             }]
         };
+
+        function displayData(data) {
+            var stationList = loadServerData(data);
+            //var stationList = data;
+            var baseLineHeight = 10000.0;
+            var scene = viewer.scene;
+            var entities = viewer.entities;
+            var polylineWith = 1;
+            var polylineColor = Cesium.Color.GRAY;
+            var stationSphereRadius = 700;
+            var machineSphereRadius = 350;
+            var factorSphereRadius = 50;
+            var stationSphereColor = Cesium.Color.BLUE.withAlpha(0.8);
+            var machineSphereColor = Cesium.Color.YELLOW.withAlpha(0.8);
+            //  var factorSphereColor = Cesium.Color.LIGHTSKYBLUE.withAlpha(0.5);
+            var factorSphereColor = Cesium.Color.fromRandom();
+            var heightScaleForNearStation = 2;
+
+            //计算每一个factor的运动轨迹的点
+
+            var start = Cesium.JulianDate.fromDate(new Date(2017, 9, 30, 12));
+
+            var stop = Cesium.JulianDate.addHours(start, 360, new Cesium.JulianDate());
+            viewer.clock.startTime = start.clone();
+            viewer.clock.stopTime = stop.clone();
+            viewer.clock.currentTime = start.clone();
+            viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+            viewer.clock.mutiplier = 60;
+            viewer.timeline.zoomTo(start, stop);
+
+            for (var i = 0; i < stationList.length; i++) {//device Node
+                var stationData = stationList[i];
+                if (stationData.stationId === 2 || stationData.stationId === 2) {
+                    stationLineHeight = (i + 5) * baseLineHeight / 20 + 1800;
+
+                } else {
+                    stationLineHeight = (i + 5) * baseLineHeight / 20;
+                }
+
+
+                var stationExtraInfo = queryLonLatByStationID(stationData.stationId);
+                var lon = stationExtraInfo.lontitude;
+                var lat = stationExtraInfo.latitude;
+
+
+                /*     var extent = Cesium.Rectangle.fromDegrees(100.334056, 3.522957,101.586551, 38.203119);
+                 Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
+                 Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
+                 viewer.camera.setView({
+                 destination: extent
+                 });*/
+                var surfacePosition = Cesium.Cartesian3.fromDegrees(lon, lat, 0);
+                var heightPosition = Cesium.Cartesian3.fromDegrees(lon, lat, stationLineHeight);
+
+                var positions = new Cesium.ConstantProperty([surfacePosition, heightPosition]);
+
+                var stationNodeLine = viewer.entities.add({
+                    name: "stationPolyline",
+                    polyline: {
+                        positions: positions,
+                        width: polylineWith,
+                        material: new Cesium.ColorMaterialProperty(polylineColor)
+                    }
+                });
+                // stationNodeLine.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(heightPosition, new Cesium.HeadingPitchRoll(heading,pitch,roll)));
+                var getRandomBallUrl = function()
+                {
+                    var randFloat =  Math.random()*28+1;
+                    var randInt = parseInt(randFloat);
+                    return 'models/balls/'+ randInt+'.glb';
+                };
+                var stationNode = viewer.entities.add({
+                    name: stationData.stationName,
+                    label:stationData.stationName,
+                    position: heightPosition,
+                    model:{
+                        uri:'models/balls/30.glb',
+                        scale:300
+                    }
+                });
+                //Add the entity to the collection.
+                // entities.add(entity);
+                // stationNode.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(heightPosition, new Cesium.HeadingPitchRoll(heading,pitch,roll)));
+                var deviceList = stationData.deviceList;
+                var radius = 0.01;
+                var devicePositionArray = getPointArrayAroundPosition(lon,lat,radius);
+                for (var j = 0; j < deviceList.length; j++) {
+                    //device node
+                    var deviceData  = deviceList[j];
+                    var degreeInterval = Cesium.Math.toRadians(360) / deviceData.factorList.length;
+
+                    var radians = degreeInterval * j;
+
+                    var startPosition = heightPosition;
+                    var machineHeight = 1000;
+
+                    //var endPosition = Cesium.Cartesian3.fromDegrees(log+, lat, 2*baseLineHeight);
+                    var vect3dPosition = getRandPosition(devicePositionArray)
+                    var deviceHeight = stationLineHeight+vect3dPosition.z*111000;
+                    var endPosition = Cesium.Cartesian3.fromDegrees(vect3dPosition.x, vect3dPosition.y, deviceHeight);
+
+                    var machinePositions = new Cesium.ConstantProperty([startPosition, endPosition]);
+                    var heading = Cesium.Math.PI_OVER_TWO;
+                    var pitch = Cesium.Math.PI_OVER_FOUR;
+                    var roll = 0.0;
+                    var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+
+
+                    var orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(startPosition, hpr));
+                    //var machinePosition =  Cesium.Cartesian3.fromDegrees(log,lat,750);
+                    var machineNodeLine = viewer.entities.add({
+                        name: "machinePolyline" + deviceData.deviceName,
+                        polyline: {
+                            positions: machinePositions,
+                            width: polylineWith,
+                            material: new Cesium.ColorMaterialProperty(polylineColor)
+                        }
+                    });
+
+                    machineNodeLine.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(Cesium.Cartesian3.fromDegrees(lon, lat, 500), hpr));
+                    var scale = 0.5;
+                    var machineNode = viewer.entities.add({
+                        name: deviceData.deviceName,
+                        label:deviceData.deviceName,
+                        position: endPosition,
+                        model:{
+                            uri:getRandomBallUrl(),
+                            scale:150
+                        }
+
+                    });
+
+                    var factorList = deviceData.factorList;
+                    var factorPositionArray = getPointArrayAroundPosition(vect3dPosition.x, vect3dPosition.y, radius);
+                    for (var k = 0; k < factorList.length; k++) {
+                        var factorData = factorList[k];
+                        // var property = computeCircularFlight(start, lon + radius * Math.cos(radians), lat + radius * Math.sin(radians), stationLineHeight + Math.sin(Cesium.Math.toRadians(30)) * machineHeight);
+                        //  alert(property);1
+                        var vectFactorPosition = getRandPosition(factorPositionArray);
+                        var factorPosition = Cesium.Cartesian3.fromDegrees(vectFactorPosition.x, vectFactorPosition.y, deviceHeight+vectFactorPosition.z*111000);
+
+                        var factorEntity = viewer.entities.add({
+                            name:"factor",
+
+                            //设置entity生存时间与
+                            // availability: new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
+                            //     start: start,
+                            //      stop: stop
+                            // })]),
+
+                            //Use our computed positions
+                            position: factorPosition,
+
+                            //Automatically compute orientation based on position movement.
+                            //  orientation: new Cesium.VelocityOrientationProperty(property),
+
+                            //Load the Cesium plane model to represent the entity
+                            model:{
+                                uri:getRandomBallUrl(),
+                                scale:60
+                            }
+                            /*
+                             ,
+
+                             //Show the path as a pink line sampled in 1 second increments.
+                             path : {
+                             resolution : 1,
+                             material : new Cesium.PolylineGlowMaterialProperty({
+                             glowPower : 0.1,
+                             color : Cesium.Color.YELLOW
+                             }),
+                             width : 1
+                             }
+                             */
+                        });
+
+                        /* factorEntity.position.setInterpolationOptions({
+                         interpolationDegree: 2,
+                         interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
+                         });*/
+
+                        /*
+                         var Pai = Cesium.Math.PI;
+                         var factorNode;
+
+                         var factorSphereRadiusPlus =100;
+
+
+                         //产生一个在0-2派之间的随机角度，控制高度角
+                         var factorSpheres_randomAlpha = Cesium.Math.randomBetween(-1,1)*Pai;
+
+
+
+                         //产生一个在0-派之间的随机角度控制平面间的旋转
+                         var factorSpheres_randomBeta = Cesium.Math.nextRandomNumber()*Pai*2;
+                         var factorSpheres_Lineradius = 0.01;
+                         var factorNode_log = log+radius*Math.cos(radians)+factorSpheres_Lineradius*Math.cos(factorSpheres_randomAlpha)*Math.sin(factorSpheres_randomBeta);
+                         var factorNode_lat = lat+radius*Math.sin(radians)+factorSpheres_Lineradius*Math.cos(factorSpheres_randomAlpha)*Math.cos(factorSpheres_randomBeta);
+                         var factorNode_height = stationLineHeight*(Math.sin(Cesium.Math.toRadians(35))+0.8)+Math.sin(factorSpheres_randomAlpha)*1200;
+
+                         var factorNode_endFactorPosition = Cesium.Cartesian3.fromDegrees( factorNode_log,factorNode_lat,factorNode_height);
+
+                         var startFactorPosition = endPosition;
+                         var factorDegreeInterval = Cesium.Math.toRadians(360)/data[i]["list"][j]["machineData"].length;
+                         var factorRadians = factorDegreeInterval*k;
+                         // var endFactorPosition = Cesium.Cartesian3.fromDegrees(log+radius*Math.cos(radians), lat+radius*Math.sin(radians),baseLineHeight*(2));
+                         //var endFactorPosition = Cesium.Cartesian3.fromDegrees(log+radius*Math.cos(radians)+scale*radius*Math.cos(factorRadians), lat+radius*Math.sin(radians)+scale*radius*Math.sin(factorRadians),factorHeight);
+                         //var factorPositions = new Cesium.ConstantProperty([startFactorPosition, factorNode_endFactorPosition]);
+
+
+                         // var factorNodeLine = viewer.entities.add({
+                         //  name:"factorPolyline"+data[i]["list"][j]["machineData"][k]["data"][0]["value"],
+                         //  polyline:{
+                         //     positions:factorPositions,
+                         //     width:polylineWith,
+                         //     material:new Cesium.ColorMaterialProperty(polylineColor)
+                         //  }
+                         // });
+
+                         factorNode = viewer.entities.add({
+                         name:"factorSphere"+data[i]["list"][j]["machineData"][k]["data"][0]["value"],
+                         position: factorNode_endFactorPosition,
+                         orientation:orientation,
+                         ellipsoid: {
+                         radii: new Cesium.Cartesian3(factorSphereRadius,factorSphereRadius, factorSphereRadius),
+                         outline: false,
+                         material:  Cesium.Color.fromRandom()
+                         }
+
+                         });
+                         if (data[i]["list"][j]["machineData"][k]["data"][0]["warningGrade"]==="5"){
+                         factorNodeWarning = viewer.entities.add({
+                         name:"factorSphereWarning"+data[i]["list"][j]["machineData"][k]["data"][0]["value"],
+                         position: factorNode_endFactorPosition,
+                         orientation:orientation,
+                         ellipsoid: {
+                         radii: new Cesium.Cartesian3(factorSphereRadius+100,factorSphereRadius+100, factorSphereRadius+100),
+                         outline: false,
+                         material:Cesium.Color.RED.withAlpha(0.3)
+                         }
+
+                         });
+                         }
+                         */
+                    }
+                }
+            }
+
+//var result = squareMatrixMultiply(calculatePositions(), caculateRotationMatrix());
+
+            viewer.zoomTo(viewer.entities);
+
+        }
 
         var selectedFactorsInfo;
         selectedFactorsInfo = [];
@@ -186,7 +440,7 @@
             leftSideBarConf();
             writeAttrsToFactors();
             mergeHidenBoxes();
-            // $($('.parkToggle').first()).trigger('click');
+             $($('.parkToggle').first()).trigger('click');
             $('.panel-heading').click(function () {
                 console.log('dsdf:'+ (($(this).index()-1)/2+1));
             });
@@ -225,13 +479,13 @@
                 var endDate = document.getElementById('endDateTimepicker').value;
                 var stringToPost = generateDataToPost(startDate, endDate);
                 jQuery.ajax ({
-                    url: "http://localhost:8070/postjson",
+                    url: "http://192.168.20.59:80/postjson",
                     type: "POST",
                     data: stringToPost,
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     success: function(data){
-                        alert( "Data Loaded: " + data );
+                        displayData(data);
                     }
                 });
             });
@@ -649,416 +903,6 @@
             /********************************加载实时经纬度坐标********************************/
             position(viewer);
             /*******************************导入json数据********************************/
-            Cesium.loadJson('./json/exampleData.json').then(function (data) {
-
-                var baseLineHeight = 10000.0;
-                var scene = viewer.scene;
-                var entities = viewer.entities;
-                var polylineWith = 1;
-                var polylineColor = Cesium.Color.GRAY;
-                var stationSphereRadius = 700;
-                var machineSphereRadius = 350;
-                var factorSphereRadius = 50;
-                var stationSphereColor = Cesium.Color.BLUE.withAlpha(0.8);
-                var machineSphereColor = Cesium.Color.YELLOW.withAlpha(0.8);
-                //  var factorSphereColor = Cesium.Color.LIGHTSKYBLUE.withAlpha(0.5);
-                var factorSphereColor = Cesium.Color.fromRandom();
-                var heightScaleForNearStation = 2;
-
-                //计算每一个factor的运动轨迹的点
-
-                var start = Cesium.JulianDate.fromDate(new Date(2017, 9, 30, 12));
-
-                var stop = Cesium.JulianDate.addHours(start, 360, new Cesium.JulianDate());
-                viewer.clock.startTime = start.clone();
-                viewer.clock.stopTime = stop.clone();
-                viewer.clock.currentTime = start.clone();
-                viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
-                viewer.clock.mutiplier = 60;
-                viewer.timeline.zoomTo(start, stop);
-
-                for (var i = 0; i < data.length; i++) {
-                    if (data[i]["stationID"] === 2 || data[i]["stationID"] === 6) {
-                        stationLineHeight = (i + 5) * baseLineHeight / 20 + 1800;
-
-                    } else {
-                        stationLineHeight = (i + 5) * baseLineHeight / 20;
-                    }
-
-
-                    var lat = data[i]["Latitude"];
-                    var log = data[i]["Logitude"];
-
-
-                    /*     var extent = Cesium.Rectangle.fromDegrees(100.334056, 3.522957,101.586551, 38.203119);
-                     Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
-                     Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
-                     viewer.camera.setView({
-                         destination: extent
-                     });*/
-                    var surfacePosition = Cesium.Cartesian3.fromDegrees(log, lat, 0);
-                    var heightPosition = Cesium.Cartesian3.fromDegrees(log, lat, stationLineHeight);
-
-                    var positions = new Cesium.ConstantProperty([surfacePosition, heightPosition]);
-
-                    var stationNodeLine = viewer.entities.add({
-                        name: "stationPolyline",
-                        polyline: {
-                            positions: positions,
-                            width: polylineWith,
-                            material: new Cesium.ColorMaterialProperty(polylineColor)
-                        }
-                    });
-                    // stationNodeLine.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(heightPosition, new Cesium.HeadingPitchRoll(heading,pitch,roll)));
-                    var stationNode = viewer.entities.add({
-                        name: "stationSphere" + data[i]["stationName"],
-                        position: heightPosition,
-                        ellipsoid: {
-                            radii: new Cesium.Cartesian3(stationSphereRadius, stationSphereRadius, stationSphereRadius),
-                            outline: false,
-                            material: stationSphereColor
-                        }
-                    });
-                    //Add the entity to the collection.
-                    // entities.add(entity);
-                    // stationNode.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(heightPosition, new Cesium.HeadingPitchRoll(heading,pitch,roll)));
-
-                    for (var j = 0; j < data[i]["list"].length; j++) {
-                        //控制仪器节点
-
-                        var degreeInterval = Cesium.Math.toRadians(360) / data[i]["list"].length;
-
-                        var radians = degreeInterval * j;
-
-                        var startPosition = heightPosition;
-                        var machineHeight = 1000;
-
-                        //var endPosition = Cesium.Cartesian3.fromDegrees(log+, lat, 2*baseLineHeight);
-                        var radius = 0.01;
-
-                        var endPosition = Cesium.Cartesian3.fromDegrees(log + radius * Math.cos(radians), lat + radius * Math.sin(radians), stationLineHeight + Math.sin(Cesium.Math.toRadians(30)) * machineHeight);
-
-                        var machinePositions = new Cesium.ConstantProperty([startPosition, endPosition]);
-                        var heading = Cesium.Math.PI_OVER_TWO;
-                        var pitch = Cesium.Math.PI_OVER_FOUR;
-                        var roll = 0.0;
-                        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
-
-
-                        var orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(startPosition, hpr));
-                        //var machinePosition =  Cesium.Cartesian3.fromDegrees(log,lat,750);
-                        var machineNodeLine = viewer.entities.add({
-                            name: "machinePolyline" + data[i]["list"][j]["machine"],
-                            polyline: {
-                                positions: machinePositions,
-                                width: polylineWith,
-                                material: new Cesium.ColorMaterialProperty(polylineColor)
-                            }
-                        });
-
-                        machineNodeLine.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(Cesium.Cartesian3.fromDegrees(log, lat, 500), hpr));
-                        var scale = 0.5;
-                        var machineNode = viewer.entities.add({
-                            name: "machineSphere" + data[i]["list"][j]["machine"],
-                            position: endPosition,
-                            //orientation:orientation,
-                            ellipsoid: {
-                                radii: new Cesium.Cartesian3(machineSphereRadius, machineSphereRadius, machineSphereRadius),
-                                outline: false,
-                                material: machineSphereColor
-                            }
-
-                        });
-
-                        for (var k = 0; k < data[i]["list"][j]["machineData"].length; k++) {
-
-                            var property = computeCircularFlight(log + radius * Math.cos(radians), lat + radius * Math.sin(radians), stationLineHeight + Math.sin(Cesium.Math.toRadians(30)) * machineHeight);
-                            //  alert(property);
-
-                            var factorEntity = viewer.entities.add({
-
-                                //设置entity生存时间与
-                                availability: new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
-                                    start: start,
-                                    stop: stop
-                                })]),
-
-                                //Use our computed positions
-                                position: property,
-
-                                //Automatically compute orientation based on position movement.
-                                orientation: new Cesium.VelocityOrientationProperty(property),
-
-                                //Load the Cesium plane model to represent the entity
-                                ellipsoid: {
-                                    radii: new Cesium.Cartesian3(factorSphereRadius, factorSphereRadius, factorSphereRadius),
-                                    outline: false,
-                                    material: Cesium.Color.fromRandom()
-                                }
-                                /*
-                            ,
-
-                            //Show the path as a pink line sampled in 1 second increments.
-                            path : {
-                                resolution : 1,
-                                material : new Cesium.PolylineGlowMaterialProperty({
-                                    glowPower : 0.1,
-                                    color : Cesium.Color.YELLOW
-                                }),
-                                width : 1
-                            }
-                            */
-                            });
-
-                            factorEntity.position.setInterpolationOptions({
-                                interpolationDegree: 2,
-                                interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
-                            });
-
-                            /*
-                        var Pai = Cesium.Math.PI;
-                        var factorNode;
-
-                        var factorSphereRadiusPlus =100;
-
-
-                        //产生一个在0-2派之间的随机角度，控制高度角
-                        var factorSpheres_randomAlpha = Cesium.Math.randomBetween(-1,1)*Pai;
-
-
-
-                        //产生一个在0-派之间的随机角度控制平面间的旋转
-                        var factorSpheres_randomBeta = Cesium.Math.nextRandomNumber()*Pai*2;
-                        var factorSpheres_Lineradius = 0.01;
-                        var factorNode_log = log+radius*Math.cos(radians)+factorSpheres_Lineradius*Math.cos(factorSpheres_randomAlpha)*Math.sin(factorSpheres_randomBeta);
-                        var factorNode_lat = lat+radius*Math.sin(radians)+factorSpheres_Lineradius*Math.cos(factorSpheres_randomAlpha)*Math.cos(factorSpheres_randomBeta);
-                        var factorNode_height = stationLineHeight*(Math.sin(Cesium.Math.toRadians(35))+0.8)+Math.sin(factorSpheres_randomAlpha)*1200;
-
-                        var factorNode_endFactorPosition = Cesium.Cartesian3.fromDegrees( factorNode_log,factorNode_lat,factorNode_height);
-
-                        var startFactorPosition = endPosition;
-                        var factorDegreeInterval = Cesium.Math.toRadians(360)/data[i]["list"][j]["machineData"].length;
-                        var factorRadians = factorDegreeInterval*k;
-                        // var endFactorPosition = Cesium.Cartesian3.fromDegrees(log+radius*Math.cos(radians), lat+radius*Math.sin(radians),baseLineHeight*(2));
-                        //var endFactorPosition = Cesium.Cartesian3.fromDegrees(log+radius*Math.cos(radians)+scale*radius*Math.cos(factorRadians), lat+radius*Math.sin(radians)+scale*radius*Math.sin(factorRadians),factorHeight);
-                        //var factorPositions = new Cesium.ConstantProperty([startFactorPosition, factorNode_endFactorPosition]);
-
-
-                              // var factorNodeLine = viewer.entities.add({
-                                 //  name:"factorPolyline"+data[i]["list"][j]["machineData"][k]["data"][0]["value"],
-                                 //  polyline:{
-                                  //     positions:factorPositions,
-                                  //     width:polylineWith,
-                                  //     material:new Cesium.ColorMaterialProperty(polylineColor)
-                                 //  }
-                              // });
-
-                        factorNode = viewer.entities.add({
-                            name:"factorSphere"+data[i]["list"][j]["machineData"][k]["data"][0]["value"],
-                            position: factorNode_endFactorPosition,
-                            orientation:orientation,
-                            ellipsoid: {
-                                radii: new Cesium.Cartesian3(factorSphereRadius,factorSphereRadius, factorSphereRadius),
-                                outline: false,
-                                material:  Cesium.Color.fromRandom()
-                            }
-
-                        });
-                        if (data[i]["list"][j]["machineData"][k]["data"][0]["warningGrade"]==="5"){
-                            factorNodeWarning = viewer.entities.add({
-                                name:"factorSphereWarning"+data[i]["list"][j]["machineData"][k]["data"][0]["value"],
-                                position: factorNode_endFactorPosition,
-                                orientation:orientation,
-                                ellipsoid: {
-                                    radii: new Cesium.Cartesian3(factorSphereRadius+100,factorSphereRadius+100, factorSphereRadius+100),
-                                    outline: false,
-                                    material:Cesium.Color.RED.withAlpha(0.3)
-                                }
-
-                            });
-                        }
-                        */
-                        }
-                    }
-
-
-                }
-
-                function computeCircularFlight(lon, lat, height) {
-
-                    var property = new Cesium.SampledPositionProperty();
-                    //计算标准圆形轨道的9个差值点
-                    var originalPositionsArray = calculatePositions();
-
-                    //对于传进来的仪器位置，随机生成空间旋转圆形轨道的旋转角度
-                    var randomRotationAngel = generateRandomRotationAngel();
-
-                    //返回一个3x3的标准差值点矩阵
-                    var rotationMatrix = caculateRotationMatrix(randomRotationAngel);
-
-                    //计算旋转后的9x3的空间差值点坐标
-                    var positionsArray = squareMatrixMultiply(originalPositionsArray, rotationMatrix);
-
-                    for (var i = 0; i < positionsArray.length; i++) {
-                        var time = Cesium.JulianDate.addSeconds(start, i * 360 / positionsArray.length, new Cesium.JulianDate());
-                        var position = Cesium.Cartesian3.fromDegrees(lon + positionsArray[i][0], lat + positionsArray[i][1], height + positionsArray[i][2] * 1115);
-                        property.addSample(time, position);
-
-                        //Also create a point for each sample we generate.
-                        /*viewer.entities.add({
-                        position : position,
-                        point : {
-                            pixelSize : 8,
-                            color : Cesium.Color.TRANSPARENT,
-                            outlineColor : Cesium.Color.YELLOW,
-                            outlineWidth : 3
-                        }
-                    });
-                    */
-                    }
-                    return property;
-                }
-
-                //随机生成一组绕轴旋转的角度值，分别为Log方向：α，lat方向：β，z方向：γ
-                function generateRandomRotationAngel() {
-                    var α = Cesium.Math.randomBetween(0, 1) * Cesium.Math.PI;
-                    var β = Cesium.Math.randomBetween(0, 1) * Cesium.Math.PI;
-                    var γ = Cesium.Math.randomBetween(0, 1) * Cesium.Math.PI;
-                    var randomRotationAngelArray = new Array(3);
-                    randomRotationAngelArray[0] = α;
-                    randomRotationAngelArray[1] = β;
-                    randomRotationAngelArray[2] = γ;
-
-                    return randomRotationAngelArray;
-                }
-
-                /*******************************计算factor围绕小球旋转矩阵********************************/
-
-                /*传入随机角度α，β，γ计算其对应旋转矩阵*/
-                function caculateRotationMatrix(randomRotationAngelArray) {
-                    var α = randomRotationAngelArray[0];
-                    var β = randomRotationAngelArray[1];
-                    var γ = randomRotationAngelArray[2];
-                    var cosα = Math.cos(α);
-                    var sinα = Math.sin(α);
-                    var cosβ = Math.cos(β);
-                    var sinβ = Math.sin(β);
-                    var cosγ = Math.cos(γ);
-                    var sinγ = Math.sin(γ);
-
-                    var a1 = cosα * cosγ - cosβ * sinα * sinγ;
-                    var a2 = sinα * cosγ + cosβ * cosα * sinγ;
-                    var a3 = sinβ * sinγ;
-                    var a4 = -cosα * sinγ - cosβ * sinα * cosγ;
-                    var a5 = -sinα * sinγ + cosβ * cosα * cosγ;
-                    var a6 = sinβ * cosγ;
-                    var a7 = sinβ * sinα;
-                    var a8 = -sinβ * cosα;
-                    var a9 = cosβ;
-
-                    var rotationMatrix = new Array(new Array(3), new Array(3), new Array(3));
-
-                    rotationMatrix[0][0] = a1;
-                    rotationMatrix[0][1] = a2;
-                    rotationMatrix[0][2] = a3;
-                    rotationMatrix[1][0] = a4;
-                    rotationMatrix[1][1] = a5;
-                    rotationMatrix[1][2] = a6;
-                    rotationMatrix[2][0] = a7;
-                    rotationMatrix[2][1] = a8;
-                    rotationMatrix[2][2] = a9;
-
-                    return rotationMatrix;
-                }
-
-                /*生成在标准坐标系中的9个z轴值为零的均分差值点的坐标，第9个值为起始值，使形成闭合环路*/
-                function calculatePositions() {
-                    var arry = new Array(new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3));
-
-                    var number = 0.006;
-                    arry[0][0] = number;
-                    arry[0][1] = 0;
-                    arry[0][2] = 0;
-                    arry[1][0] = Math.sqrt(2) / 2 * number;
-                    arry[1][1] = Math.sqrt(2) / 2 * number;
-                    arry[1][2] = 0;
-                    arry[2][0] = 0;
-                    arry[2][1] = number;
-                    arry[2][2] = 0;
-                    arry[3][0] = -Math.sqrt(2) / 2 * number;
-                    arry[3][1] = Math.sqrt(2) / 2 * number;
-                    arry[3][2] = 0;
-                    arry[4][0] = -number;
-                    arry[4][1] = 0;
-                    arry[4][2] = 0;
-                    arry[5][0] = -Math.sqrt(2) / 2 * number;
-                    arry[5][1] = -Math.sqrt(2) / 2 * number;
-                    arry[5][2] = 0;
-                    arry[6][0] = 0;
-                    arry[6][1] = -number;
-                    arry[6][2] = 0;
-                    arry[7][0] = Math.sqrt(2) / 2 * number;
-                    arry[7][1] = -Math.sqrt(2) / 2 * number;
-                    arry[7][2] = 0;
-                    arry[8][0] = number;
-                    arry[8][1] = 0;
-                    arry[8][2] = 0;
-
-                    return arry;
-                }
-
-
-                function squareMatrixMultiply(A, B) {
-                    var n = A.length;
-                    var C = new Array(new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3), new Array(3));
-
-                    for (var i = 0; i < n; i++) {
-
-                        for (var j = 0; j < A[i].length; j++) {
-                            C[i][j] = 0;
-                            for (var k = 0; k < A[i].length; k++) {
-
-
-                                C[i][j] += A[i][k] * B[k][j];
-                            }
-                        }
-                    }
-                    return C;
-                }
-
-                function calculateExplosionFlight(lon, lat, height) {
-                    var property = new Cesium.SampledPositionProperty();
-                    var α = new Cesium.Math.randomBetween(0, 2) * Cesium.Math.PI;
-                    var β = new Cesium.Math.randomBetween(-1, 1) * Cesium.Math.PI_OVER_TWO;
-
-
-                    for (var i = 0; i < positionsArray.length; i++) {
-                        var time = Cesium.JulianDate.addSeconds(start, i * 360 / positionsArray.length, new Cesium.JulianDate());
-                        var position = Cesium.Cartesian3.fromDegrees(lon + positionsArray[i][0], lat + positionsArray[i][1], height + positionsArray[i][2] * 1115);
-                        property.addSample(time, position);
-
-                        //Also create a point for each sample we generate.
-                        /*viewer.entities.add({
-                        position : position,
-                        point : {
-                            pixelSize : 8,
-                            color : Cesium.Color.TRANSPARENT,
-                            outlineColor : Cesium.Color.YELLOW,
-                            outlineWidth : 3
-                        }
-                    });
-                    */
-                    }
-                    return property;
-
-                }
-
-//var result = squareMatrixMultiply(calculatePositions(), caculateRotationMatrix());
-
-                viewer.zoomTo(viewer.entities);
-            }).otherwise(function (error) {
-                alert(error);
-            });
 
             function getDataForHeatMap() {
                 var points = [];
@@ -1499,9 +1343,6 @@
         }
 
     </script>
-
-
-
     <script>
         function openCity(evt, cityName) {
             var i, tabcontent, tablinks;
@@ -1518,12 +1359,12 @@
         }
 
         // Get the element with id="defaultOpen" and click on it
-        document.getElementById("defaultOpen").click();
+      //  document.getElementById("defaultOpen").click();
     </script>
 
-
-
 </body>
+<script src="stationData.js"></script>
+<script src="utils.js"></script>
 </html>
 
 
