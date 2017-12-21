@@ -4,16 +4,16 @@
 function computeCircularFlight(start,lon, lat, height) {
 
     var property = new Cesium.SampledPositionProperty();
-    //计算标准圆形轨道的9个差值点
+
     var originalPositionsArray = calculatePositions();
 
-    //对于传进来的仪器位置，随机生成空间旋转圆形轨道的旋转角度
+
     var randomRotationAngel = generateRandomRotationAngel();
 
-    //返回一个3x3的标准差值点矩阵
+
     var rotationMatrix = caculateRotationMatrix(randomRotationAngel);
 
-    //计算旋转后的9x3的空间差值点坐标
+
     var positionsArray = squareMatrixMultiply(originalPositionsArray, rotationMatrix);
 
     for (var i = 0; i < positionsArray.length; i++) {
@@ -36,7 +36,7 @@ function computeCircularFlight(start,lon, lat, height) {
     return property;
 }
 
-//随机生成一组绕轴旋转的角度值，分别为Log方向：α，lat方向：β，z方向：γ
+
 function generateRandomRotationAngel() {
     var a= Cesium.Math.randomBetween(0, 1) * Cesium.Math.PI;
     var b= Cesium.Math.randomBetween(0, 1) * Cesium.Math.PI;
@@ -60,9 +60,6 @@ function create2DArray(rows, cols)
     return array;
 }
 
-/*******************************计算factor围绕小球旋转矩阵********************************/
-
-/*传入随机角度α，β，γ计算其对应旋转矩阵*/
 function caculateRotationMatrix(randomRotationAngelArray) {
     var a = randomRotationAngelArray[0];
     var b = randomRotationAngelArray[1];
@@ -99,7 +96,7 @@ function caculateRotationMatrix(randomRotationAngelArray) {
     return rotationMatrix;
 }
 
-/*生成在标准坐标系中的9个z轴值为零的均分差值点的坐标，第9个值为起始值，使形成闭合环路*/
+
 function calculatePositions() {
 
     var arry = create2DArray(9,3);
@@ -212,5 +209,17 @@ function getPointArrayAroundPosition(lon, lat, radius)
     return positionArray;
 }
 
+function loadJSON(callback) {
+    var xobj = new XMLHttpRequest();
+    xobj.overrideMimeType("application/json");
+    xobj.open('GET', 'ParkStructure.json', true); // Replace 'my_data' with the path to your file
+    xobj.onreadystatechange = function () {
+        if (xobj.readyState == 4 && xobj.status == "200") {
+            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+            callback(xobj.responseText);
+        }
+    };
+    xobj.send(null);
+}
 
 

@@ -4,6 +4,7 @@
     "地形切片",
     "矢量切片",
     "三维模型",
+    "气温",
     "青海省监测站点布局图.kml"
   ],
   "影像切片": [
@@ -20,6 +21,16 @@
   "三维模型": [
     {"name":"三维模型","type":"gltf","url":"./gltf","Description":"3DTransform service","demo":"load3D.html"}
    
+  ],
+  "气温":[
+    {
+      "name":"气温",
+      "type":"osm",
+      "url":"http://c.maps.owm.io/map/temp_new/",
+      "Description":"open weather map",
+      "demo":"load3D.html",
+      "suffix":"png?appid=b1b15e88fa797225412429c1c50c122a1"
+    }
   ],
   "青海省监测站点布局图.kml": [
     {"name":"青海省监测站点布局图.kml","type":"kml","url":"json/青海省监测站点布局图.kml","Description":"3DTransform service","demo":"load3D.html"}

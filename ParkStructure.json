@@ -1,1 +1,1574 @@
-[{"stations": [{"name": "天泰站", "device": [{"name": "傅立叶红外光谱分析仪", "deviceID": 53, "factor": [{"name": "二氧化硫", "factorID": 258}, {"name": "正辛烷", "factorID": 49}, {"name": "甲醇", "factorID": 153}, {"name": "氨", "factorID": 66}, {"name": "氟化氢", "factorID": 73}, {"name": "六氟化硫", "factorID": 259}, {"name": "甲烷", "factorID": 15}, {"name": "乙烯", "factorID": 12}, {"name": "正庚烷", "factorID": 44}, {"name": "氯乙烯", "factorID": 312}, {"name": "硫化羰", "factorID": 244}]}, {"name": "气象分析仪", "deviceID": 54, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 7}, {"name": "东区污水厂站", "device": [{"name": "气象分析仪", "deviceID": 96, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 1007}, {"name": "苏锡子站", "device": [{"name": "大气重金属在线分析仪", "deviceID": 89, "factor": [{"name": "铅", "factorID": 440}, {"name": "PM2.5", "factorID": 423}, {"name": "铜", "factorID": 424}, {"name": "硒", "factorID": 445}, {"name": "钡", "factorID": 447}, {"name": "铊", "factorID": 438}, {"name": "钾", "factorID": 433}, {"name": "汞", "factorID": 439}, {"name": "氩", "factorID": 452}, {"name": "铬", "factorID": 427}, {"name": "锰", "factorID": 426}, {"name": "铯", "factorID": 454}, {"name": "PM10", "factorID": 456}, {"name": "锌", "factorID": 425}, {"name": "锡", "factorID": 436}, {"name": "钙", "factorID": 432}, {"name": "锑", "factorID": 437}, {"name": "锆", "factorID": 453}, {"name": "溴", "factorID": 446}, {"name": "钒", "factorID": 428}, {"name": "钪", "factorID": 442}, {"name": "钛", "factorID": 429}, {"name": "锶", "factorID": 450}, {"name": "砷", "factorID": 444}, {"name": "铁", "factorID": 431}, {"name": "镓", "factorID": 443}, {"name": "钴", "factorID": 430}, {"name": "氯", "factorID": 455}, {"name": "钼", "factorID": 451}, {"name": "镉", "factorID": 434}, {"name": "镍", "factorID": 441}, {"name": "碲", "factorID": 449}, {"name": "钯", "factorID": 448}, {"name": "银", "factorID": 435}]}, {"name": "气象分析仪", "deviceID": 97, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 1008}, {"name": "西区污水厂站", "device": [{"name": "大气重金属在线分析仪", "deviceID": 91, "factor": [{"name": "锡", "factorID": 436}, {"name": "钒", "factorID": 428}, {"name": "钪", "factorID": 442}, {"name": "锆", "factorID": 453}, {"name": "锑", "factorID": 437}, {"name": "钛", "factorID": 429}, {"name": "镉", "factorID": 434}, {"name": "PM2.5", "factorID": 423}, {"name": "镓", "factorID": 443}, {"name": "锌", "factorID": 425}, {"name": "锶", "factorID": 450}, {"name": "锰", "factorID": 426}, {"name": "溴", "factorID": 446}, {"name": "铬", "factorID": 427}, {"name": "钾", "factorID": 433}, {"name": "银", "factorID": 435}, {"name": "PM10", "factorID": 456}, {"name": "铜", "factorID": 424}, {"name": "镍", "factorID": 441}, {"name": "汞", "factorID": 439}, {"name": "氯", "factorID": 455}, {"name": "铊", "factorID": 438}, {"name": "钴", "factorID": 430}, {"name": "硒", "factorID": 445}, {"name": "钼", "factorID": 451}, {"name": "铯", "factorID": 454}, {"name": "钙", "factorID": 432}, {"name": "铅", "factorID": 440}, {"name": "铁", "factorID": 431}, {"name": "钡", "factorID": 447}, {"name": "碲", "factorID": 449}, {"name": "钯", "factorID": 448}, {"name": "砷", "factorID": 444}, {"name": "氩", "factorID": 452}]}, {"name": "气象分析仪", "deviceID": 98, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 1009}, {"name": "桂鲁站", "device": [{"name": "大气重金属在线分析仪", "deviceID": 94, "factor": [{"name": "铁", "factorID": 431}, {"name": "氩", "factorID": 452}, {"name": "铊", "factorID": 438}, {"name": "溴", "factorID": 446}, {"name": "锰", "factorID": 426}, {"name": "钡", "factorID": 447}, {"name": "钴", "factorID": 430}, {"name": "钙", "factorID": 432}, {"name": "汞", "factorID": 439}, {"name": "锑", "factorID": 437}, {"name": "镍", "factorID": 441}, {"name": "银", "factorID": 435}, {"name": "钒", "factorID": 428}, {"name": "PM2.5", "factorID": 423}, {"name": "镓", "factorID": 443}, {"name": "锌", "factorID": 425}, {"name": "锡", "factorID": 436}, {"name": "钼", "factorID": 451}, {"name": "PM10", "factorID": 456}, {"name": "硒", "factorID": 445}, {"name": "锆", "factorID": 453}, {"name": "钛", "factorID": 429}, {"name": "铜", "factorID": 424}, {"name": "钪", "factorID": 442}, {"name": "铯", "factorID": 454}, {"name": "砷", "factorID": 444}, {"name": "钾", "factorID": 433}, {"name": "氯", "factorID": 455}, {"name": "镉", "factorID": 434}, {"name": "锶", "factorID": 450}, {"name": "铬", "factorID": 427}, {"name": "碲", "factorID": 449}, {"name": "钯", "factorID": 448}, {"name": "铅", "factorID": 440}]}, {"name": "傅立叶红外光谱分析仪", "deviceID": 93, "factor": [{"name": "氯化氢", "factorID": 72}, {"name": "硫化羰", "factorID": 244}, {"name": "六氟化硫", "factorID": 259}, {"name": "氯乙烯", "factorID": 312}, {"name": "甲醇", "factorID": 153}, {"name": "正庚烷", "factorID": 44}, {"name": "二氧化硫", "factorID": 258}, {"name": "正辛烷", "factorID": 49}, {"name": "乙炔", "factorID": 2}, {"name": "乙烯", "factorID": 12}, {"name": "氨", "factorID": 66}, {"name": "甲烷", "factorID": 15}]}, {"name": "气象分析仪", "deviceID": 99, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 1010}, {"name": "管委会站", "device": [{"name": "大气重金属在线分析仪", "deviceID": 60, "factor": [{"name": "锶", "factorID": 450}, {"name": "汞", "factorID": 439}, {"name": "钯", "factorID": 448}, {"name": "氯", "factorID": 455}, {"name": "银", "factorID": 435}, {"name": "碲", "factorID": 449}, {"name": "钒", "factorID": 428}, {"name": "钾", "factorID": 433}, {"name": "氩", "factorID": 452}, {"name": "镉", "factorID": 434}, {"name": "硒", "factorID": 445}, {"name": "锰", "factorID": 426}, {"name": "铅", "factorID": 440}, {"name": "钴", "factorID": 430}, {"name": "镓", "factorID": 443}, {"name": "钡", "factorID": 447}, {"name": "溴", "factorID": 446}, {"name": "PM2.5", "factorID": 423}, {"name": "砷", "factorID": 444}, {"name": "钙", "factorID": 432}, {"name": "锑", "factorID": 437}, {"name": "铬", "factorID": 427}, {"name": "铜", "factorID": 424}, {"name": "锌", "factorID": 425}, {"name": "镍", "factorID": 441}, {"name": "钛", "factorID": 429}, {"name": "钪", "factorID": 442}, {"name": "钼", "factorID": 451}, {"name": "铊", "factorID": 438}, {"name": "铯", "factorID": 454}, {"name": "锆", "factorID": 453}, {"name": "铁", "factorID": 431}, {"name": "锡", "factorID": 436}]}, {"name": "傅立叶红外光谱分析仪", "deviceID": 22, "factor": [{"name": "六氟化硫", "factorID": 259}, {"name": "二氧化硫", "factorID": 258}, {"name": "氯乙烯", "factorID": 312}, {"name": "甲醇", "factorID": 153}, {"name": "乙烯", "factorID": 12}, {"name": "氟化氢", "factorID": 73}, {"name": "氨", "factorID": 66}, {"name": "正辛烷", "factorID": 49}, {"name": "正庚烷", "factorID": 44}, {"name": "甲烷", "factorID": 15}, {"name": "硫化羰", "factorID": 244}]}, {"name": "气象分析仪", "deviceID": 2, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 1}, {"name": "海纳1号站", "device": [{"name": "差分吸收光谱分析仪", "deviceID": 20, "factor": [{"name": "臭氧", "factorID": 407}, {"name": "二氧化氮", "factorID": 392}, {"name": "二氧化硫", "factorID": 386}, {"name": "氯气", "factorID": 472}]}, {"name": "气象分析仪", "deviceID": 25, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 2}, {"name": "海纳2号站", "device": [{"name": "傅立叶红外光谱分析仪", "deviceID": 49, "factor": [{"name": "乙烯", "factorID": 12}, {"name": "硫化羰", "factorID": 244}, {"name": "二氧化硫", "factorID": 258}, {"name": "甲烷", "factorID": 15}, {"name": "氯乙烯", "factorID": 312}, {"name": "正庚烷", "factorID": 44}, {"name": "甲醇", "factorID": 153}, {"name": "氟化氢", "factorID": 73}, {"name": "六氟化硫", "factorID": 259}, {"name": "氨", "factorID": 66}, {"name": "正辛烷", "factorID": 49}]}, {"name": "气象分析仪", "deviceID": 51, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 6}], "name": "青海省西宁市甘河化工园区", "parkID": 1}, {"stations": [{"name": "信禾站", "device": [{"name": "傅立叶红外光谱分析仪", "deviceID": 23, "factor": [{"name": "硫化氢", "factorID": 252}, {"name": "氨", "factorID": 66}, {"name": "硫化羰", "factorID": 244}, {"name": "氯化氢", "factorID": 72}, {"name": "氟化氢", "factorID": 73}, {"name": "六氟化硫", "factorID": 259}, {"name": "二氧化硫", "factorID": 258}, {"name": "乙烯", "factorID": 12}, {"name": "氯乙烯", "factorID": 312}, {"name": "二氯硅烷", "factorID": 364}, {"name": "正庚烷", "factorID": 44}, {"name": "甲烷", "factorID": 15}, {"name": "正辛烷", "factorID": 49}, {"name": "二氧化氮", "factorID": 202}, {"name": "甲醇", "factorID": 153}]}, {"name": "气象分析仪", "deviceID": 24, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 3}], "name": "青海省西宁市东川化工园区", "parkID": 2}, {"stations": [{"name": "宜化2号站", "device": [{"name": "差分吸收光谱分析仪", "deviceID": 46, "factor": [{"name": "氯气", "factorID": 472}, {"name": "二氧化氮", "factorID": 392}, {"name": "二氧化硫", "factorID": 386}, {"name": "臭氧", "factorID": 407}]}, {"name": "气象分析仪", "deviceID": 47, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 5}, {"name": "宜化1号站", "device": [{"name": "傅立叶红外光谱分析仪", "deviceID": 43, "factor": [{"name": "正辛烷", "factorID": 49}, {"name": "氟化氢", "factorID": 73}, {"name": "硫化氢", "factorID": 252}, {"name": "二氧化硫", "factorID": 258}, {"name": "六氟化硫", "factorID": 259}, {"name": "氯乙烯", "factorID": 312}, {"name": "甲醇", "factorID": 153}, {"name": "甲烷", "factorID": 15}, {"name": "乙烯", "factorID": 12}, {"name": "氨", "factorID": 66}, {"name": "正庚烷", "factorID": 44}]}, {"name": "气象分析仪", "deviceID": 44, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 4}], "name": "青海省西宁市北川化工园区", "parkID": 3}, {"stations": [{"name": "湟中县子站", "device": [{"name": "大气重金属在线分析仪", "deviceID": 57, "factor": [{"name": "锡", "factorID": 436}, {"name": "钙", "factorID": 432}, {"name": "锑", "factorID": 437}, {"name": "铬", "factorID": 427}, {"name": "镉", "factorID": 434}, {"name": "氯", "factorID": 455}, {"name": "锰", "factorID": 426}, {"name": "砷", "factorID": 444}, {"name": "钾", "factorID": 433}, {"name": "溴", "factorID": 446}, {"name": "铜", "factorID": 424}, {"name": "碲", "factorID": 449}, {"name": "镍", "factorID": 441}, {"name": "硒", "factorID": 445}, {"name": "钡", "factorID": 447}, {"name": "氩", "factorID": 452}, {"name": "铊", "factorID": 438}, {"name": "银", "factorID": 435}, {"name": "铯", "factorID": 454}, {"name": "钯", "factorID": 448}, {"name": "镓", "factorID": 443}, {"name": "PM2.5", "factorID": 423}, {"name": "锶", "factorID": 450}, {"name": "锆", "factorID": 453}, {"name": "钪", "factorID": 442}, {"name": "钴", "factorID": 430}, {"name": "钛", "factorID": 429}, {"name": "钒", "factorID": 428}, {"name": "汞", "factorID": 439}, {"name": "铁", "factorID": 431}, {"name": "铅", "factorID": 440}, {"name": "锌", "factorID": 425}, {"name": "钼", "factorID": 451}]}, {"name": "傅立叶红外光谱分析仪", "deviceID": 56, "factor": [{"name": "乙烯", "factorID": 12}, {"name": "氟化氢", "factorID": 73}, {"name": "正庚烷", "factorID": 44}, {"name": "正辛烷", "factorID": 49}, {"name": "硫化羰", "factorID": 244}, {"name": "甲醇", "factorID": 153}, {"name": "甲烷", "factorID": 15}, {"name": "氯乙烯", "factorID": 312}, {"name": "氨", "factorID": 66}, {"name": "二氧化硫", "factorID": 258}, {"name": "六氟化硫", "factorID": 259}]}, {"name": "气象分析仪", "deviceID": 58, "factor": [{"name": "温度", "factorID": 382}, {"name": "相对湿度", "factorID": 417}, {"name": "风向", "factorID": 381}, {"name": "风向标识", "factorID": 419}, {"name": "风速", "factorID": 380}, {"name": "气压", "factorID": 421}]}], "stationID": 8}], "name": "青海省西宁市湟中县西山化工园区", "parkID": 4}]
+[
+  {
+    "stations": [
+      {
+        "name": "天泰站",
+        "device": [
+          {
+            "name": "傅立叶红外光谱分析仪",
+            "deviceID": 53,
+            "factor": [
+              {
+                "name": "二氧化硫",
+                "factorID": 258
+              },
+              {
+                "name": "正辛烷",
+                "factorID": 49
+              },
+              {
+                "name": "甲醇",
+                "factorID": 153
+              },
+              {
+                "name": "氨",
+                "factorID": 66
+              },
+              {
+                "name": "氟化氢",
+                "factorID": 73
+              },
+              {
+                "name": "六氟化硫",
+                "factorID": 259
+              },
+              {
+                "name": "甲烷",
+                "factorID": 15
+              },
+              {
+                "name": "乙烯",
+                "factorID": 12
+              },
+              {
+                "name": "正庚烷",
+                "factorID": 44
+              },
+              {
+                "name": "氯乙烯",
+                "factorID": 312
+              },
+              {
+                "name": "硫化羰",
+                "factorID": 244
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 54,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 7
+      },
+      {
+        "name": "东区污水厂站",
+        "device": [
+          {
+            "name": "气象分析仪",
+            "deviceID": 96,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 1007
+      },
+      {
+        "name": "苏锡子站",
+        "device": [
+          {
+            "name": "大气重金属在线分析仪",
+            "deviceID": 89,
+            "factor": [
+              {
+                "name": "铅",
+                "factorID": 440
+              },
+              {
+                "name": "PM2.5",
+                "factorID": 423
+              },
+              {
+                "name": "铜",
+                "factorID": 424
+              },
+              {
+                "name": "硒",
+                "factorID": 445
+              },
+              {
+                "name": "钡",
+                "factorID": 447
+              },
+              {
+                "name": "铊",
+                "factorID": 438
+              },
+              {
+                "name": "钾",
+                "factorID": 433
+              },
+              {
+                "name": "汞",
+                "factorID": 439
+              },
+              {
+                "name": "氩",
+                "factorID": 452
+              },
+              {
+                "name": "铬",
+                "factorID": 427
+              },
+              {
+                "name": "锰",
+                "factorID": 426
+              },
+              {
+                "name": "铯",
+                "factorID": 454
+              },
+              {
+                "name": "PM10",
+                "factorID": 456
+              },
+              {
+                "name": "锌",
+                "factorID": 425
+              },
+              {
+                "name": "锡",
+                "factorID": 436
+              },
+              {
+                "name": "钙",
+                "factorID": 432
+              },
+              {
+                "name": "锑",
+                "factorID": 437
+              },
+              {
+                "name": "锆",
+                "factorID": 453
+              },
+              {
+                "name": "溴",
+                "factorID": 446
+              },
+              {
+                "name": "钒",
+                "factorID": 428
+              },
+              {
+                "name": "钪",
+                "factorID": 442
+              },
+              {
+                "name": "钛",
+                "factorID": 429
+              },
+              {
+                "name": "锶",
+                "factorID": 450
+              },
+              {
+                "name": "砷",
+                "factorID": 444
+              },
+              {
+                "name": "铁",
+                "factorID": 431
+              },
+              {
+                "name": "镓",
+                "factorID": 443
+              },
+              {
+                "name": "钴",
+                "factorID": 430
+              },
+              {
+                "name": "氯",
+                "factorID": 455
+              },
+              {
+                "name": "钼",
+                "factorID": 451
+              },
+              {
+                "name": "镉",
+                "factorID": 434
+              },
+              {
+                "name": "镍",
+                "factorID": 441
+              },
+              {
+                "name": "碲",
+                "factorID": 449
+              },
+              {
+                "name": "钯",
+                "factorID": 448
+              },
+              {
+                "name": "银",
+                "factorID": 435
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 97,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 1008
+      },
+      {
+        "name": "西区污水厂站",
+        "device": [
+          {
+            "name": "大气重金属在线分析仪",
+            "deviceID": 91,
+            "factor": [
+              {
+                "name": "锡",
+                "factorID": 436
+              },
+              {
+                "name": "钒",
+                "factorID": 428
+              },
+              {
+                "name": "钪",
+                "factorID": 442
+              },
+              {
+                "name": "锆",
+                "factorID": 453
+              },
+              {
+                "name": "锑",
+                "factorID": 437
+              },
+              {
+                "name": "钛",
+                "factorID": 429
+              },
+              {
+                "name": "镉",
+                "factorID": 434
+              },
+              {
+                "name": "PM2.5",
+                "factorID": 423
+              },
+              {
+                "name": "镓",
+                "factorID": 443
+              },
+              {
+                "name": "锌",
+                "factorID": 425
+              },
+              {
+                "name": "锶",
+                "factorID": 450
+              },
+              {
+                "name": "锰",
+                "factorID": 426
+              },
+              {
+                "name": "溴",
+                "factorID": 446
+              },
+              {
+                "name": "铬",
+                "factorID": 427
+              },
+              {
+                "name": "钾",
+                "factorID": 433
+              },
+              {
+                "name": "银",
+                "factorID": 435
+              },
+              {
+                "name": "PM10",
+                "factorID": 456
+              },
+              {
+                "name": "铜",
+                "factorID": 424
+              },
+              {
+                "name": "镍",
+                "factorID": 441
+              },
+              {
+                "name": "汞",
+                "factorID": 439
+              },
+              {
+                "name": "氯",
+                "factorID": 455
+              },
+              {
+                "name": "铊",
+                "factorID": 438
+              },
+              {
+                "name": "钴",
+                "factorID": 430
+              },
+              {
+                "name": "硒",
+                "factorID": 445
+              },
+              {
+                "name": "钼",
+                "factorID": 451
+              },
+              {
+                "name": "铯",
+                "factorID": 454
+              },
+              {
+                "name": "钙",
+                "factorID": 432
+              },
+              {
+                "name": "铅",
+                "factorID": 440
+              },
+              {
+                "name": "铁",
+                "factorID": 431
+              },
+              {
+                "name": "钡",
+                "factorID": 447
+              },
+              {
+                "name": "碲",
+                "factorID": 449
+              },
+              {
+                "name": "钯",
+                "factorID": 448
+              },
+              {
+                "name": "砷",
+                "factorID": 444
+              },
+              {
+                "name": "氩",
+                "factorID": 452
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 98,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 1009
+      },
+      {
+        "name": "桂鲁站",
+        "device": [
+          {
+            "name": "大气重金属在线分析仪",
+            "deviceID": 94,
+            "factor": [
+              {
+                "name": "铁",
+                "factorID": 431
+              },
+              {
+                "name": "氩",
+                "factorID": 452
+              },
+              {
+                "name": "铊",
+                "factorID": 438
+              },
+              {
+                "name": "溴",
+                "factorID": 446
+              },
+              {
+                "name": "锰",
+                "factorID": 426
+              },
+              {
+                "name": "钡",
+                "factorID": 447
+              },
+              {
+                "name": "钴",
+                "factorID": 430
+              },
+              {
+                "name": "钙",
+                "factorID": 432
+              },
+              {
+                "name": "汞",
+                "factorID": 439
+              },
+              {
+                "name": "锑",
+                "factorID": 437
+              },
+              {
+                "name": "镍",
+                "factorID": 441
+              },
+              {
+                "name": "银",
+                "factorID": 435
+              },
+              {
+                "name": "钒",
+                "factorID": 428
+              },
+              {
+                "name": "PM2.5",
+                "factorID": 423
+              },
+              {
+                "name": "镓",
+                "factorID": 443
+              },
+              {
+                "name": "锌",
+                "factorID": 425
+              },
+              {
+                "name": "锡",
+                "factorID": 436
+              },
+              {
+                "name": "钼",
+                "factorID": 451
+              },
+              {
+                "name": "PM10",
+                "factorID": 456
+              },
+              {
+                "name": "硒",
+                "factorID": 445
+              },
+              {
+                "name": "锆",
+                "factorID": 453
+              },
+              {
+                "name": "钛",
+                "factorID": 429
+              },
+              {
+                "name": "铜",
+                "factorID": 424
+              },
+              {
+                "name": "钪",
+                "factorID": 442
+              },
+              {
+                "name": "铯",
+                "factorID": 454
+              },
+              {
+                "name": "砷",
+                "factorID": 444
+              },
+              {
+                "name": "钾",
+                "factorID": 433
+              },
+              {
+                "name": "氯",
+                "factorID": 455
+              },
+              {
+                "name": "镉",
+                "factorID": 434
+              },
+              {
+                "name": "锶",
+                "factorID": 450
+              },
+              {
+                "name": "铬",
+                "factorID": 427
+              },
+              {
+                "name": "碲",
+                "factorID": 449
+              },
+              {
+                "name": "钯",
+                "factorID": 448
+              },
+              {
+                "name": "铅",
+                "factorID": 440
+              }
+            ]
+          },
+          {
+            "name": "傅立叶红外光谱分析仪",
+            "deviceID": 93,
+            "factor": [
+              {
+                "name": "氯化氢",
+                "factorID": 72
+              },
+              {
+                "name": "硫化羰",
+                "factorID": 244
+              },
+              {
+                "name": "六氟化硫",
+                "factorID": 259
+              },
+              {
+                "name": "氯乙烯",
+                "factorID": 312
+              },
+              {
+                "name": "甲醇",
+                "factorID": 153
+              },
+              {
+                "name": "正庚烷",
+                "factorID": 44
+              },
+              {
+                "name": "二氧化硫",
+                "factorID": 258
+              },
+              {
+                "name": "正辛烷",
+                "factorID": 49
+              },
+              {
+                "name": "乙炔",
+                "factorID": 2
+              },
+              {
+                "name": "乙烯",
+                "factorID": 12
+              },
+              {
+                "name": "氨",
+                "factorID": 66
+              },
+              {
+                "name": "甲烷",
+                "factorID": 15
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 99,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 1010
+      },
+      {
+        "name": "管委会站",
+        "device": [
+          {
+            "name": "大气重金属在线分析仪",
+            "deviceID": 60,
+            "factor": [
+              {
+                "name": "锶",
+                "factorID": 450
+              },
+              {
+                "name": "汞",
+                "factorID": 439
+              },
+              {
+                "name": "钯",
+                "factorID": 448
+              },
+              {
+                "name": "氯",
+                "factorID": 455
+              },
+              {
+                "name": "银",
+                "factorID": 435
+              },
+              {
+                "name": "碲",
+                "factorID": 449
+              },
+              {
+                "name": "钒",
+                "factorID": 428
+              },
+              {
+                "name": "钾",
+                "factorID": 433
+              },
+              {
+                "name": "氩",
+                "factorID": 452
+              },
+              {
+                "name": "镉",
+                "factorID": 434
+              },
+              {
+                "name": "硒",
+                "factorID": 445
+              },
+              {
+                "name": "锰",
+                "factorID": 426
+              },
+              {
+                "name": "铅",
+                "factorID": 440
+              },
+              {
+                "name": "钴",
+                "factorID": 430
+              },
+              {
+                "name": "镓",
+                "factorID": 443
+              },
+              {
+                "name": "钡",
+                "factorID": 447
+              },
+              {
+                "name": "溴",
+                "factorID": 446
+              },
+              {
+                "name": "PM2.5",
+                "factorID": 423
+              },
+              {
+                "name": "砷",
+                "factorID": 444
+              },
+              {
+                "name": "钙",
+                "factorID": 432
+              },
+              {
+                "name": "锑",
+                "factorID": 437
+              },
+              {
+                "name": "铬",
+                "factorID": 427
+              },
+              {
+                "name": "铜",
+                "factorID": 424
+              },
+              {
+                "name": "锌",
+                "factorID": 425
+              },
+              {
+                "name": "镍",
+                "factorID": 441
+              },
+              {
+                "name": "钛",
+                "factorID": 429
+              },
+              {
+                "name": "钪",
+                "factorID": 442
+              },
+              {
+                "name": "钼",
+                "factorID": 451
+              },
+              {
+                "name": "铊",
+                "factorID": 438
+              },
+              {
+                "name": "铯",
+                "factorID": 454
+              },
+              {
+                "name": "锆",
+                "factorID": 453
+              },
+              {
+                "name": "铁",
+                "factorID": 431
+              },
+              {
+                "name": "锡",
+                "factorID": 436
+              }
+            ]
+          },
+          {
+            "name": "傅立叶红外光谱分析仪",
+            "deviceID": 22,
+            "factor": [
+              {
+                "name": "六氟化硫",
+                "factorID": 259
+              },
+              {
+                "name": "二氧化硫",
+                "factorID": 258
+              },
+              {
+                "name": "氯乙烯",
+                "factorID": 312
+              },
+              {
+                "name": "甲醇",
+                "factorID": 153
+              },
+              {
+                "name": "乙烯",
+                "factorID": 12
+              },
+              {
+                "name": "氟化氢",
+                "factorID": 73
+              },
+              {
+                "name": "氨",
+                "factorID": 66
+              },
+              {
+                "name": "正辛烷",
+                "factorID": 49
+              },
+              {
+                "name": "正庚烷",
+                "factorID": 44
+              },
+              {
+                "name": "甲烷",
+                "factorID": 15
+              },
+              {
+                "name": "硫化羰",
+                "factorID": 244
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 2,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 1
+      },
+      {
+        "name": "海纳1号站",
+        "device": [
+          {
+            "name": "差分吸收光谱分析仪",
+            "deviceID": 20,
+            "factor": [
+              {
+                "name": "臭氧",
+                "factorID": 407
+              },
+              {
+                "name": "二氧化氮",
+                "factorID": 392
+              },
+              {
+                "name": "二氧化硫",
+                "factorID": 386
+              },
+              {
+                "name": "氯气",
+                "factorID": 472
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 25,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 2
+      },
+      {
+        "name": "海纳2号站",
+        "device": [
+          {
+            "name": "傅立叶红外光谱分析仪",
+            "deviceID": 49,
+            "factor": [
+              {
+                "name": "乙烯",
+                "factorID": 12
+              },
+              {
+                "name": "硫化羰",
+                "factorID": 244
+              },
+              {
+                "name": "二氧化硫",
+                "factorID": 258
+              },
+              {
+                "name": "甲烷",
+                "factorID": 15
+              },
+              {
+                "name": "氯乙烯",
+                "factorID": 312
+              },
+              {
+                "name": "正庚烷",
+                "factorID": 44
+              },
+              {
+                "name": "甲醇",
+                "factorID": 153
+              },
+              {
+                "name": "氟化氢",
+                "factorID": 73
+              },
+              {
+                "name": "六氟化硫",
+                "factorID": 259
+              },
+              {
+                "name": "氨",
+                "factorID": 66
+              },
+              {
+                "name": "正辛烷",
+                "factorID": 49
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 51,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 6
+      }
+    ],
+    "name": "青海省西宁市甘河化工园区",
+    "parkID": 1
+  },
+  {
+    "stations": [
+      {
+        "name": "信禾站",
+        "device": [
+          {
+            "name": "傅立叶红外光谱分析仪",
+            "deviceID": 23,
+            "factor": [
+              {
+                "name": "硫化氢",
+                "factorID": 252
+              },
+              {
+                "name": "氨",
+                "factorID": 66
+              },
+              {
+                "name": "硫化羰",
+                "factorID": 244
+              },
+              {
+                "name": "氯化氢",
+                "factorID": 72
+              },
+              {
+                "name": "氟化氢",
+                "factorID": 73
+              },
+              {
+                "name": "六氟化硫",
+                "factorID": 259
+              },
+              {
+                "name": "二氧化硫",
+                "factorID": 258
+              },
+              {
+                "name": "乙烯",
+                "factorID": 12
+              },
+              {
+                "name": "氯乙烯",
+                "factorID": 312
+              },
+              {
+                "name": "二氯硅烷",
+                "factorID": 364
+              },
+              {
+                "name": "正庚烷",
+                "factorID": 44
+              },
+              {
+                "name": "甲烷",
+                "factorID": 15
+              },
+              {
+                "name": "正辛烷",
+                "factorID": 49
+              },
+              {
+                "name": "二氧化氮",
+                "factorID": 202
+              },
+              {
+                "name": "甲醇",
+                "factorID": 153
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 24,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 3
+      }
+    ],
+    "name": "青海省西宁市东川化工园区",
+    "parkID": 2
+  },
+  {
+    "stations": [
+      {
+        "name": "宜化2号站",
+        "device": [
+          {
+            "name": "差分吸收光谱分析仪",
+            "deviceID": 46,
+            "factor": [
+              {
+                "name": "氯气",
+                "factorID": 472
+              },
+              {
+                "name": "二氧化氮",
+                "factorID": 392
+              },
+              {
+                "name": "二氧化硫",
+                "factorID": 386
+              },
+              {
+                "name": "臭氧",
+                "factorID": 407
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 47,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 5
+      },
+      {
+        "name": "宜化1号站",
+        "device": [
+          {
+            "name": "傅立叶红外光谱分析仪",
+            "deviceID": 43,
+            "factor": [
+              {
+                "name": "正辛烷",
+                "factorID": 49
+              },
+              {
+                "name": "氟化氢",
+                "factorID": 73
+              },
+              {
+                "name": "硫化氢",
+                "factorID": 252
+              },
+              {
+                "name": "二氧化硫",
+                "factorID": 258
+              },
+              {
+                "name": "六氟化硫",
+                "factorID": 259
+              },
+              {
+                "name": "氯乙烯",
+                "factorID": 312
+              },
+              {
+                "name": "甲醇",
+                "factorID": 153
+              },
+              {
+                "name": "甲烷",
+                "factorID": 15
+              },
+              {
+                "name": "乙烯",
+                "factorID": 12
+              },
+              {
+                "name": "氨",
+                "factorID": 66
+              },
+              {
+                "name": "正庚烷",
+                "factorID": 44
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 44,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 4
+      }
+    ],
+    "name": "青海省西宁市北川化工园区",
+    "parkID": 3
+  },
+  {
+    "stations": [
+      {
+        "name": "湟中县子站",
+        "device": [
+          {
+            "name": "大气重金属在线分析仪",
+            "deviceID": 57,
+            "factor": [
+              {
+                "name": "锡",
+                "factorID": 436
+              },
+              {
+                "name": "钙",
+                "factorID": 432
+              },
+              {
+                "name": "锑",
+                "factorID": 437
+              },
+              {
+                "name": "铬",
+                "factorID": 427
+              },
+              {
+                "name": "镉",
+                "factorID": 434
+              },
+              {
+                "name": "氯",
+                "factorID": 455
+              },
+              {
+                "name": "锰",
+                "factorID": 426
+              },
+              {
+                "name": "砷",
+                "factorID": 444
+              },
+              {
+                "name": "钾",
+                "factorID": 433
+              },
+              {
+                "name": "溴",
+                "factorID": 446
+              },
+              {
+                "name": "铜",
+                "factorID": 424
+              },
+              {
+                "name": "碲",
+                "factorID": 449
+              },
+              {
+                "name": "镍",
+                "factorID": 441
+              },
+              {
+                "name": "硒",
+                "factorID": 445
+              },
+              {
+                "name": "钡",
+                "factorID": 447
+              },
+              {
+                "name": "氩",
+                "factorID": 452
+              },
+              {
+                "name": "铊",
+                "factorID": 438
+              },
+              {
+                "name": "银",
+                "factorID": 435
+              },
+              {
+                "name": "铯",
+                "factorID": 454
+              },
+              {
+                "name": "钯",
+                "factorID": 448
+              },
+              {
+                "name": "镓",
+                "factorID": 443
+              },
+              {
+                "name": "PM2.5",
+                "factorID": 423
+              },
+              {
+                "name": "锶",
+                "factorID": 450
+              },
+              {
+                "name": "锆",
+                "factorID": 453
+              },
+              {
+                "name": "钪",
+                "factorID": 442
+              },
+              {
+                "name": "钴",
+                "factorID": 430
+              },
+              {
+                "name": "钛",
+                "factorID": 429
+              },
+              {
+                "name": "钒",
+                "factorID": 428
+              },
+              {
+                "name": "汞",
+                "factorID": 439
+              },
+              {
+                "name": "铁",
+                "factorID": 431
+              },
+              {
+                "name": "铅",
+                "factorID": 440
+              },
+              {
+                "name": "锌",
+                "factorID": 425
+              },
+              {
+                "name": "钼",
+                "factorID": 451
+              }
+            ]
+          },
+          {
+            "name": "傅立叶红外光谱分析仪",
+            "deviceID": 56,
+            "factor": [
+              {
+                "name": "乙烯",
+                "factorID": 12
+              },
+              {
+                "name": "氟化氢",
+                "factorID": 73
+              },
+              {
+                "name": "正庚烷",
+                "factorID": 44
+              },
+              {
+                "name": "正辛烷",
+                "factorID": 49
+              },
+              {
+                "name": "硫化羰",
+                "factorID": 244
+              },
+              {
+                "name": "甲醇",
+                "factorID": 153
+              },
+              {
+                "name": "甲烷",
+                "factorID": 15
+              },
+              {
+                "name": "氯乙烯",
+                "factorID": 312
+              },
+              {
+                "name": "氨",
+                "factorID": 66
+              },
+              {
+                "name": "二氧化硫",
+                "factorID": 258
+              },
+              {
+                "name": "六氟化硫",
+                "factorID": 259
+              }
+            ]
+          },
+          {
+            "name": "气象分析仪",
+            "deviceID": 58,
+            "factor": [
+              {
+                "name": "温度",
+                "factorID": 382
+              },
+              {
+                "name": "相对湿度",
+                "factorID": 417
+              },
+              {
+                "name": "风向",
+                "factorID": 381
+              },
+              {
+                "name": "风向标识",
+                "factorID": 419
+              },
+              {
+                "name": "风速",
+                "factorID": 380
+              },
+              {
+                "name": "气压",
+                "factorID": 421
+              }
+            ]
+          }
+        ],
+        "stationID": 8
+      }
+    ],
+    "name": "青海省西宁市湟中县西山化工园区",
+    "parkID": 4
+  }
+]

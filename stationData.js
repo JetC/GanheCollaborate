@@ -4,45 +4,45 @@
 
 var sationPositionArray = [
     {
-        "stationID": 5, "stationName": "ÒË»¯2ºÅÕ¾", "Latitude": 36.89525, "Lontitude": 101.75372
+        "stationID": 5, "stationName": "å®œåŒ–2å·ç«™", "Latitude": 36.89525, "Lontitude": 101.75372
     },
     {
-        "stationID": 7, "stationName": "ÌìÌ©Õ¾", "Latitude": 36.51549, "Logitude": 101.52896
+        "stationID": 7, "stationName": "å¤©æ³°ç«™", "Latitude": 36.51549, "Logitude": 101.52896
     },
     {
-        "stationID": 1007, "stationName": "¶«ÇøÎÛË®³§Õ¾", "Latitude": 36.58916, "Logitude": 101.52756
+        "stationID": 1007, "stationName": "ä¸œåŒºæ±¡æ°´å‚ç«™", "Latitude": 36.58916, "Logitude": 101.52756
 
     },
     {
-        "stationID": 1008, "stationName": "ËÕÎı×ÓÕ¾", "Latitude": 36.50519, "Logitude": 101.53191
+        "stationID": 1008, "stationName": "è‹é”¡å­ç«™", "Latitude": 36.50519, "Logitude": 101.53191
 
     },
     {
-        "stationID": 1009, "stationName": "Î÷ÇøÎÛË®³§Õ¾", "Latitude": 36.63168, "Logitude": 101.50297
+        "stationID": 1009, "stationName": "è¥¿åŒºæ±¡æ°´å‚ç«™", "Latitude": 36.63168, "Logitude": 101.50297
 
     },
     {
-        "stationID": 4, "stationName": "ÒË»¯1ºÅÕ¾", "Latitude": 36.89864, "Logitude": 101.75441
+        "stationID": 4, "stationName": "å®œåŒ–1å·ç«™", "Latitude": 36.89864, "Logitude": 101.75441
 
     },
     {
-        "stationID": 1010, "stationName": "¹ğÂ³Õ¾", "Latitude": 36.54012, "Logitude": 101.48518
+        "stationID": 1010, "stationName": "æ¡‚é²ç«™", "Latitude": 36.54012, "Logitude": 101.48518
 
     },
     {
-        "stationID": 1, "stationName": "¹ÜÎ¯»áÕ¾", "Latitude": 36.54695, "Logitude": 101.52028
+        "stationID": 1, "stationName": "ç®¡å§”ä¼šç«™", "Latitude": 36.54695, "Logitude": 101.52028
     },
     {
-        "stationID": 8, "stationName": "äÒÖĞÏØ×ÓÕ¾", "Latitude": 36.49424, "Logitude": 101.56043
+        "stationID": 8, "stationName": "æ¹Ÿä¸­å¿å­ç«™", "Latitude": 36.49424, "Logitude": 101.56043
     },
     {
-        "stationID": 2, "stationName": "º£ÄÉ1ºÅÕ¾", "Latitude": 36.55809, "Logitude": 101.49935
+        "stationID": 2, "stationName": "æµ·çº³1å·ç«™", "Latitude": 36.55809, "Logitude": 101.49935
     },
     {
-        "stationID": 3, "stationName": "ĞÅºÌÕ¾", "Latitude": 36.55657, "Logitude": 101.87368
+        "stationID": 3, "stationName": "ä¿¡ç¦¾ç«™", "Latitude": 36.55657, "Logitude": 101.87368
     },
     {
-        "stationID": 6, "stationName": "º£ÄÉ2ºÅÕ¾", "Latitude": 36.55789, "Logitude": 101.49936
+        "stationID": 6, "stationName": "æµ·çº³2å·ç«™", "Latitude": 36.55789, "Logitude": 101.49936
     }
 ];
 
@@ -109,7 +109,6 @@ function getWeatherFactorData(unitData)
             {
                 var factorData = new FactorData();
                 factorData.factorId = -1;
-                factorData.factorName="Æ½¾ùÎÂ¶È";
                 factorData.value
             }else if(prop ==="")
             {
