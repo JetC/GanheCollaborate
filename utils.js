@@ -166,7 +166,7 @@ function getPointArrayAroundPosition(lon, lat, radius)
 
     for(j=0;j<=4;j++)
     {
-        if(j==4)
+        if(j===4)
         {
             vect = new Vector3D();
             vect.x = 0+lon;
@@ -204,8 +204,6 @@ function getPointArrayAroundPosition(lon, lat, radius)
             }
         }
     }
-
-
     return positionArray;
 }
 
@@ -220,6 +218,68 @@ function loadJSON(callback) {
         }
     };
     xobj.send(null);
+}
+
+function getCylinderPosition(startGeoPoint,endGeoPoint,index,radius)
+{
+    var startPoint = new Vector3D();
+    startPoint.x = startGeoPoint.Longitude;
+    startPoint.y = startGeoPoint.Latitude;
+    radius*=1;
+    var endPoint = new Vector3D();
+    endPoint.x = endGeoPoint.Longitude;
+    endPoint.y = endGeoPoint.Latitude;
+
+    var x1,y1,x2,y2,k,b,r;
+    x1 = startPoint.x;
+    y1 = startPoint.y;
+    x2 = endPoint.x;
+    y2 = endPoint.y;
+    k = (y2-y1)/(x2-x1);
+    b = y1-x1*k;
+    index+=1;//start at 1.
+    r = (index-1)*2*radius+radius;
+    var A,B,C;
+    A = 1+k*k;
+    B = -2*x1+2*k*b-2*y1*k;
+    C = x1*x1+b*b-2*y1*b+y1*y1-r*r;
+
+    var solve1={},solve2={};
+    solve1.x = (-B+Math.sqrt(B*B - 4*A*C))/(2*A);
+    solve1.y = k*solve1.x+b;
+
+    solve2.x = (-B-Math.sqrt(B*B - 4*A*C))/(2*A);
+    solve2.y = k*solve2.x+b;
+
+    var vector1={},vector2={};
+    vector1.x = x2 - x1;
+    vector1.y = y2 - y1;
+    vector2.x = solve1.x - x1;
+    vector2.y = solve1.y - y1;
+    var realSolve={};
+
+    if(vector1.x*vector2.x+vector1.y*vector2.y>0)//is the solve x,y
+    {
+        realSolve.x = solve1.x;
+        realSolve.y = solve1.y;
+    }else
+    {
+        realSolve.x = solve2.x;
+        realSolve.y = solve2.y;
+    }
+
+    return realSolve;
+}
+
+function getRandomBallUrl ()
+{
+    var randFloat =  Math.random()*28+1;
+    var randInt = Math.floor(randFloat);
+    return 'models/balls/'+ randInt+'.glb';
+}
+
+function getCylinderUrl() {
+    return 'models/cylinder/1.glb';
 }
 
 

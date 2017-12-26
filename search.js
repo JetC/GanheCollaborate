@@ -1,4 +1,133 @@
+var transform = {
+    "park":[{"<>":"div","class":"panel-heading",
+        "html":[{"<>":"h4","class":"panel-title",
+            "html":[{"<>":"a", "class":"parkToggle", "data-toggle":"collapse","href":"#collapse-${parkID}","html":"${name}"}]
+        }]
+    },
+        {"<>":"div","class":"sidebar-info panel-collapse collapse", "id":"collapse-${parkID}",
+            "html": [{"<>":"div", "class":"panel-body", "html":function (){
+                    var side_li_content = "<ul class=\"side-li\">";
+                    var side_li_html = json2html.transform(this.stations,transform.siteLi);
+                    side_li_html += "</ul>";
+                    var parkID = this.parkID;
+                    var hidenboxIdString = 'hiden-box'+parkID;
+                    var hiden_box_content = "<ul class=\"hiden-box\">";
+                    var hiden_box_html = json2html.transform(this.stations,transform.siteHiddenBox);
+                    hiden_box_html += "</ul>";
+                    return (side_li_content+side_li_html+hiden_box_content+hiden_box_html);
+                }}]
+        }],
+    "siteLi":{"<>":"li", "class":"s_${stationID}",
+        "html":[{"<>":"h3", "stationID":"${stationID}",
+            "html":"${name}<span class=\"rightArrow rightArrow-angle-right rightArrow-loc\"></span>"
+        }]
+    },
+    "siteHiddenBox":[{
+        "<>":"li","data-hidden":"li","id":"hiden-${stationID}","html":[
+            {"<>":"div", "class":"sub-nav-right","html":function () {
+                    return json2html.transform(this.device,transform.sub_nav);
+                }}
+        ]
+    }],
+    "sub_nav":[
+        {"<>":"div","class":"cell-box","html":function () {
+                return json2html.transform(this,transform.cell_box);
+            }
+        }],
+    "cell_box":[{
+        "<>":"div", "class":"instrumentLogoDiv", "html":[{"<>":"img","src":"images/intrumentLogo.png", "class":"instrumentLogoImg", "float":"left"},{"<>":"h1","deviceID":"${deviceID}","html":"${name}"}]
+    },{
+        "<>":"div","class":"a-box","html":function () {
+            return json2html.transform(this.factor,transform.a_box);
+        }
+    }],
+    "a_box":[{
+        "<>":"button","href":"#1", "class":"factor","factorID":"${factorID}", "html":"${name}"
+    },{
+        "<>":"span","html":" "
+    }]
+};
+var providerViewModels = [];
 
+providerViewModels.push(new Cesium.ProviderViewModel({
+    name : 'Bing Maps Aerial with Labels',
+    iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerialLabels.png'),
+    tooltip : 'Bing Maps aerial imagery with label overlays \nhttp://www.bing.com/maps',
+    creationFunction : function() {
+        return new Cesium.BingMapsImageryProvider({
+            url : '//dev.virtualearth.net',
+            mapStyle : Cesium.BingMapsStyle.AERIAL_WITH_LABELS
+        });
+    }
+}));
+
+providerViewModels.push(new Cesium.ProviderViewModel({
+    name : 'Open Street Map',
+    iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/openStreetMap.png'),
+    tooltip : 'Open StreetMap aerial imagery \nhttps://www.openstreetmap.org',
+    creationFunction : function() {
+        return Cesium.createOpenStreetMapImageryProvider({
+            url : 'https://a.tile.openstreetmap.org/'
+        });
+    }
+}));
+
+var terrainViewModels = [];
+terrainViewModels.push(new Cesium.ProviderViewModel({
+    name : 'WGS84 Ellipsoid',
+    iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
+    tooltip : 'WGS84 standard ellipsoid, also known as EPSG:4326',
+    creationFunction : function() {
+        return new Cesium.EllipsoidTerrainProvider();
+    }
+}));
+
+terrainViewModels.push(new Cesium.ProviderViewModel({
+    name : 'STK World Terrain meshes',
+    iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/STK.png'),
+    tooltip : 'High-resolution, mesh-based terrain for the entire globe. Free for use on the Internet. Closed-network options are available.\nhttp://www.agi.com',
+    creationFunction : function() {
+        return new Cesium.CesiumTerrainProvider({
+            url : '//assets.agi.com/stk-terrain/world',
+            requestWaterMask : true,
+            requestVertexNormals : true
+        });
+    }
+}));
+
+var viewer = new Cesium.Viewer('cesiumContainer', {
+    baseLayerPicker: true,//图层控制显示
+
+    geocoder: true,//地名查找显示
+
+    timeline: true,//时间线显示
+
+    sceneModePicker: false, //投影方式显示
+
+    navigationHelpButton: false,//帮助键不显示
+
+    homeButton: false,//Home键不显示
+    imageryProviderViewModels : providerViewModels,
+    selectedImageryProviderViewModel : providerViewModels[1],
+    terrainProviderViewModels : terrainViewModels,
+    selectedTerrainProviderViewModel : terrainViewModels[1]
+
+});
+//去掉Cesium下角的商标
+viewer._cesiumWidget._creditContainer.style.display = "none";
+//buttonControl = new ButtonControl('cesiumContainer', options);
+viewer.scene.globe.enableLighting = true;
+/*选择控件按钮
+
+that.useNavigationMixin = Cesium.defaultValue(options.useNavigationMixin, true);
+if (that.useNavigationMixin) {
+viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
+}*/
+viewer.extend(Cesium.viewerCesiumNavigationMixin, {});
+
+var selectedFactorsInfo;
+selectedFactorsInfo = [];
+var jsonData;
 
 function leftSideBarConf(){
     var scTop = 0,
@@ -9,10 +138,8 @@ function leftSideBarConf(){
         classN,
         num;
     var hidenBoxCalculatedWidth = 0;
-    hidenBoxCalculatedWidth;
     $('.side-li > li').hover(
         function(){
-            hidenBoxCalculatedWidth;
             // $(this).find('h3').css({border: 'none'})
             //     .end().find('span').css({color: ""});
             classN = $(this).attr('class');
@@ -74,7 +201,6 @@ function leftSideBarConf(){
     );
     $('.hiden-box').hover(
         function(){
-            hidenBoxCalculatedWidth;
             $('.s_'+num).addClass("sideLiHover");
             // $('.s_'+num).find('h3').css({border: 'none'});
             $(this).show().css({width: hidenBoxCalculatedWidth});
@@ -133,8 +259,6 @@ function openCity(evt, cityName) {
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
 }
-
-
 /********************************加载实时经纬度坐标********************************/
 position(viewer);
 /*******************************导入json数据********************************/
@@ -453,60 +577,509 @@ function taiShiLegendDraw() {
 
 function taiShiLayerClick() {
 
-};
+}
 //List item transform
-var transform = {
-    "park":[{"<>":"div","class":"panel-heading",
-        "html":[{"<>":"h4","class":"panel-title",
-            "html":[{"<>":"a", "class":"parkToggle", "data-toggle":"collapse","href":"#collapse-${parkID}","html":"${name}"}]
-        }]
-    },
-        {"<>":"div","class":"sidebar-info panel-collapse collapse", "id":"collapse-${parkID}",
-            "html": [{"<>":"div", "class":"panel-body", "html":function (){
-                    var side_li_content = "<ul class=\"side-li\">";
-                    var side_li_html = json2html.transform(this.stations,transform.siteLi);
-                    side_li_html += "</ul>";
-                    var parkID = this.parkID;
-                    var hidenboxIdString = 'hiden-box'+parkID;
-                    var hiden_box_content = "<ul class=\"hiden-box\">";
-                    var hiden_box_html = json2html.transform(this.stations,transform.siteHiddenBox);
-                    hiden_box_html += "</ul>";
-                    return (side_li_content+side_li_html+hiden_box_content+hiden_box_html);
-                }}]
-        }],
-    "siteLi":{"<>":"li", "class":"s_${stationID}",
-        "html":[{"<>":"h3", "stationID":"${stationID}",
-            "html":"${name}<span class=\"rightArrow rightArrow-angle-right rightArrow-loc\"></span>"
-        }]
-    },
-    "siteHiddenBox":[{
-        "<>":"li","data-hidden":"li","id":"hiden-${stationID}","html":[
-            {"<>":"div", "class":"sub-nav-right","html":function () {
-                    return json2html.transform(this.device,transform.sub_nav);
-                }}
-        ]
-    }],
-    "sub_nav":[
-        {"<>":"div","class":"cell-box","html":function () {
-                return json2html.transform(this,transform.cell_box);
-            }
-        }],
-    "cell_box":[{
-        "<>":"div", "class":"instrumentLogoDiv", "html":[{"<>":"img","src":"images/intrumentLogo.png", "class":"instrumentLogoImg", "float":"left"},{"<>":"h1","deviceID":"${deviceID}","html":"${name}"}]
-    },{
-        "<>":"div","class":"a-box","html":function () {
-            return json2html.transform(this.factor,transform.a_box);
+
+
+$(function(){
+    $('<i />',{
+        id:'home',
+        "class":"fa fa-home",
+        "aria-hidden":"true",
+        "color":'#08ABD5',
+        'background':'#888',
+        "title":"首页",
+        click:function(){
+
+            viewer.zoomTo(viewer.entities);
         }
-    }],
-    "a_box":[{
-        "<>":"button","href":"#1", "class":"factor","factorID":"${factorID}", "html":"${name}"
-    },{
-        "<>":"span","html":" "
-    }]
-};
+    }).appendTo("#test");
+});
+
+$(function(){
+    $('<i />',{
+        id:'3D_2D',
+        "class":"fa fa-globe",
+        "aria-hidden":"true",
+        "color":'#08ABD5',
+        'background':'#888',
+        "title":"2D/3D",
+        click:function(){
+
+            if($(this).hasClass("fa-globe")){
+                $(this).removeClass("fa-globe");
+                $(this).addClass("fa-map-o");
+                alert("切换Cesium为2D");
+            }else{
+                $(this).removeClass("fa-map-o");
+                $(this).addClass("fa-globe");
+                alert("切换Cesium为3D");
+            }
+        }
+    }).appendTo("#test");
+
+});
+
+
+$(function() {
+    // viewer.dataSources.add(Cesium.KmlDataSource.load('./json/dataLayer.json'));
+    //  var promise = Cesium.GeoJsonDataSource.load(top_src);
+    //promise.then(function(dataSource) {});
+    $.getJSON("json/dataLayer.json", function (data) {
+        var items = [];
+        $.each(data.categories, function (key, val) {
+            items.push("<li class=\"modalLi\" style=\"position: relative; display:inline-block\">" +
+                "<div class=\"checkBocContainer\"><input id=\"permitted" + key + "\"" + " type=\"checkbox\"><label for=\"permitted" + key + "\"" + " class=\"side-label\"></label>" +
+                "</div>" +
+                "<div id=\"dataTable-content1\" class=\"modalContent\">" + val + "</div></li></br>\n");
+        });
+
+        //数据头
+        var html = "<li style=\"position: relative\">" +
+            "<div id=\"dataTable-title\" class=\"modalTitle\">矢量与栅格数据集</div><div class=\"errorButton\">&times;</div>" +
+            "</li>\n" + items.join("");
+        $("<ul/>", {
+            html: html
+        }).appendTo("#dataTable");
+        //checkbox选择加载数据事件
+
+        var layerMapper ={};
+        var $checkbox =$("li input[type=\"checkbox\"]");
+        $checkbox.click(function(){
+            var layers = viewer.scene.imageryLayers;
+            var id = this.id;
+            var index = parseInt(id.substr(id.length-1,1));
+            var key = data.categories[index];
+            var contentArr = data[key];
+            var url,type,method,suffix;
+            var i;
+
+            if(($(this).prop('checked')))
+            {
+                $(this).prop('checked',true);
+
+                for(i=0; i<contentArr.length; i++)
+                {
+                    loadDataLayer(contentArr[i]);
+                }
+            }else {
+                $(this).prop('checked', false);
+                for(i=0;i<contentArr.length;i++)
+                {
+                    removeDataLayer(contentArr[i]);
+                }
+            }
+            function loadDataLayer(content){
+                var currLayer,options,extent;
+                //加载不同格式数据
+                if ((content.type === "png") && (content.method === "tms")) {
+                    alert("影像数据数据加载");
+                }
+                else if (content.type === "kml") {
+                    options = {
+                        camera : viewer.scene.camera,
+                        canvas : viewer.scene.canvas
+                    };
+                    extent = Cesium.Rectangle.fromDegrees(101.432053, 36.403152,102.101701, 36.96018);
+                    Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
+                    Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
+                    viewer.dataSources.add(Cesium.KmlDataSource.load(content.url, options));
+                    viewer.camera.setView({destination: extent});
+
+                } else if (content.type === "png") {
+                }else if(content.type==="osm")
+                {
+                    currLayer =  layers.addImageryProvider(Cesium.createOpenStreetMapImageryProvider({
+                        'url' : content.url,
+                        'fileExtension':content.suffix
+                    }));
+                    layerMapper[content.url] = currLayer;
+                }
+            }
+            function removeDataLayer(content){
+                if ((content.type === "png") && (content.method === "tms")) {
+
+                    alert("影像数据数据加载");
+                }
+                else if (content.type === "kml") {
+                    viewer.dataSources.removeAll();
+                } else if (content.type === "png") {
+                }else if(content.type==="osm")
+                {
+                    var layer =  layerMapper[content.url];
+                    layers.remove(layer, false);
+                }
+            }
+        });
+    });
+
+
+    $('<i />', {
+        id: 'dataPicker',
+        "class": "fa fa-database",
+        "aria-hidden": "true",
+        "color": '#08ABD5',
+        'background': '#888',
+        "title": "数据加载",
+        click: function () {
+
+            $("#dataTable").removeClass("modalHide");
+            $(".errorButton").click(function () {
+                $("#dataTable").addClass("modalHide");
+            });
+        }
+    }).appendTo("#test");
+});
+
+$(function () {
+    $("<input />", {
+        id: 'toolbarsCheckbox',
+        "class": "toolbarsDis",
+        "type": "checkbox",
+        "z-index": "3000"
+    }).appendTo("#test");
+});
+$(function () {
+    $("<label />", {
+        id: 'toolbarsLabel',
+        "for": "toolbarsCheckbox",
+        "class": "fa fa-wrench",
+        "display": "block",
+        "aria-hidden": "true",
+        "color": '#08ABD5',
+        'background': '#888',
+        "title": "工具集",
+        "z-index": "2000"
+    }).appendTo("#test");
+});
+
+
+$(function () {
+
+    $('<i />', {
+        id: 'roamHelper',
+        "class": "fa fa-plane buttonMove roamAnimation",
+        "aria-hidden": "true",
+        "color": '#08ABD5',
+        'background': '#888',
+        "title": "三维巡航",
+        click: function () {
+
+            alert("ok");
+        }
+    }).appendTo("#test");
+});
+/*********************************绘图工具********************************/
+$(function () {
+    $('<i />', {
+        id: 'drawHelper',
+        "class": "fa fa-pencil buttonMove drawAnimation",
+        "aria-hidden": "true",
+        "color": '#08ABD5',
+        'background': '#888',
+        "title": "绘图工具",
+        click: function () {
+            if ($(this).hasClass("active")) {
+                $("#drawToolsContainer").hide();
+                $(this).removeClass("active");
+
+            } else {
+                $("#drawToolsContainer").show();
+                $(this).addClass("active");
+            }
+
+
+        }
+    }).appendTo("#test");
+});
+$('<div />', {
+    id: 'drawToolsContainer',
+    "class": "drawToolsContainer toolsContainerDis"
+}).appendTo("#cesiumContainer");
+
+$('<i />', {
+    id: 'delectPoly',
+    "class": "fa fa-trash toolsContainer",
+    "aria-hidden": "true",
+    "color": '#08ABD5',
+    'background': '#888',
+    "title": "删除",
+    click: function () {
+        alert("删除");
+    }
+}).appendTo("#drawToolsContainer");
+
+$('<i />', {
+    id: 'drawPolygon',
+    "class": "fa fa-marker toolsContainer",
+    "aria-hidden": "true",
+    "color": '#08ABD5',
+    'background': '#888',
+    "title": "绘制多边形",
+    click: function () {
+        alert("绘制多边形");
+    }
+}).appendTo("#drawToolsContainer");
+
+$('<i />', {
+    id: 'drawExtent',
+    "class": "fa fa-marker toolsContainer",
+    "aria-hidden": "true",
+    "color": '#08ABD5',
+    'background': '#888',
+    "title": "绘制多方形",
+    click: function () {
+        alert("绘制方形");
+    }
+}).appendTo("#drawToolsContainer");
+
+
+$('<i />', {
+    id: 'drawPolyline',
+    "class": "fa fa-marker toolsContainer",
+    "aria-hidden": "true",
+    "color": '#08ABD5',
+    'background': '#888',
+    "title": "绘制线",
+    click: function () {
+        alert("绘制线");
+    }
+}).appendTo("#drawToolsContainer");
+
+$('<i />', {
+    id: 'drawPin',
+    "class": "fa fa-map-marker toolsContainer",
+    "aria-hidden": "true",
+    "color": '#08ABD5',
+    'background': '#888',
+    "title": "图标",
+    click: function () {
+        alert("创建图标");
+    }
+}).appendTo("#drawToolsContainer");
+
+/*******************************测量工具********************************/
+$(function () {
+    $('<div />', {
+        id: 'measureHelper',
+        "class": "fa fa-pencil buttonMove measureAnimation",
+        "background-image": "url(images/measure.png)",
+        "color": '#08ABD5',
+        'background-color': '#888',
+        "title": "测量工具",
+        click: function () {
+
+            alert("ok");
+        }
+    }).appendTo("#test");
+});
+$(function () {
+
+    $('<i />', {
+        id: 'statisticsHelper',
+        "class": "fa fa-bar-chart buttonMove statAnimation",
+        "aria-hidden": "true",
+        "color": '#08ABD5',
+        'background': '#888',
+        "title": "统计工具",
+        click: function () {
+
+            alert("ok");
+        }
+    }).appendTo("#test");
+});
+$(function () {
+    $('<i />', {
+        id: 'situationMap',
+        "class": "fa fa-cubes",
+        "aria-hidden": "true",
+        "color": '#08ABD5',
+        'background': '#888',
+        "title": "实时可视化层",
+        click: function () {
+            if ($(this).hasClass("fa-cubes")) {
+                $(this).removeClass("fa-cubes");
+                $(this).addClass("fa-tasks");
+                $(this).attr("title", "态势分析层");
+                alert("切换为态势分析层，执行heatMap以及态势标签显示");
+                viewer.entities.removeAll();
+                taiShiLegendDraw();
+                alert("OK");
+                //drawHeatMap();
+            } else if ($(this).hasClass("fa-tasks")) {
+                $(this).removeClass("fa-tasks");
+                $(this).addClass("fa-exclamation-triangle");
+                $(this).attr("title", "诊断分析层");
+                alert("切换为诊断分析层");
+            } else {
+                $(this).removeClass("fa-exclamation-triangle");
+                $(this).addClass("fa-cubes");
+                $(this).attr("title", "实时可视化层");
+
+            }
+        }
+    }).appendTo("#test");
+});
+
+$(function () {
+    $('<i />', {
+        id: 'situationMap',
+        "class": "fa fa-question",
+        "aria-hidden": "true",
+        "color": '#08ABD5',
+        'background': '#888',
+        "title": "帮助",
+        click: function () {
+
+            alert("ok");
+        }
+    }).appendTo("#test");
+});
+
+$(function(){
+    //Create the list
+    $('#sidebar').json2html(jsonData,transform.park);
+    $('<div class="pageHeader"><h4 class="panel-title"><a class="parkToggle">青海省甘河工业园区污染监测系统</a></h4></div>').prependTo('#sidebar');
+    $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">查询</button></div></div>').appendTo('#left-side-nav-panel');
+
+    jQuery(function(){
+        var today = new Date();
+        today.setHours(today.getHours()-1);
+        var startDate = today;
+        today = new Date();
+        jQuery('#startDateTimepicker').datetimepicker({
+            format:'Y-m-d H:i:s',
+            lang: 'ch',
+            onShow:function( ct ){
+                this.setOptions({
+                    maxDate: jQuery('#endDateTimepicker').val() ? jQuery('#endDateTimepicker').val() : false
+                })
+            },
+            timePicker: true,
+            value: startDate
+        });
+
+        jQuery('#endDateTimepicker').datetimepicker({
+            format: 'Y-m-d H:i:s',
+            locale: 'ch',
+            onShow: function (ct) {
+                this.setOptions({
+                    minDate: jQuery('#startDateTimepicker').val() ? jQuery('#startDateTimepicker').val() : false
+                })
+            },
+            timePicker: true,
+            value: today
+        });
+    });
+
+    leftSideBarConf();
+    writeAttrsToFactors();
+    mergeHidenBoxes();
+    $($('.parkToggle').first()).trigger('click');
+    $('.panel-heading').click(function () {
+        console.log('dsdf:'+ (($(this).index()-1)/2+1));
+    });
+    $('.factor').click( function(e) {
+
+        var factorID = $(this).attr("factorID");
+        var deviceID = $(this).attr("deviceID");
+        var stationID = $(this).attr("stationID");
+        var parkID = $(this).attr("parkID");
+
+        if ($(this).hasClass("selectedFactor"))
+        {
+            $(this).removeClass("selectedFactor");
+            var afterFilter = [];
+            afterFilter = $.grep(selectedFactorsInfo,function (obj) {
+                console.log(obj.deviceID);
+                if ((obj.deviceID === deviceID) && (obj.factorID === factorID) && (obj.stationID === stationID) && (obj.parkID === parkID)) {
+                    //Old factor, Remove
+                    return false;
+                } else {
+                    //New facotor, add
+                    return true;
+                }
+            });
+            selectedFactorsInfo = afterFilter;
+        } else {
+            $(this).addClass("selectedFactor");
+            var factorInfo = {"parkID":parkID,"stationID":stationID,"deviceID":deviceID,"factorID":factorID};
+            selectedFactorsInfo.push(factorInfo);
+        }
+        console.log("selectedFactorsInfo: "+selectedFactorsInfo);
+    });
+
+    $(".submitButton").click( function () {
+        console.log("succvvvv");
+        var startDate = document.getElementById('startDateTimepicker').value;
+        var endDate = document.getElementById('endDateTimepicker').value;
+        var stringToPost = generateDataToPost(startDate, endDate);
+        jQuery.ajax ({
+            url: "http://192.168.20.59:80/postjson",
+            type: "POST",
+            data: stringToPost,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function(data){
+                displayData(data);
+            }
+        });
+    });
+    function generateDataToPost(startDate, endDate){
+        var queryObj = {"factorsQuery":selectedFactorsInfo,"startDate":startDate,"endDate":endDate};
+        var tempObj = {};
+        var outputObj = {"factorsQuery":[],"startTime":startDate,"endTime":endDate};
+        for (var i = 0; i<selectedFactorsInfo.length; i++) {
+            var singleFactor = selectedFactorsInfo[i];
+            singleFactor["key"] = singleFactor.parkID + singleFactor.stationID + singleFactor.deviceID;
+            var keyString = singleFactor["key"];
+            if (tempObj[keyString] === undefined) {
+                tempObj[keyString] = [];
+            }
+            tempObj[keyString].push(singleFactor);
+        }
+        for (var i = 0; i<Object.keys(tempObj).length; i++) {
+            var factorKey = Object.keys(tempObj)[i];
+            var factorsInSameDevice = tempObj[factorKey];
+            var factorIDs = [];
+            for (var j=0; j<factorsInSameDevice.length; j++) {
+                factorIDs.push(factorsInSameDevice[j].factorID);
+            }
+            var parkID = tempObj[factorKey][0].parkID;
+            var stationID = tempObj[factorKey][0].stationID;
+            var deviceID = tempObj[factorKey][0].deviceID;
+            outputObj["factorsQuery"].push({"parkID":parkID,"stationID":stationID,"deviceID":deviceID,"factorID":factorIDs});
+        }
+        var string = JSON.stringify(outputObj);
+        console.log("jsonData:" + string);
+        return string;
+    }
+});
+
+loadJSON(function (response) {
+    // Parse JSON string into object
+    jsonData = JSON.parse(response);
+    var park, site, instrument, factor;
+    for (park in jsonData) {
+        for (site in jsonData[park]["stations"]) {
+            for (instrument in jsonData[park]["stations"][site]["device"]) {
+                for (factor in jsonData[park]["stations"][site]["device"][instrument]["factor"]) {
+                    jsonData[park]["stations"][site]["device"][instrument]["factor"].sort(function(a,b){
+                        return a["name"].localeCompare(b["name"], 'zh-Hans-CN', {sensitivity: 'accent'});
+                    });
+                }
+            }
+        }
+    }
+});
+
+Cesium.loadJson('./json/exampleData.json').then(function (data) {
+    displayData(data);
+});
 
 function displayData(data) {
-    var stationList = loadServerData(data);
+    var stationList = data;//loadServerData(data);
+    var minMaxMap = getFactorMinMaxMap(data);
     //var stationList = data;
     var baseLineHeight = 10000.0;
     var scene = viewer.scene;
@@ -543,18 +1116,14 @@ function displayData(data) {
             stationLineHeight = (i + 5) * baseLineHeight / 20;
         }
 
+        var stationInfo = queryLonLatByStationID(stationData.stationId);
+        var lon = stationInfo.Longitude;
+        var lat = stationInfo.Latitude;
+        if(lon === undefined||lat === undefined)
+        {
+            console.log("undefined lon lat");
+        }
 
-        var stationExtraInfo = queryLonLatByStationID(stationData.stationId);
-        var lon = stationExtraInfo.lontitude;
-        var lat = stationExtraInfo.latitude;
-
-
-        /*     var extent = Cesium.Rectangle.fromDegrees(100.334056, 3.522957,101.586551, 38.203119);
-         Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
-         Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
-         viewer.camera.setView({
-         destination: extent
-         });*/
         var surfacePosition = Cesium.Cartesian3.fromDegrees(lon, lat, 0);
         var heightPosition = Cesium.Cartesian3.fromDegrees(lon, lat, stationLineHeight);
 
@@ -569,12 +1138,7 @@ function displayData(data) {
             }
         });
         // stationNodeLine.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(heightPosition, new Cesium.HeadingPitchRoll(heading,pitch,roll)));
-        var getRandomBallUrl = function()
-        {
-            var randFloat =  Math.random()*28+1;
-            var randInt = parseInt(randFloat);
-            return 'models/balls/'+ randInt+'.glb';
-        };
+
         var stationNode = viewer.entities.add({
             name: stationData.stationName,
             label:stationData.stationName,
@@ -584,9 +1148,7 @@ function displayData(data) {
                 scale:300
             }
         });
-        //Add the entity to the collection.
-        // entities.add(entity);
-        // stationNode.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(heightPosition, new Cesium.HeadingPitchRoll(heading,pitch,roll)));
+
         var deviceList = stationData.deviceList;
         var radius = 0.01;
         var devicePositionArray = getPointArrayAroundPosition(lon,lat,radius);
@@ -601,7 +1163,7 @@ function displayData(data) {
             var machineHeight = 1000;
 
             //var endPosition = Cesium.Cartesian3.fromDegrees(log+, lat, 2*baseLineHeight);
-            var vect3dPosition = getRandPosition(devicePositionArray)
+            var vect3dPosition = getRandPosition(devicePositionArray);
             var deviceHeight = stationLineHeight+vect3dPosition.z*111000;
             var endPosition = Cesium.Cartesian3.fromDegrees(vect3dPosition.x, vect3dPosition.y, deviceHeight);
 
@@ -637,127 +1199,61 @@ function displayData(data) {
             });
 
             var factorList = deviceData.factorList;
-            var factorPositionArray = getPointArrayAroundPosition(vect3dPosition.x, vect3dPosition.y, radius);
+         //   var factorPositionArray = getPointArrayAroundPosition(vect3dPosition.x, vect3dPosition.y, radius);
+            if(!stationInfo.hasOwnProperty("radarLine"))
+                continue;
+
             for (var k = 0; k < factorList.length; k++) {
                 var factorData = factorList[k];
-                // var property = computeCircularFlight(start, lon + radius * Math.cos(radians), lat + radius * Math.sin(radians), stationLineHeight + Math.sin(Cesium.Math.toRadians(30)) * machineHeight);
-                //  alert(property);1
-                var vectFactorPosition = getRandPosition(factorPositionArray);
-                var factorPosition = Cesium.Cartesian3.fromDegrees(vectFactorPosition.x, vectFactorPosition.y, deviceHeight+vectFactorPosition.z*111000);
+
+                var xyPosition = getCylinderPosition(stationInfo.radarLine.point1,
+                    stationInfo.radarLine.point2,
+                    k,
+                    radius*0.055);
+
+                var vectorFactorPosition = new Vector3D();
+                vectorFactorPosition.x = xyPosition.x;
+                vectorFactorPosition.y = xyPosition.y;
+                vectorFactorPosition.z = 20;
+                var sheetFactor = Math.random()*0.005-0.0025;
+                var factorPosition = Cesium.Cartesian3.fromDegrees(vectorFactorPosition.x+sheetFactor, vectorFactorPosition.y+sheetFactor, vectorFactorPosition.z);
+
+
+                var minMax = minMaxMap[factorData.factorName];
+                var examData= factorData.timeLineData[0];
+                var scaleFactor = (examData.value-minMax.min)/(minMax.max- minMax.min);
+                var cylinderHeight = scaleFactor*10000;
+                var colorValue = 1*scaleFactor;
+
+
 
                 var factorEntity = viewer.entities.add({
                     name:"factor",
-
-                    //设置entity生存时间与
-                    // availability: new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
-                    //     start: start,
-                    //      stop: stop
-                    // })]),
-
-                    //Use our computed positions
                     position: factorPosition,
-
-                    //Automatically compute orientation based on position movement.
-                    //  orientation: new Cesium.VelocityOrientationProperty(property),
-
-                    //Load the Cesium plane model to represent the entity
-                    model:{
-                        uri:getRandomBallUrl(),
-                        scale:60
+                    cylinder:{
+                        topRadius:50,
+                        bottomRadius:50,
+                        length:cylinderHeight,
+                        material : new Cesium.Color(1,1-colorValue,1-colorValue),
+                        outline : false
                     }
-                    /*
-                     ,
-
-                     //Show the path as a pink line sampled in 1 second increments.
-                     path : {
-                     resolution : 1,
-                     material : new Cesium.PolylineGlowMaterialProperty({
-                     glowPower : 0.1,
-                     color : Cesium.Color.YELLOW
-                     }),
-                     width : 1
-                     }
-                     */
                 });
 
-                /* factorEntity.position.setInterpolationOptions({
-                 interpolationDegree: 2,
-                 interpolationAlgorithm: Cesium.LagrangePolynomialApproximation
-                 });*/
+              //  var labelPosition = factorPosition.clone();
+                factorPosition.z = factorPosition.z+cylinderHeight*0.5;
 
-                /*
-                 var Pai = Cesium.Math.PI;
-                 var factorNode;
-
-                 var factorSphereRadiusPlus =100;
-
-
-                 //产生一个在0-2派之间的随机角度，控制高度角
-                 var factorSpheres_randomAlpha = Cesium.Math.randomBetween(-1,1)*Pai;
-
-
-
-                 //产生一个在0-派之间的随机角度控制平面间的旋转
-                 var factorSpheres_randomBeta = Cesium.Math.nextRandomNumber()*Pai*2;
-                 var factorSpheres_Lineradius = 0.01;
-                 var factorNode_log = log+radius*Math.cos(radians)+factorSpheres_Lineradius*Math.cos(factorSpheres_randomAlpha)*Math.sin(factorSpheres_randomBeta);
-                 var factorNode_lat = lat+radius*Math.sin(radians)+factorSpheres_Lineradius*Math.cos(factorSpheres_randomAlpha)*Math.cos(factorSpheres_randomBeta);
-                 var factorNode_height = stationLineHeight*(Math.sin(Cesium.Math.toRadians(35))+0.8)+Math.sin(factorSpheres_randomAlpha)*1200;
-
-                 var factorNode_endFactorPosition = Cesium.Cartesian3.fromDegrees( factorNode_log,factorNode_lat,factorNode_height);
-
-                 var startFactorPosition = endPosition;
-                 var factorDegreeInterval = Cesium.Math.toRadians(360)/data[i]["list"][j]["machineData"].length;
-                 var factorRadians = factorDegreeInterval*k;
-                 // var endFactorPosition = Cesium.Cartesian3.fromDegrees(log+radius*Math.cos(radians), lat+radius*Math.sin(radians),baseLineHeight*(2));
-                 //var endFactorPosition = Cesium.Cartesian3.fromDegrees(log+radius*Math.cos(radians)+scale*radius*Math.cos(factorRadians), lat+radius*Math.sin(radians)+scale*radius*Math.sin(factorRadians),factorHeight);
-                 //var factorPositions = new Cesium.ConstantProperty([startFactorPosition, factorNode_endFactorPosition]);
-
-
-                 // var factorNodeLine = viewer.entities.add({
-                 //  name:"factorPolyline"+data[i]["list"][j]["machineData"][k]["data"][0]["value"],
-                 //  polyline:{
-                 //     positions:factorPositions,
-                 //     width:polylineWith,
-                 //     material:new Cesium.ColorMaterialProperty(polylineColor)
-                 //  }
-                 // });
-
-                 factorNode = viewer.entities.add({
-                 name:"factorSphere"+data[i]["list"][j]["machineData"][k]["data"][0]["value"],
-                 position: factorNode_endFactorPosition,
-                 orientation:orientation,
-                 ellipsoid: {
-                 radii: new Cesium.Cartesian3(factorSphereRadius,factorSphereRadius, factorSphereRadius),
-                 outline: false,
-                 material:  Cesium.Color.fromRandom()
-                 }
-
-                 });
-                 if (data[i]["list"][j]["machineData"][k]["data"][0]["warningGrade"]==="5"){
-                 factorNodeWarning = viewer.entities.add({
-                 name:"factorSphereWarning"+data[i]["list"][j]["machineData"][k]["data"][0]["value"],
-                 position: factorNode_endFactorPosition,
-                 orientation:orientation,
-                 ellipsoid: {
-                 radii: new Cesium.Cartesian3(factorSphereRadius+100,factorSphereRadius+100, factorSphereRadius+100),
-                 outline: false,
-                 material:Cesium.Color.RED.withAlpha(0.3)
-                 }
-
-                 });
-                 }
-                 */
+                var labelEntity = viewer.entities.add({
+                    position:labelPosition,
+                    label:{
+                        id: factorData.factorName,
+                        text:factorData.factorName,
+                        font:'25px Microsoft YaHei',
+                        fillColor:Cesium.Color.AQUA,
+                        scaleByDistance:new Cesium.NearFarScalar(1.5e2, 1.5, 10000, 0.0)
+                    }
+                });
             }
         }
     }
-
-//var result = squareMatrixMultiply(calculatePositions(), caculateRotationMatrix());
-
     viewer.zoomTo(viewer.entities);
-
 }
-
-var selectedFactorsInfo;
-selectedFactorsInfo = [];
-
