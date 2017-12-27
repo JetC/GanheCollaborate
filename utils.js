@@ -220,15 +220,85 @@ function loadJSON(callback) {
     xobj.send(null);
 }
 
-function getCylinderPosition(startGeoPoint,endGeoPoint,index,radius)
+/*
+*
+* index number
+* */
+function getVerticalLineRadius(index) {
+    return Math.floor((index+1)/2)*0.003;
+}
+
+/*
+* index number
+**/
+function getSolutionFlag(index) {
+    return Math.pow(-1,Math.floor(index+1));
+}
+
+/*
+*
+* startPointVect Vector3D
+* endPointVect Vector3D
+* index number
+* radius number
+* */
+function  getLineK(startPointVector, endPointVector)
+{
+    return (endPointVector.y - startPointVector.y)/(endPointVector.x - startPointVector.x);
+}
+
+/*
+*
+* startPoint3D Vector3D
+* k number
+* index number
+* radius number
+* solutionFlag number
+* */
+function getVerticalShiftPosition(startPoint3D, k, index, radius, solutionFlag) {
+    var x1,y1,b,r;
+    x1 = startPoint3D.x;
+    y1 = startPoint3D.y;
+    b = y1-x1*k;
+    var calIndex = Math.floor((index+1)/2);
+    r = (calIndex-1)*2*radius+radius;
+    if(r===0)
+        return startPoint3D;
+
+    var A,B,C;
+    A = 1+k*k;
+    B = -2*x1+2*k*b-2*y1*k;
+    C = x1*x1+b*b-2*y1*b+y1*y1-r*r;
+
+    var solve1=new Vector3D(),solve2=new Vector3D();
+    solve1.x = (-B+Math.sqrt(B*B - 4*A*C))/(2*A);
+    solve1.y = k*solve1.x+b;
+
+    solve2.x = (-B-Math.sqrt(B*B - 4*A*C))/(2*A);
+    solve2.y = k*solve2.x+b;
+
+    if(solutionFlag<0)
+        return solve1;
+    else return solve2;
+}
+
+
+/*
+*
+* startPointVector Vector3D
+* endPointVector Vector3D
+* index number
+* radius number
+* */
+function getCylinderPosition(startPoint3D,endPoint3D,index,radius)
 {
     var startPoint = new Vector3D();
-    startPoint.x = startGeoPoint.Longitude;
-    startPoint.y = startGeoPoint.Latitude;
+    startPoint.x = startPoint3D.x;
+    startPoint.y = startPoint3D.y;
     radius*=1;
     var endPoint = new Vector3D();
-    endPoint.x = endGeoPoint.Longitude;
-    endPoint.y = endGeoPoint.Latitude;
+    endPoint.x = endPoint3D.x;
+    endPoint.y = endPoint3D.y;
 
     var x1,y1,x2,y2,k,b,r;
     x1 = startPoint.x;
@@ -237,8 +307,9 @@ function getCylinderPosition(startGeoPoint,endGeoPoint,index,radius)
     y2 = endPoint.y;
     k = (y2-y1)/(x2-x1);
     b = y1-x1*k;
-    index+=1;//start at 1.
-    r = (index-1)*2*radius+radius;
+    var calIndex = index+1;//start at 1.
+    r = (calIndex-1)*2*radius+radius;
+    console.log("r:"+r);
     var A,B,C;
     A = 1+k*k;
     B = -2*x1+2*k*b-2*y1*k;
@@ -276,10 +347,6 @@ function getRandomBallUrl ()
     var randFloat =  Math.random()*28+1;
     var randInt = Math.floor(randFloat);
     return 'models/balls/'+ randInt+'.glb';
-}
-
-function getCylinderUrl() {
-    return 'models/cylinder/1.glb';
 }
 
 

@@ -167,6 +167,20 @@ function Vector3D()
 }
 
 
+/*
+*geoPoint:{Longitude,Latitude}
+*
+*
+* return Vector3D
+* */
+function convertGeo2Vector3D(geoPoint) {
+    var vector3D = new Vector3D();
+    vector3D.x = geoPoint.Longitude;
+    vector3D.y = geoPoint.Latitude;
+    return vector3D;
+}
+
+
 function getWeatherFactorData(unitData)
 {
     var factors=[];

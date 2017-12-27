@@ -73,27 +73,27 @@ providerViewModels.push(new Cesium.ProviderViewModel({
 }));
 
 var terrainViewModels = [];
-terrainViewModels.push(new Cesium.ProviderViewModel({
-    name : 'WGS84 Ellipsoid',
-    iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
-    tooltip : 'WGS84 standard ellipsoid, also known as EPSG:4326',
-    creationFunction : function() {
-        return new Cesium.EllipsoidTerrainProvider();
-    }
-}));
-
-terrainViewModels.push(new Cesium.ProviderViewModel({
-    name : 'STK World Terrain meshes',
-    iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/STK.png'),
-    tooltip : 'High-resolution, mesh-based terrain for the entire globe. Free for use on the Internet. Closed-network options are available.\nhttp://www.agi.com',
-    creationFunction : function() {
-        return new Cesium.CesiumTerrainProvider({
-            url : '//assets.agi.com/stk-terrain/world',
-            requestWaterMask : true,
-            requestVertexNormals : true
-        });
-    }
-}));
+// terrainViewModels.push(new Cesium.ProviderViewModel({
+//     name : 'WGS84 Ellipsoid',
+//     iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/Ellipsoid.png'),
+//     tooltip : 'WGS84 standard ellipsoid, also known as EPSG:4326',
+//     creationFunction : function() {
+//         return new Cesium.EllipsoidTerrainProvider();
+//     }
+// }));
+//
+// terrainViewModels.push(new Cesium.ProviderViewModel({
+//     name : 'STK World Terrain meshes',
+//     iconUrl : Cesium.buildModuleUrl('Widgets/Images/TerrainProviders/STK.png'),
+//     tooltip : 'High-resolution, mesh-based terrain for the entire globe. Free for use on the Internet. Closed-network options are available.\nhttp://www.agi.com',
+//     creationFunction : function() {
+//         return new Cesium.CesiumTerrainProvider({
+//             url : '//assets.agi.com/stk-terrain/world',
+//             requestWaterMask : true,
+//             requestVertexNormals : true
+//         });
+//     }
+// }));
 
 var viewer = new Cesium.Viewer('cesiumContainer', {
     baseLayerPicker: true,//图层控制显示
@@ -1096,7 +1096,7 @@ function displayData(data) {
     var heightScaleForNearStation = 2;
 
     //计算每一个factor的运动轨迹的点
-
+//2017-4-30 12:01:00
     var start = Cesium.JulianDate.fromDate(new Date(2017, 9, 30, 12));
 
     var stop = Cesium.JulianDate.addHours(start, 360, new Cesium.JulianDate());
@@ -1203,53 +1203,70 @@ function displayData(data) {
             if(!stationInfo.hasOwnProperty("radarLine"))
                 continue;
 
+            /*使得直线侧移一段距离*/
+            var factorLineStartPoint = convertGeo2Vector3D(stationInfo.radarLine.point1);
+            var factorLineEndPoint = convertGeo2Vector3D(stationInfo.radarLine.point2);
+            var factorLineK = -1/getLineK(factorLineStartPoint,factorLineEndPoint);
+            var verticalLineRadius = getVerticalLineRadius(j);
+
+            var solutionFlag = getSolutionFlag(j);
+            var factorShiftLineStartPoint = getVerticalShiftPosition(factorLineStartPoint, factorLineK, j, verticalLineRadius, solutionFlag);
+            var factorShiftLineEndPoint = getVerticalShiftPosition(factorLineEndPoint, factorLineK, j, verticalLineRadius, solutionFlag);
+
             for (var k = 0; k < factorList.length; k++) {
                 var factorData = factorList[k];
+                var linePoint1 = new Vector3D();
+                linePoint1.x = stationInfo.radarLine.point1.x;
+                linePoint1.y = stationInfo.radarLine.point1.y;
 
-                var xyPosition = getCylinderPosition(stationInfo.radarLine.point1,
-                    stationInfo.radarLine.point2,
+                var linePoint2 = new Vector3D();
+                linePoint2.x = stationInfo.radarLine.point2.x;
+                linePoint2.y = stationInfo.radarLine.point2.y;
+
+                var xyPosition = getCylinderPosition(factorShiftLineStartPoint,
+                    factorShiftLineEndPoint,
                     k,
-                    radius*0.055);
+                    radius*0.1);
 
                 var vectorFactorPosition = new Vector3D();
                 vectorFactorPosition.x = xyPosition.x;
                 vectorFactorPosition.y = xyPosition.y;
                 vectorFactorPosition.z = 20;
-                var sheetFactor = Math.random()*0.005-0.0025;
-                var factorPosition = Cesium.Cartesian3.fromDegrees(vectorFactorPosition.x+sheetFactor, vectorFactorPosition.y+sheetFactor, vectorFactorPosition.z);
-
 
                 var minMax = minMaxMap[factorData.factorName];
-                var examData= factorData.timeLineData[0];
+                var randomTimeLineIndex = Math.floor(Math.random()*(factorData.timeLineData.length-1));
+                var examData= factorData.timeLineData[randomTimeLineIndex];
                 var scaleFactor = (examData.value-minMax.min)/(minMax.max- minMax.min);
                 var cylinderHeight = scaleFactor*10000;
+
+                var factorPosition = Cesium.Cartesian3.fromDegrees(vectorFactorPosition.x, vectorFactorPosition.y, vectorFactorPosition.z+cylinderHeight/2);
+
                 var colorValue = 1*scaleFactor;
-
-
+                console.log(minMax);
+                console.log("scaleFactor: "+scaleFactor);
 
                 var factorEntity = viewer.entities.add({
                     name:"factor",
                     position: factorPosition,
                     cylinder:{
-                        topRadius:50,
-                        bottomRadius:50,
+                        topRadius:80,
+                        bottomRadius:80,
                         length:cylinderHeight,
                         material : new Cesium.Color(1,1-colorValue,1-colorValue),
                         outline : false
                     }
                 });
 
-              //  var labelPosition = factorPosition.clone();
-                factorPosition.z = factorPosition.z+cylinderHeight*0.5;
+                var labelPosition = Cesium.Cartesian3.fromDegrees(vectorFactorPosition.x, vectorFactorPosition.y, vectorFactorPosition.z + cylinderHeight/2 + cylinderHeight*0.5+20);
 
                 var labelEntity = viewer.entities.add({
                     position:labelPosition,
                     label:{
                         id: factorData.factorName,
                         text:factorData.factorName,
-                        font:'25px Microsoft YaHei',
+                        font:'30px YaHei',
                         fillColor:Cesium.Color.AQUA,
-                        scaleByDistance:new Cesium.NearFarScalar(1.5e2, 1.5, 10000, 0.0)
+                        scaleByDistance:new Cesium.NearFarScalar(1.5e2, 1.5,20000, 0.0)
                     }
                 });
             }
