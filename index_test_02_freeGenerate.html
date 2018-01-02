@@ -22,6 +22,9 @@
     <script src="js/libs/jquery.js" ></script>
     <script src="js/PositionPick.js"></script>
     <script src="js/navigation-mixin.js" ></script>
+    <script src="js/turf.min.js" type="application/javascript"></script>
+
+
     <!--BootStrap-->
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -43,6 +46,15 @@
     <script src="js/php-date-formatter.js"></script>
     <link rel="stylesheet" href="css/jquery.datetimepicker.css">
     <script text="text/javascript" src="js/pinying.js" charset="GBK"></script>
+
+    <script src="js/require.js"></script>
+    <script src="js/buttonBinding.js"></script>
+    <script src="js/roam.js"></script>
+    <script src="js/DrawHelper.js"></script>
+    <script src="js/drawTools.js"></script>
+    <script src="js/roamManager.js"></script>
+    <script src="js/settingCesium.js"></script>
+
 </head>
 
 <body>
@@ -54,17 +66,132 @@
             </div>
         </div>
         <div id="cesiumContainer">
-            <div id = "test"></div>
+            <div id ="test"></div>
             <div id="tool-bar-append" ></div>
             <div id="position" ></div>
             <div id="dataTable" class="modalHide"></div>
             <div id="flyTable" class="modalHide"></div>
+
+            <div id="toolbar" style="visibility: hidden;">
+                <div class="toolbar">
+                    <div class="button" title="标记"><span><img src="bootstrap/img/glyphicons_242_google_maps.png"></span>
+                    </div>
+                    <div class="button" title="绘制线"><span><img src="bootstrap/img/glyphicons_097_vector_path_line.png"></span>
+                    </div>
+                    <div class="button" title="绘制多边形区域"><span><img
+                            src="bootstrap/img/glyphicons_096_vector_path_polygon.png"></span></div>
+                    <div class="button" title="绘制圆形区域"><span><img
+                            src="bootstrap/img/glyphicons_095_vector_path_circle.png"></span></div>
+                    <div class="divider"></div>
+                </div>
+            </div>
+
+            <div class='col-xs-1 col-lg-1'>
+                <div class="btn-group" style="position:absolute; z-index:100; ">
+                    <button id="measure" type="button" class="btn btn-default glyphicon glyphicon-pencil" title="标绘"></button>
+                    <button id="remove" type="button" class="btn btn-default glyphicon glyphicon-remove" title="全部移除"></button>
+
+                </div>
+            </div>
+
+            <div class='col-xs-1 col-lg-1'>
+                <div class="btn-group" style="position:absolute; z-index:100; ">
+                    <button id="fly" type="button" class="btn btn-default glyphicon glyphicon-plane" title="飞行"></button>
+                    <button id="roam" type="button" class="btn btn-default glyphicon glyphicon-road" title="漫游"></button>
+
+                </div>
+            </div>
+            <div class="modal" id="flyModal"  style="top:2%;" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">选择飞行位置</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group">
+                                <span class="input-group-addon">经度</span>
+                                <input type="text" class="form-control" id="lonFly">
+                                <span class="input-group-addon">纬度</span>
+                                <input type="text" class="form-control" id="latFly">
+                                <span class="input-group-addon">高度</span>
+                                <input type="text" class="form-control" id="heightFly">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="closeFly" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" id="loadFly" class="btn btn-primary">飞行</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal" id="roamModal"  style="top:2%;" >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">选择漫游路径</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="input-group">
+                                <span class="input-group-addon">起点经度</span>
+                                <input type="text" class="form-control" id="startLon" readonly>
+                                <span class="input-group-addon">起点纬度</span>
+                                <input type="text" class="form-control" id="startLat" readonly>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">终点经度</span>
+                                <input type="text" class="form-control" id="endLon" readonly>
+                                <span class="input-group-addon">终点纬度</span>
+                                <input type="text" class="form-control" id="endLat" readonly>
+                            </div>
+                            </br>
+                            <div class="input-group">
+                                <span class="input-group-addon">漫游速度</span>
+                                <input type="text" class="form-control" id="roamTime" value='10'>
+                                <span class="input-group-addon">漫游高度</span>
+                                <input type="text" class="form-control" id="roamHeight" value='30'>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="closeRoam" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" id="pointRoam" class="btn btn-primary" data-dismiss="modal">点选路径</button>
+                            <button type="button" id="clearRoam" class="btn btn-primary">重置漫游</button>
+                            <button type="button" id="cancelRoam" class="btn btn-primary" data-dismiss="modal">取消漫游</button>
+                            <button type="button" id="loadRoam" class="btn btn-primary">开始漫游</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </body>
+
+<!--<script>-->
+    <!--var viewer-->
+    <!--if(Cesium!=="undefined"){-->
+        <!--viewer=startUpCesium(Cesium);-->
+        <!--var scene=viewer.scene;-->
+    <!--}-->
+    <!--else if(require==="function"){-->
+        <!--viewer=require(["Cesium"],startUpCesium);-->
+        <!--var scene=viewer.scene;-->
+    <!--}-->
+
+<!--</script>-->
 <script src="stationData.js"></script>
 <script src="utils.js"></script>
 <script src="search.js"></script>
+<script>
+    settingFunc();
+    draw(undefined,true);
+    roam();
+</script>
+<script>
+
+
+</script>
+
 </html>
 
 

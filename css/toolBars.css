@@ -230,3 +230,14 @@ right:-10px; !important
     transform: translateY(0);
     transition: transform 0.4s ease-out;
 }
+
+#toolbar {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    display: inline;
+    margin: 10px;
+    padding: 0px;
+    background: white;
+    z-index: 50;
+}

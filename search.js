@@ -1054,6 +1054,40 @@ $(function(){
         console.log("jsonData:" + string);
         return string;
     }
+    $('.submitButton').click(function () {
+        fly();
+    });
+    function fly() {
+        // viewer.scene.camera.flyTo({destination: Cesium.Cartesian3.fromDegrees(lon, lat, height)})
+        var camera=viewer.scene.camera;
+        camera.flyTo({
+            destination :  Cesium.Cartesian3.fromDegrees(116.435314,39.960521, 150), // 设置位置
+            complete: function () {
+                // 到达位置后执行的回调函数
+                console.log('到达目的地,next!');
+                roam();
+            },
+            cancel: function () {
+                // 如果取消飞行则会调用此函数
+                console.log('飞行取消')
+            }
+        });
+    }
+    function roam() {
+        var camera=viewer.scene.camera;
+        camera.flyTo({
+            destination :  Cesium.Cartesian3.fromDegrees(120,30, 150), // 设置位置
+            complete: function () {
+                // 到达位置后执行的回调函数
+                console.log('到达目的地');
+            },
+            cancel: function () {
+                // 如果取消飞行则会调用此函数
+                console.log('飞行取消')
+            }
+        });
+
+    }
 });
 
 loadJSON(function (response) {
