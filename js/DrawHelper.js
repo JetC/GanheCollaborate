@@ -1707,29 +1707,29 @@ var DrawHelper = (function() {
                         var latitudeString = Cesium.Math.toDegrees(carto.latitude).toFixed(4);
                         var HeightString =viewer.camera.positionCartographic.height;
                         //计算圆范围内建筑数量
-                        xmlhttp=new window.XMLHttpRequest(); 
-                        xmlhttp.open("GET",'data/models/Philadelphiabuilding-images.xml',false);  
-                        xmlhttp.send();  
-                        xmlDoc=xmlhttp.responseXML; 
-                        var nodes=xmlDoc.getElementsByTagName("Location"); 
-                        var n=0;
-                        for(i=1;i<nodes.length*2;i=i+2){
-                            lon=xmlDoc.documentElement.childNodes[1].childNodes[3].childNodes[i].childNodes[3].childNodes[3].childNodes[1].textContent;
-                            lat=xmlDoc.documentElement.childNodes[1].childNodes[3].childNodes[i].childNodes[3].childNodes[3].childNodes[3].textContent
-                            var distance=Cesium.Cartesian3.distance(Cesium.Cartesian3.fromDegrees(longitudeString,latitudeString),Cesium.Cartesian3.fromDegrees(lon,lat));                            
-                            if(distance<circle.getRadius()){
-                                n++;
-                                var buffer=bufferModel[i];
-                                if(Cesium.defined(buffer)){
-                                    var material = buffer.getMaterial('MATERIAL_NAME_NOT_FOUND');
-                                    lastColor = material.getValue('diffuse').clone();
-                                    material.setValue('diffuse', Cesium.Cartesian4.fromColor(Cesium.Color.RED));
-                        
-                                }
-
-                            }
-                        }
-                        alert("区域内共有"+n+"个建筑被选中")
+                        // xmlhttp=new window.XMLHttpRequest();
+                        // xmlhttp.open("GET",'data/models/Philadelphiabuilding-images.xml',false);
+                        // xmlhttp.send();
+                        // xmlDoc=xmlhttp.responseXML;
+                        // var nodes=xmlDoc.getElementsByTagName("Location");
+                        // var n=0;
+                        // for(i=1;i<nodes.length*2;i=i+2){
+                        //     lon=xmlDoc.documentElement.childNodes[1].childNodes[3].childNodes[i].childNodes[3].childNodes[3].childNodes[1].textContent;
+                        //     lat=xmlDoc.documentElement.childNodes[1].childNodes[3].childNodes[i].childNodes[3].childNodes[3].childNodes[3].textContent
+                        //     var distance=Cesium.Cartesian3.distance(Cesium.Cartesian3.fromDegrees(longitudeString,latitudeString),Cesium.Cartesian3.fromDegrees(lon,lat));
+                        //     if(distance<circle.getRadius()){
+                        //         n++;
+                        //         var buffer=bufferModel[i];
+                        //         if(Cesium.defined(buffer)){
+                        //             var material = buffer.getMaterial('MATERIAL_NAME_NOT_FOUND');
+                        //             lastColor = material.getValue('diffuse').clone();
+                        //             material.setValue('diffuse', Cesium.Cartesian4.fromColor(Cesium.Color.RED));
+                        //
+                        //         }
+                        //
+                        //     }
+                        // }
+                        // alert("区域内共有"+n+"个建筑被选中")
                         var handleMarkerChanges = {
                             dragHandlers: {
                                 onDrag: function(index, position) {
