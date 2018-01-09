@@ -49,6 +49,7 @@ var transform = {
 };
 var providerViewModels = [];
 var points = [];
+var indexOfPointsToFlyTo = 0;
 
 providerViewModels.push(new Cesium.ProviderViewModel({
     name : 'Bing Maps Aerial with Labels',
@@ -1051,7 +1052,7 @@ loadJSON(function (response) {
         $('#roam').click(function () {
             roam();
         });
-        
+
         viewer.canvas.addEventListener('click', function(e){
             var mousePosition = new Cesium.Cartesian2(e.clientX, e.clientY);
             var ellipsoid = viewer.scene.globe.ellipsoid;
@@ -1101,14 +1102,15 @@ loadJSON(function (response) {
         return string;
     }
 
-    function fly() {
+    function fly(point) {
         // viewer.scene.camera.flyTo({destination: Cesium.Cartesian3.fromDegrees(lon, lat, height)})
         var camera=viewer.scene.camera;
         camera.flyTo({
-            destination:points[0], // 设置位置
+            destination:point, // 设置位置
             complete: function () {
                 // 到达位置后执行的回调函数
                 console.log('到达目的地,next!');
+                roam();
             },
             cancel: function () {
                 // 如果取消飞行则会调用此函数
@@ -1117,7 +1119,10 @@ loadJSON(function (response) {
         });
     }
     function roam() {
-        fly()
+        if (indexOfPointsToFlyTo<points.length-1) {
+            fly(points[indexOfPointsToFlyTo]);
+            indexOfPointsToFlyTo++;
+        }
     }
 
 
