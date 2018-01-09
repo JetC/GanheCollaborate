@@ -224,14 +224,15 @@ function leftSideBarConf(){
 }
 function mergeHidenBoxes() {
     var hidenBoxesArray = $('.hiden-box');
-    for (var i = 1;i < hidenBoxesArray.length;i++) {
+    for (var i = 1;i < hidenBoxesArray.length; i++) {
         var singleHidenBox = hidenBoxesArray[i];
-        for (var j=0; j < singleHidenBox.children.length; j++) {
-            hidenBoxesArray[0].append(singleHidenBox.children[j]);
+        for (;$($(singleHidenBox).children()).length > 0;) {
+            hidenBoxesArray[0].append(singleHidenBox.children[0]);
         }
         singleHidenBox.remove();
     }
 }
+
 function writeAttrsToFactors() {
     var allFactorsArr = $('.factor');
     for (var i=0;i<allFactorsArr.length;i++) {
@@ -936,95 +937,121 @@ $(function () {
     }).appendTo("#test");
 });
 
-$(function(){
-    //Create the list
+loadJSON(function (response) {
+    // Parse JSON string into object
+    leftSideBarHeaderFooter();
+    jsonData = JSON.parse(response);
     $('#sidebar').json2html(jsonData,transform.park);
-    $('<div class="pageHeader"><h4 class="panel-title"><a class="parkToggle">青海省甘河工业园区污染监测系统</a></h4></div>').prependTo('#sidebar');
-    $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">查询</button></div></div>').appendTo('#left-side-nav-panel');
+    afterLeftSidebarCreation();
+    // var park, site, instrument, factor;
+    // for (park in jsonData) {
+    //     for (site in jsonData[park]["stations"]) {
+    //         for (instrument in jsonData[park]["stations"][site]["device"]) {
+    //             for (factor in jsonData[park]["stations"][site]["device"][instrument]["factor"]) {
+    //                 jsonData[park]["stations"][site]["device"][instrument]["factor"].sort(function(a,b){
+    //                     return a["name"].localeCompare(b["name"], 'zh-Hans-CN', {sensitivity: 'accent'});
+    //                 });
+    //             }
+    //         }
+    //     }
+    // }
+});
 
-    jQuery(function(){
-        var today = new Date();
-        today.setHours(today.getHours()-1);
-        var startDate = today;
-        today = new Date();
-        jQuery('#startDateTimepicker').datetimepicker({
-            format:'Y-m-d H:i:s',
-            lang: 'ch',
-            onShow:function( ct ){
-                this.setOptions({
-                    maxDate: jQuery('#endDateTimepicker').val() ? jQuery('#endDateTimepicker').val() : false
-                })
-            },
-            timePicker: true,
-            value: startDate
+
+    function leftSideBarHeaderFooter() {
+        //Create the list
+        $('<div class="pageHeader"><h4 class="panel-title"><a class="parkToggle">青海省甘河工业园区污染监测系统</a></h4></div>').prependTo('#sidebar');
+        $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">查询</button></div></div>').appendTo('#left-side-nav-panel');
+
+        jQuery(function () {
+            var today = new Date();
+            today.setHours(today.getHours() - 1);
+            var startDate = today;
+            today = new Date();
+            jQuery('#startDateTimepicker').datetimepicker({
+                format: 'Y-m-d H:i:s',
+                lang: 'ch',
+                onShow: function (ct) {
+                    this.setOptions({
+                        maxDate: jQuery('#endDateTimepicker').val() ? jQuery('#endDateTimepicker').val() : false
+                    })
+                },
+                timePicker: true,
+                value: startDate
+            });
+
+            jQuery('#endDateTimepicker').datetimepicker({
+                format: 'Y-m-d H:i:s',
+                locale: 'ch',
+                onShow: function (ct) {
+                    this.setOptions({
+                        minDate: jQuery('#startDateTimepicker').val() ? jQuery('#startDateTimepicker').val() : false
+                    })
+                },
+                timePicker: true,
+                value: today
+            });
+        });
+    }
+
+    function afterLeftSidebarCreation() {
+        leftSideBarConf();
+        writeAttrsToFactors();
+        mergeHidenBoxes();
+        $($('.parkToggle').first()).trigger('click');
+        $('.panel-heading').click(function () {
+            console.log('dsdf:' + (($(this).index() - 1) / 2 + 1));
+        });
+        $('.factor').click(function (e) {
+
+            var factorID = $(this).attr("factorID");
+            var deviceID = $(this).attr("deviceID");
+            var stationID = $(this).attr("stationID");
+            var parkID = $(this).attr("parkID");
+
+            if ($(this).hasClass("selectedFactor")) {
+                $(this).removeClass("selectedFactor");
+                var afterFilter = [];
+                afterFilter = $.grep(selectedFactorsInfo, function (obj) {
+                    console.log(obj.deviceID);
+                    if ((obj.deviceID === deviceID) && (obj.factorID === factorID) && (obj.stationID === stationID) && (obj.parkID === parkID)) {
+                        //Old factor, Remove
+                        return false;
+                    } else {
+                        //New facotor, add
+                        return true;
+                    }
+                });
+                selectedFactorsInfo = afterFilter;
+            } else {
+                $(this).addClass("selectedFactor");
+                var factorInfo = {"parkID": parkID, "stationID": stationID, "deviceID": deviceID, "factorID": factorID};
+                selectedFactorsInfo.push(factorInfo);
+            }
+            console.log("selectedFactorsInfo: " + selectedFactorsInfo);
         });
 
-        jQuery('#endDateTimepicker').datetimepicker({
-            format: 'Y-m-d H:i:s',
-            locale: 'ch',
-            onShow: function (ct) {
-                this.setOptions({
-                    minDate: jQuery('#startDateTimepicker').val() ? jQuery('#startDateTimepicker').val() : false
-                })
-            },
-            timePicker: true,
-            value: today
-        });
-    });
-
-    leftSideBarConf();
-    writeAttrsToFactors();
-    mergeHidenBoxes();
-    $($('.parkToggle').first()).trigger('click');
-    $('.panel-heading').click(function () {
-        console.log('dsdf:'+ (($(this).index()-1)/2+1));
-    });
-    $('.factor').click( function(e) {
-
-        var factorID = $(this).attr("factorID");
-        var deviceID = $(this).attr("deviceID");
-        var stationID = $(this).attr("stationID");
-        var parkID = $(this).attr("parkID");
-
-        if ($(this).hasClass("selectedFactor"))
-        {
-            $(this).removeClass("selectedFactor");
-            var afterFilter = [];
-            afterFilter = $.grep(selectedFactorsInfo,function (obj) {
-                console.log(obj.deviceID);
-                if ((obj.deviceID === deviceID) && (obj.factorID === factorID) && (obj.stationID === stationID) && (obj.parkID === parkID)) {
-                    //Old factor, Remove
-                    return false;
-                } else {
-                    //New facotor, add
-                    return true;
+        $(".submitButton").click(function () {
+            console.log("succvvvv");
+            var startDate = document.getElementById('startDateTimepicker').value;
+            var endDate = document.getElementById('endDateTimepicker').value;
+            var stringToPost = generateDataToPost(startDate, endDate);
+            jQuery.ajax({
+                url: "http://192.168.20.59:80/postjson",
+                type: "POST",
+                data: stringToPost,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    displayData(data);
                 }
             });
-            selectedFactorsInfo = afterFilter;
-        } else {
-            $(this).addClass("selectedFactor");
-            var factorInfo = {"parkID":parkID,"stationID":stationID,"deviceID":deviceID,"factorID":factorID};
-            selectedFactorsInfo.push(factorInfo);
-        }
-        console.log("selectedFactorsInfo: "+selectedFactorsInfo);
-    });
-
-    $(".submitButton").click( function () {
-        console.log("succvvvv");
-        var startDate = document.getElementById('startDateTimepicker').value;
-        var endDate = document.getElementById('endDateTimepicker').value;
-        var stringToPost = generateDataToPost(startDate, endDate);
-        jQuery.ajax ({
-            url: "http://192.168.20.59:80/postjson",
-            type: "POST",
-            data: stringToPost,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function(data){
-                displayData(data);
-            }
         });
-    });
+        $('.submitButton').click(function () {
+            fly();
+        });
+    }
+
     function generateDataToPost(startDate, endDate){
         var queryObj = {"factorsQuery":selectedFactorsInfo,"startDate":startDate,"endDate":endDate};
         var tempObj = {};
@@ -1054,9 +1081,7 @@ $(function(){
         console.log("jsonData:" + string);
         return string;
     }
-    $('.submitButton').click(function () {
-        fly();
-    });
+
     function fly() {
         // viewer.scene.camera.flyTo({destination: Cesium.Cartesian3.fromDegrees(lon, lat, height)})
         var camera=viewer.scene.camera;
@@ -1088,24 +1113,7 @@ $(function(){
         });
 
     }
-});
 
-loadJSON(function (response) {
-    // Parse JSON string into object
-    jsonData = JSON.parse(response);
-    var park, site, instrument, factor;
-    for (park in jsonData) {
-        for (site in jsonData[park]["stations"]) {
-            for (instrument in jsonData[park]["stations"][site]["device"]) {
-                for (factor in jsonData[park]["stations"][site]["device"][instrument]["factor"]) {
-                    jsonData[park]["stations"][site]["device"][instrument]["factor"].sort(function(a,b){
-                        return a["name"].localeCompare(b["name"], 'zh-Hans-CN', {sensitivity: 'accent'});
-                    });
-                }
-            }
-        }
-    }
-});
 
 Cesium.loadJson('./json/exampleData.json').then(function (data) {
     displayData(data);
