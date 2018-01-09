@@ -48,6 +48,7 @@ var transform = {
     }]
 };
 var providerViewModels = [];
+var points = [];
 
 providerViewModels.push(new Cesium.ProviderViewModel({
     name : 'Bing Maps Aerial with Labels',
@@ -1047,9 +1048,27 @@ loadJSON(function (response) {
                 }
             });
         });
-        $('.submitButton').click(function () {
-            fly();
+        $('#roam').click(function () {
+            roam();
         });
+        
+        viewer.canvas.addEventListener('click', function(e){
+            var mousePosition = new Cesium.Cartesian2(e.clientX, e.clientY);
+            var ellipsoid = viewer.scene.globe.ellipsoid;
+            var cartesian = viewer.camera.pickEllipsoid(mousePosition, ellipsoid);
+            if (cartesian) {
+                var cartographic = ellipsoid.cartesianToCartographic(cartesian);
+                var longitudeString = Cesium.Math.toDegrees(cartographic.longitude);
+                var latitudeString = Cesium.Math.toDegrees(cartographic.latitude);
+                var point = Cesium.Cartesian3.fromDegrees(longitudeString,latitudeString,150);
+                points.push(point);
+
+                console.log(longitudeString + ', ' + latitudeString);
+            } else {
+                alert('Globe was not picked');
+            }
+        }, false);
+
     }
 
     function generateDataToPost(startDate, endDate){
@@ -1086,11 +1105,10 @@ loadJSON(function (response) {
         // viewer.scene.camera.flyTo({destination: Cesium.Cartesian3.fromDegrees(lon, lat, height)})
         var camera=viewer.scene.camera;
         camera.flyTo({
-            destination :  Cesium.Cartesian3.fromDegrees(116.435314,39.960521, 150), // 设置位置
+            destination:points[0], // 设置位置
             complete: function () {
                 // 到达位置后执行的回调函数
                 console.log('到达目的地,next!');
-                roam();
             },
             cancel: function () {
                 // 如果取消飞行则会调用此函数
@@ -1099,20 +1117,9 @@ loadJSON(function (response) {
         });
     }
     function roam() {
-        var camera=viewer.scene.camera;
-        camera.flyTo({
-            destination :  Cesium.Cartesian3.fromDegrees(120,30, 150), // 设置位置
-            complete: function () {
-                // 到达位置后执行的回调函数
-                console.log('到达目的地');
-            },
-            cancel: function () {
-                // 如果取消飞行则会调用此函数
-                console.log('飞行取消')
-            }
-        });
-
+        fly()
     }
+
 
 
 Cesium.loadJson('./json/exampleData.json').then(function (data) {
