@@ -50,6 +50,10 @@ var transform = {
 var providerViewModels = [];
 var points = [];
 var indexOfPointsToFlyTo = 0;
+var clickListener;
+var isRecordingClicks = false;
+var roamDuration = 5;
+
 
 providerViewModels.push(new Cesium.ProviderViewModel({
     name : 'Bing Maps Aerial with Labels',
@@ -223,6 +227,7 @@ function leftSideBarConf(){
             console.log('hiden-box-hover-exit');
         }
     );
+    startRecordingClicks();
 }
 function mergeHidenBoxes() {
     var hidenBoxesArray = $('.hiden-box');
@@ -996,11 +1001,31 @@ loadJSON(function (response) {
         });
     }
 
-    function afterLeftSidebarCreation() {
-        leftSideBarConf();
-        writeAttrsToFactors();
-        mergeHidenBoxes();
-        $($('.parkToggle').first()).trigger('click');
+function startRecordingClicks() {
+    clickListener = viewer.canvas.addEventListener('click', function addClickListener(e) {
+        if (isRecordingClicks) {
+            var mousePosition = new Cesium.Cartesian2(e.clientX, e.clientY);
+            var ellipsoid = Cesium.Ellipsoid.WGS84;
+            var cartesian = viewer.camera.pickEllipsoid(mousePosition, ellipsoid);
+            if (cartesian) {
+                var cartographic = ellipsoid.cartesianToCartographic(cartesian);
+                var longitude = Cesium.Math.toDegrees(cartographic.longitude);
+                var latitude = Cesium.Math.toDegrees(cartographic.latitude);
+                var point = [longitude, latitude];
+                points.push(point);
+                console.log(longitude + ', ' + latitude);
+            } else {
+                alert('Globe was not picked');
+            }
+        }
+    }, false);
+}
+
+function afterLeftSidebarCreation() {
+    leftSideBarConf();
+    writeAttrsToFactors();
+    mergeHidenBoxes();
+    $($('.parkToggle').first()).trigger('click');
         $('.panel-heading').click(function () {
             console.log('dsdf:' + (($(this).index() - 1) / 2 + 1));
         });
@@ -1049,65 +1074,37 @@ loadJSON(function (response) {
                 }
             });
         });
+
         $('#pointRoam').click(function () {
+            isRecordingClicks = true;
+        });
+        $('#clearRoam').click(function () {
+            isRecordingClicks = false;
+        });
+        $('#cancelRoam').click(function () {
+            var camera=viewer.scene.camera;
+            camera.cancelFlight();
+        });
+
+        $('#loadRoam').click(function () {
+            roamDuration = $('#roamTime').val();
             roam();
         });
 
-        viewer.canvas.addEventListener('click', function(e){
-            var mousePosition = new Cesium.Cartesian2(e.clientX, e.clientY);
-            var ellipsoid = Cesium.Ellipsoid.WGS84;
-            var cartesian = viewer.camera.pickEllipsoid(mousePosition, ellipsoid);
-            if (cartesian) {
-                var cartographic = ellipsoid.cartesianToCartographic(cartesian);
-                var longitudeString = Cesium.Math.toDegrees(cartographic.longitude);
-                var latitudeString = Cesium.Math.toDegrees(cartographic.latitude);
-                var point = Cesium.Cartesian3.fromDegrees(longitudeString,latitudeString,150);
 
-                points.push(point);
-
-                console.log(longitudeString + ', ' + latitudeString);
-            } else {
-                alert('Globe was not picked');
-            }
-        }, false);
-
-    }
-
-    function generateDataToPost(startDate, endDate){
-        var queryObj = {"factorsQuery":selectedFactorsInfo,"startDate":startDate,"endDate":endDate};
-        var tempObj = {};
-        var outputObj = {"factorsQuery":[],"startTime":startDate,"endTime":endDate};
-        for (var i = 0; i<selectedFactorsInfo.length; i++) {
-            var singleFactor = selectedFactorsInfo[i];
-            singleFactor["key"] = singleFactor.parkID + singleFactor.stationID + singleFactor.deviceID;
-            var keyString = singleFactor["key"];
-            if (tempObj[keyString] === undefined) {
-                tempObj[keyString] = [];
-            }
-            tempObj[keyString].push(singleFactor);
-        }
-        for (var i = 0; i<Object.keys(tempObj).length; i++) {
-            var factorKey = Object.keys(tempObj)[i];
-            var factorsInSameDevice = tempObj[factorKey];
-            var factorIDs = [];
-            for (var j=0; j<factorsInSameDevice.length; j++) {
-                factorIDs.push(factorsInSameDevice[j].factorID);
-            }
-            var parkID = tempObj[factorKey][0].parkID;
-            var stationID = tempObj[factorKey][0].stationID;
-            var deviceID = tempObj[factorKey][0].deviceID;
-            outputObj["factorsQuery"].push({"parkID":parkID,"stationID":stationID,"deviceID":deviceID,"factorID":factorIDs});
-        }
-        var string = JSON.stringify(outputObj);
-        console.log("jsonData:" + string);
-        return string;
     }
 
     function fly(point) {
-        // viewer.scene.camera.flyTo({destination: Cesium.Cartesian3.fromDegrees(lon, lat, height)})
         var camera=viewer.scene.camera;
+        var heightOfDestnition;
+        if ($('#roamHeight').val() != 0 && $('#roamHeight').val() != null) {
+            heightOfDestnition = parseFloat($('#roamHeight').val());
+        } else {
+            heightOfDestnition = viewer.camera.positionCartographic.height;
+        }
+        point = Cesium.Cartesian3.fromDegrees(point[0], point[1], heightOfDestnition);
         camera.flyTo({
-            destination:point, // 设置位置
+            destination: point,
             complete: function () {
                 // 到达位置后执行的回调函数
                 console.log('到达目的地,next!');
@@ -1116,7 +1113,8 @@ loadJSON(function (response) {
             cancel: function () {
                 // 如果取消飞行则会调用此函数
                 console.log('飞行取消')
-            }
+            },
+            duration: roamDuration
         });
     }
     function roam() {
@@ -1126,6 +1124,7 @@ loadJSON(function (response) {
         } else if (indexOfPointsToFlyTo===points.length){
             indexOfPointsToFlyTo = 0;
             points = [];
+            isRecordingClicks = false;
         }
     }
 // //定义一些常量
@@ -1163,7 +1162,35 @@ loadJSON(function (response) {
 //         return [lng * 2 - mglng, lat * 2 - mglat]
 // }
 
-
+function generateDataToPost(startDate, endDate){
+    var queryObj = {"factorsQuery":selectedFactorsInfo,"startDate":startDate,"endDate":endDate};
+    var tempObj = {};
+    var outputObj = {"factorsQuery":[],"startTime":startDate,"endTime":endDate};
+    for (var i = 0; i<selectedFactorsInfo.length; i++) {
+        var singleFactor = selectedFactorsInfo[i];
+        singleFactor["key"] = singleFactor.parkID + singleFactor.stationID + singleFactor.deviceID;
+        var keyString = singleFactor["key"];
+        if (tempObj[keyString] === undefined) {
+            tempObj[keyString] = [];
+        }
+        tempObj[keyString].push(singleFactor);
+    }
+    for (var i = 0; i<Object.keys(tempObj).length; i++) {
+        var factorKey = Object.keys(tempObj)[i];
+        var factorsInSameDevice = tempObj[factorKey];
+        var factorIDs = [];
+        for (var j=0; j<factorsInSameDevice.length; j++) {
+            factorIDs.push(factorsInSameDevice[j].factorID);
+        }
+        var parkID = tempObj[factorKey][0].parkID;
+        var stationID = tempObj[factorKey][0].stationID;
+        var deviceID = tempObj[factorKey][0].deviceID;
+        outputObj["factorsQuery"].push({"parkID":parkID,"stationID":stationID,"deviceID":deviceID,"factorID":factorIDs});
+    }
+    var string = JSON.stringify(outputObj);
+    console.log("jsonData:" + string);
+    return string;
+}
 
 Cesium.loadJson('./json/exampleData.json').then(function (data) {
     displayData(data);
