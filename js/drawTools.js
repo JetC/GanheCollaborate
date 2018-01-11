@@ -86,7 +86,7 @@ function draw(bufferPrimitives,visible){
         });
        toolbar.addListener('removeClicked', function(event) {
            for (;myPrimitives.length>0;) {
-                   scene.primitives.remove(myPrimitives.pop());
+               scene.primitives.remove(myPrimitives.pop());
            }
         })
        })

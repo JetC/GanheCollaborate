@@ -1814,6 +1814,7 @@ var DrawHelper = (function() {
             function addIcon(id, url, title, callback) {
                 var div = document.createElement('DIV');
                 div.className = 'button';
+                div.id = id;
                 div.title = title;
                 toolbar.appendChild(div);
                 div.onclick = callback;
@@ -1827,7 +1828,7 @@ var DrawHelper = (function() {
 
             var scene = drawHelper._scene;
 
-            addIcon('marker', options.markerIcon, '标记', function() {
+            addIcon('addMarker', options.markerIcon, '标记', function() {
                 drawHelper.startDrawingMarker({
                     callback: function(position) {
                         _self.executeListeners({name: 'markerCreated', position: position});
@@ -1835,7 +1836,7 @@ var DrawHelper = (function() {
                 });
             })
 
-            addIcon('polyline', options.polylineIcon, '绘制线', function() {
+            addIcon('addPolyline', options.polylineIcon, '绘制线', function() {
                 drawHelper.startDrawingPolyline({
                     callback: function(positions) {
                         _self.executeListeners({name: 'polylineCreated', positions: positions});
@@ -1843,7 +1844,7 @@ var DrawHelper = (function() {
                 });
             })
 
-            addIcon('polygon', options.polygonIcon, '绘制多边形区域', function() {
+            addIcon('addPolygon', options.polygonIcon, '绘制多边形区域', function() {
                 drawHelper.startDrawingPolygon({
                     callback: function(positions) {
                         _self.executeListeners({name: 'polygonCreated', positions: positions});
@@ -1859,7 +1860,7 @@ var DrawHelper = (function() {
             //     });
             // })
 
-            addIcon('circle', options.circleIcon, '绘制圆形区域', function() {
+            addIcon('addCircle', options.circleIcon, '绘制圆形区域', function() {
                 drawHelper.startDrawingCircle({
                     callback: function(center, radius) {
                         _self.executeListeners({name: 'circleCreated', center: center, radius: radius});
@@ -1872,7 +1873,7 @@ var DrawHelper = (function() {
             var div = document.createElement('DIV');
             div.className = 'divider';
             toolbar.appendChild(div);
-            addIcon('clear', options.clearIcon, '移除', function() {
+            addIcon('clearDraws', options.clearIcon, '移除', function() {
                 _self.executeListeners({name: 'removeClicked'});
             });
 

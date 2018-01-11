@@ -772,8 +772,7 @@ $(function () {
         'background': '#888',
         "title": "三维巡航",
         click: function () {
-
-            alert("ok");
+            $('#flyModal').modal('show')
         }
     }).appendTo("#test");
 });
@@ -813,7 +812,7 @@ $('<i />', {
     'background': '#888',
     "title": "删除",
     click: function () {
-        alert("删除");
+        $('#clearDraws').trigger('click');
     }
 }).appendTo("#drawToolsContainer");
 
@@ -823,9 +822,9 @@ $('<i />', {
     "aria-hidden": "true",
     "color": '#08ABD5',
     'background': '#888',
-    "title": "绘制多边形",
+    "title": "绘制圆形",
     click: function () {
-        alert("绘制多边形");
+        $('#addCircle').trigger('click');
     }
 }).appendTo("#drawToolsContainer");
 
@@ -837,7 +836,7 @@ $('<i />', {
     'background': '#888',
     "title": "绘制多方形",
     click: function () {
-        alert("绘制方形");
+        $('#addPolygon').trigger('click');
     }
 }).appendTo("#drawToolsContainer");
 
@@ -850,7 +849,7 @@ $('<i />', {
     'background': '#888',
     "title": "绘制线",
     click: function () {
-        alert("绘制线");
+        $('#addPolyline').trigger('click');
     }
 }).appendTo("#drawToolsContainer");
 
@@ -862,7 +861,7 @@ $('<i />', {
     'background': '#888',
     "title": "图标",
     click: function () {
-        alert("创建图标");
+        $('#addMarker').trigger('click');
     }
 }).appendTo("#drawToolsContainer");
 
@@ -874,10 +873,9 @@ $(function () {
         "background-image": "url(images/measure.png)",
         "color": '#08ABD5',
         'background-color': '#888',
-        "title": "测量工具",
+        "title": "三维漫游",
         click: function () {
-
-            alert("ok");
+            $('#roamModal').modal('show');
         }
     }).appendTo("#test");
 });
