@@ -226,7 +226,6 @@ function leftSideBarConf(){
             console.log('hiden-box-hover-exit');
         }
     );
-    startRecordingClicks();
     setDefaultValueOfRoamWindow();
 }
 function mergeHidenBoxes() {
@@ -1023,6 +1022,11 @@ function setDefaultValueOfRoamWindow() {
     document.getElementById("roamHeight").value = "1000";
 }
 
+function stopRecordingClicks() {
+    var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+    handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
+}
+
 function afterLeftSidebarCreation() {
     leftSideBarConf();
     writeAttrsToFactors();
@@ -1081,6 +1085,7 @@ function afterLeftSidebarCreation() {
             isRecordingClicks = true;
             points = [];
             indexOfPointsToFlyTo = 0;
+            startRecordingClicks();
         });
         // $('#clearRoam').click(function () {
         //     isRecordingClicks = false;
@@ -1091,15 +1096,15 @@ function afterLeftSidebarCreation() {
             points = [];
             indexOfPointsToFlyTo = 0;
             setDefaultValueOfRoamWindow();
-            // var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
-            // handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
+            stopRecordingClicks();
         });
 
         $('#loadRoam').click(function () {
             roamDuration = $('#roamTime').val();
             roam();
+            stopRecordingClicks();
         });
-        $('#roam').click(function () {
+        $('#measureHelper').click(function () {
             document.getElementById("pointsCount").value = points.length.toString();
         })
 
