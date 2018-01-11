@@ -5,7 +5,8 @@ function draw(bufferPrimitives,visible){
    require(['js/turf.min'],function(turf){
         //var turf=new turf();
        var scene = viewer.scene;
-        var drawHelper = new DrawHelper(viewer.cesiumWidget,bufferPrimitives,turf);
+       var myPrimitives = [];
+       var drawHelper = new DrawHelper(viewer.cesiumWidget,bufferPrimitives,turf);
         if(!visible){
             var toolbar = drawHelper.addToolbar(document.getElementById("toolbar1"), {
                 buttons: ['marker', 'polyline', 'polygon', 'circle', 'extent']
@@ -21,6 +22,7 @@ function draw(bufferPrimitives,visible){
 
             var b = new Cesium.BillboardCollection();
             scene.primitives.add(b);
+            myPrimitives.push(b);
             var billboard = b.add({
                 show : true,
                 position : event.position,
@@ -42,6 +44,7 @@ function draw(bufferPrimitives,visible){
                 geodesic: true
             });
             scene.primitives.add(polyline);
+            myPrimitives.push(polyline);
             polyline.setEditable();
 
         });
@@ -52,6 +55,7 @@ function draw(bufferPrimitives,visible){
                 material : Cesium.Material.fromType(Cesium.Material.RimLightingType)
             });
             scene.primitives.add(polygon);
+            myPrimitives.push(polygon);
             polygon.setEditable();
 
 
@@ -64,6 +68,7 @@ function draw(bufferPrimitives,visible){
                 material: Cesium.Material.fromType(Cesium.Material.RimLightingType)
             });
             scene.primitives.add(circle);
+            myPrimitives.push(circle);
             circle.setEditable();
 
         });
@@ -75,10 +80,16 @@ function draw(bufferPrimitives,visible){
                 material: Cesium.Material.fromType(Cesium.Material.StripeType)
             });
             scene.primitives.add(extentPrimitive);
+            myPrimitives.push(extentPrimitive);
             extentPrimitive.setEditable();
 
         });
-   })
+       toolbar.addListener('removeClicked', function(event) {
+           for (;myPrimitives.length>0;) {
+                   scene.primitives.remove(myPrimitives.pop());
+           }
+        })
+       })
 
 
 }

@@ -1872,10 +1872,10 @@ var DrawHelper = (function() {
             var div = document.createElement('DIV');
             div.className = 'divider';
             toolbar.appendChild(div);
-            /*addIcon('clear', options.clearIcon, '移除', function() {
-                scene.primitives.removeAll();
+            addIcon('clear', options.clearIcon, '移除', function() {
+                _self.executeListeners({name: 'removeClicked'});
             });
-*/
+
             enhanceWithListeners(this);
 
         }
