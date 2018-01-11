@@ -50,7 +50,6 @@ var transform = {
 var providerViewModels = [];
 var points = [];
 var indexOfPointsToFlyTo = 0;
-var clickListener;
 var isRecordingClicks = false;
 var roamDuration = 5;
 
@@ -1002,30 +1001,42 @@ loadJSON(function (response) {
     }
 
 function startRecordingClicks() {
-    clickListener = viewer.canvas.addEventListener('click', function addClickListener(e) {
-        if (isRecordingClicks) {
-            var mousePosition = new Cesium.Cartesian2(e.clientX, e.clientY);
-            var ellipsoid = Cesium.Ellipsoid.WGS84;
-            var cartesian = viewer.camera.pickEllipsoid(mousePosition, ellipsoid);
-            if (cartesian) {
-                var cartographic = ellipsoid.cartesianToCartographic(cartesian);
-                var longitude = Cesium.Math.toDegrees(cartographic.longitude);
-                var latitude = Cesium.Math.toDegrees(cartographic.latitude);
-                var point = [longitude, latitude];
-                points.push(point);
-                console.log(longitude + ', ' + latitude);
-            } else {
-                alert('Globe was not picked');
-            }
-        }
-    }, false);
+    var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+    handler.setInputAction(function(movement) {
+        var adaptiveCar=viewer.scene.pickPosition(movement.position);
+        var adaptiveCarto = Cesium.Cartographic.fromCartesian(adaptiveCar);
+        var longitudeString = Cesium.Math.toDegrees(adaptiveCarto.longitude).toFixed(8);
+        var latitudeString = Cesium.Math.toDegrees(adaptiveCarto.latitude).toFixed(8);
+        var adaptiveHeight= adaptiveCarto.height;
+        var pointHeight1=adaptiveHeight;
+        var point = [parseFloat(longitudeString),parseFloat(latitudeString)];
+        points.push(point);
+        console.log(longitudeString + ', ' + latitudeString);
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    // viewer.canvas.addEventListener('click', function addClickListener(e) {
+    //     if (isRecordingClicks) {
+    //         var mousePosition = new Cesium.Cartesian2(e.clientX, e.clientY);
+    //         var ellipsoid = Cesium.Ellipsoid.WGS84;
+    //         var cartesian = viewer.camera.pickEllipsoid(mousePosition, ellipsoid);
+    //         if (cartesian) {
+    //             var cartographic = ellipsoid.cartesianToCartographic(cartesian);
+    //             var longitude = Cesium.Math.toDegrees(cartographic.longitude);
+    //             var latitude = Cesium.Math.toDegrees(cartographic.latitude);
+    //             var point = [longitude, latitude];
+    //             points.push(point);
+    //             console.log(longitude + ', ' + latitude);
+    //         } else {
+    //             alert('Globe was not picked');
+    //         }
+    //     }
+    // }, false);
 }
 
 function afterLeftSidebarCreation() {
     leftSideBarConf();
     writeAttrsToFactors();
     mergeHidenBoxes();
-    $($('.parkToggle').first()).trigger('click');
+    $($('.parkToggle')[1]).trigger('click');
         $('.panel-heading').click(function () {
             console.log('dsdf:' + (($(this).index() - 1) / 2 + 1));
         });
@@ -1084,13 +1095,17 @@ function afterLeftSidebarCreation() {
         $('#cancelRoam').click(function () {
             var camera=viewer.scene.camera;
             camera.cancelFlight();
+            var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+            handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
         });
 
         $('#loadRoam').click(function () {
             roamDuration = $('#roamTime').val();
             roam();
         });
-
+        $('#roam').click(function () {
+            document.getElementById("pointsCount").value = points.length.toString();
+        })
 
     }
 
