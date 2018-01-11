@@ -227,6 +227,7 @@ function leftSideBarConf(){
         }
     );
     startRecordingClicks();
+    setDefaultValueOfRoamWindow();
 }
 function mergeHidenBoxes() {
     var hidenBoxesArray = $('.hiden-box');
@@ -1003,15 +1004,28 @@ loadJSON(function (response) {
 function startRecordingClicks() {
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
     handler.setInputAction(function(movement) {
-        var adaptiveCar=viewer.scene.pickPosition(movement.position);
-        var adaptiveCarto = Cesium.Cartographic.fromCartesian(adaptiveCar);
-        var longitudeString = Cesium.Math.toDegrees(adaptiveCarto.longitude).toFixed(8);
-        var latitudeString = Cesium.Math.toDegrees(adaptiveCarto.latitude).toFixed(8);
-        var adaptiveHeight= adaptiveCarto.height;
-        var pointHeight1=adaptiveHeight;
-        var point = [parseFloat(longitudeString),parseFloat(latitudeString)];
-        points.push(point);
-        console.log(longitudeString + ', ' + latitudeString);
+        if (isRecordingClicks) {
+            // var adaptiveCar = viewer.scene.pickPosition(movement.position);
+            // var adaptiveCarto = Cesium.Cartographic.fromCartesian(adaptiveCar);
+            // var longitudeString = Cesium.Math.toDegrees(adaptiveCarto.longitude).toFixed(8);
+            // var latitudeString = Cesium.Math.toDegrees(adaptiveCarto.latitude).toFixed(8);
+            // var adaptiveHeight = adaptiveCarto.height;
+            // var pointHeight1 = adaptiveHeight;
+            // var point = [parseFloat(longitudeString), parseFloat(latitudeString)];
+            // points.push(point);
+            // console.log(longitudeString + ', ' + latitudeString);
+            // var mousePosition = new Cesium.Cartesian2(e.clientX, e.clientY);
+                    var ellipsoid = Cesium.Ellipsoid.WGS84;
+                    var cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
+                    if (cartesian) {
+                        var cartographic = ellipsoid.cartesianToCartographic(cartesian);
+                        var longitude = Cesium.Math.toDegrees(cartographic.longitude);
+                        var latitude = Cesium.Math.toDegrees(cartographic.latitude);
+                        var point = [longitude, latitude];
+                        points.push(point);
+                        console.log(longitude + ', ' + latitude);
+                    }
+        }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
     // viewer.canvas.addEventListener('click', function addClickListener(e) {
     //     if (isRecordingClicks) {
@@ -1030,6 +1044,12 @@ function startRecordingClicks() {
     //         }
     //     }
     // }, false);
+}
+
+function setDefaultValueOfRoamWindow() {
+    document.getElementById("pointsCount").value = "0";
+    document.getElementById("roamTime").value = "5";
+    document.getElementById("roamHeight").value = "1000";
 }
 
 function afterLeftSidebarCreation() {
@@ -1088,15 +1108,20 @@ function afterLeftSidebarCreation() {
 
         $('#pointRoam').click(function () {
             isRecordingClicks = true;
+            points = [];
+            indexOfPointsToFlyTo = 0;
         });
-        $('#clearRoam').click(function () {
-            isRecordingClicks = false;
-        });
+        // $('#clearRoam').click(function () {
+        //     isRecordingClicks = false;
+        // });
         $('#cancelRoam').click(function () {
             var camera=viewer.scene.camera;
             camera.cancelFlight();
-            var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
-            handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
+            points = [];
+            indexOfPointsToFlyTo = 0;
+            setDefaultValueOfRoamWindow();
+            // var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
+            // handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
         });
 
         $('#loadRoam').click(function () {
