@@ -1,50 +1,73 @@
 var transform = {
-    "park":[{"<>":"div","class":"panel-heading",
-        "html":[{"<>":"h4","class":"panel-title",
-            "html":[{"<>":"a", "class":"parkToggle", "data-toggle":"collapse","href":"#collapse-${parkID}","html":"${name}"}]
+    "park": [{
+        "<>": "div", "class": "panel-heading",
+        "html": [{
+            "<>": "h4", "class": "panel-title",
+            "html": [{
+                "<>": "a",
+                "class": "parkToggle",
+                "data-toggle": "collapse",
+                "href": "#collapse-${parkID}",
+                "html": "${name}"
+            }]
         }]
     },
-        {"<>":"div","class":"sidebar-info panel-collapse collapse", "id":"collapse-${parkID}",
-            "html": [{"<>":"div", "class":"panel-body", "html":function (){
+        {
+            "<>": "div", "class": "sidebar-info panel-collapse collapse", "id": "collapse-${parkID}",
+            "html": [{
+                "<>": "div", "class": "panel-body", "html": function () {
                     var side_li_content = "<ul class=\"side-li\">";
-                    var side_li_html = json2html.transform(this.stations,transform.siteLi);
+                    var side_li_html = json2html.transform(this.stations, transform.siteLi);
                     side_li_html += "</ul>";
                     var parkID = this.parkID;
-                    var hidenboxIdString = 'hiden-box'+parkID;
+                    var hidenboxIdString = 'hiden-box' + parkID;
                     var hiden_box_content = "<ul class=\"hiden-box\">";
-                    var hiden_box_html = json2html.transform(this.stations,transform.siteHiddenBox);
+                    var hiden_box_html = json2html.transform(this.stations, transform.siteHiddenBox);
                     hiden_box_html += "</ul>";
-                    return (side_li_content+side_li_html+hiden_box_content+hiden_box_html);
-                }}]
+                    return (side_li_content + side_li_html + hiden_box_content + hiden_box_html);
+                }
+            }]
         }],
-    "siteLi":{"<>":"li", "class":"s_${stationID}",
-        "html":[{"<>":"h3", "stationID":"${stationID}",
-            "html":"${name}<span class=\"rightArrow rightArrow-angle-right rightArrow-loc\"></span>"
+    "siteLi": {
+        "<>": "li", "class": "s_${stationID}",
+        "html": [{
+            "<>": "h3", "stationID": "${stationID}",
+            "html": "${name}<span class=\"rightArrow rightArrow-angle-right rightArrow-loc\"></span>"
         }]
     },
-    "siteHiddenBox":[{
-        "<>":"li","data-hidden":"li","id":"hiden-${stationID}","html":[
-            {"<>":"div", "class":"sub-nav-right","html":function () {
-                    return json2html.transform(this.device,transform.sub_nav);
-                }}
+    "siteHiddenBox": [{
+        "<>": "li", "data-hidden": "li", "id": "hiden-${stationID}", "html": [
+            {
+                "<>": "div", "class": "sub-nav-right", "html": function () {
+                    return json2html.transform(this.device, transform.sub_nav);
+                }
+            }
         ]
     }],
-    "sub_nav":[
-        {"<>":"div","class":"cell-box","html":function () {
-                return json2html.transform(this,transform.cell_box);
+    "sub_nav": [
+        {
+            "<>": "div", "class": "cell-box", "html": function () {
+                return json2html.transform(this, transform.cell_box);
             }
         }],
-    "cell_box":[{
-        "<>":"div", "class":"instrumentLogoDiv", "html":[{"<>":"img","src":"images/intrumentLogo.png", "class":"instrumentLogoImg", "float":"left"},{"<>":"h1","deviceID":"${deviceID}","html":"${name}"}]
-    },{
-        "<>":"div","class":"a-box","html":function () {
-            return json2html.transform(this.factor,transform.a_box);
+    "cell_box": [{
+        "<>": "div",
+        "class": "instrumentLogoDiv",
+        "html": [{
+            "<>": "img",
+            "src": "images/intrumentLogo.png",
+            "class": "instrumentLogoImg",
+            "float": "left"
+        }, {"<>": "h1", "deviceID": "${deviceID}", "html": "${name}"}]
+    }, {
+        "<>": "div", "class": "a-box", "html": function () {
+            return json2html.transform(this.factor, transform.a_box);
         }
     }],
-    "a_box":[{
-        "<>":"button","href":"#1", "class":"factor","factorID":"${factorID}", "html":"${name}"
-    },{
-        "<>":"span","html":" "
+    "a_box": [{
+        "<>": "button", "href": "#1", "class": "factor", "factorID": "${factorID}", "html": "${name}"
+    }, {
+        "<>": "span", "html": " "
     }]
 };
 var providerViewModels = [];
@@ -55,24 +78,24 @@ var roamDuration = 5;
 
 
 providerViewModels.push(new Cesium.ProviderViewModel({
-    name : 'Bing Maps Aerial with Labels',
-    iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerialLabels.png'),
-    tooltip : 'Bing Maps aerial imagery with label overlays \nhttp://www.bing.com/maps',
-    creationFunction : function() {
+    name: 'Bing Maps Aerial with Labels',
+    iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/bingAerialLabels.png'),
+    tooltip: 'Bing Maps aerial imagery with label overlays \nhttp://www.bing.com/maps',
+    creationFunction: function () {
         return new Cesium.BingMapsImageryProvider({
-            url : '//dev.virtualearth.net',
-            mapStyle : Cesium.BingMapsStyle.AERIAL_WITH_LABELS
+            url: '//dev.virtualearth.net',
+            mapStyle: Cesium.BingMapsStyle.AERIAL_WITH_LABELS
         });
     }
 }));
 
 providerViewModels.push(new Cesium.ProviderViewModel({
-    name : 'Open Street Map',
-    iconUrl : Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/openStreetMap.png'),
-    tooltip : 'Open StreetMap aerial imagery \nhttps://www.openstreetmap.org',
-    creationFunction : function() {
+    name: 'Open Street Map',
+    iconUrl: Cesium.buildModuleUrl('Widgets/Images/ImageryProviders/openStreetMap.png'),
+    tooltip: 'Open StreetMap aerial imagery \nhttps://www.openstreetmap.org',
+    creationFunction: function () {
         return Cesium.createOpenStreetMapImageryProvider({
-            url : 'https://a.tile.openstreetmap.org/'
+            url: 'https://a.tile.openstreetmap.org/'
         });
     }
 }));
@@ -112,10 +135,10 @@ var viewer = new Cesium.Viewer('cesiumContainer', {
     navigationHelpButton: false,//帮助键不显示
 
     homeButton: false,//Home键不显示
-    imageryProviderViewModels : providerViewModels,
-    selectedImageryProviderViewModel : providerViewModels[1],
-    terrainProviderViewModels : terrainViewModels,
-    selectedTerrainProviderViewModel : terrainViewModels[1]
+    imageryProviderViewModels: providerViewModels,
+    selectedImageryProviderViewModel: providerViewModels[1],
+    terrainProviderViewModels: terrainViewModels,
+    selectedTerrainProviderViewModel: terrainViewModels[1]
 
 });
 //去掉Cesium下角的商标
@@ -134,7 +157,7 @@ var selectedFactorsInfo;
 selectedFactorsInfo = [];
 var jsonData;
 
-function leftSideBarConf(){
+function leftSideBarConf() {
     var scTop = 0,
         //Initial position
         beginH = 0,
@@ -144,36 +167,36 @@ function leftSideBarConf(){
         num;
     var hidenBoxCalculatedWidth = 0;
     $('.side-li > li').hover(
-        function(){
+        function () {
             // $(this).find('h3').css({border: 'none'})
             //     .end().find('span').css({color: ""});
             classN = $(this).attr('class');
             num = classN.substring(2, classN.length);
             beginH = 50;
-            var parkIndex = ($(this).parent().parent().parent().index()-2)/2;
+            var parkIndex = ($(this).parent().parent().parent().index() - 2) / 2;
             var siteIndex = $(this).index();
             var liTop = $(this).offset().top;
-            console.log("top:"+liTop);
+            console.log("top:" + liTop);
             // var hidenBoxHeight = $(window).height()/2;
-            var maxHeight = $(window).height()*0.75;
+            var maxHeight = $(window).height() * 0.75;
 
             $('.hiden-box').show()
                 .css({
-                    top:"-10000px",
-                    left: ($(window).width()/4),
-                    width: $(window).width()*0.75,
+                    top: "-10000px",
+                    left: ($(window).width() / 4),
+                    width: $(window).width() * 0.75,
                     maxHeight: maxHeight
                 });
             var actualHeight = $('.hiden-box').height();
-            console.log("actualHeight:"+actualHeight);
+            console.log("actualHeight:" + actualHeight);
 
             var top = function () {
-                var calculatedValue = $('.s_'+num).offset().top-20;
+                var calculatedValue = $('.s_' + num).offset().top - 20;
                 if (calculatedValue < 0) {
                     calculatedValue += 20;
                 }
-                if(calculatedValue+actualHeight>$(window).height()) {
-                    calculatedValue = $(window).height()-actualHeight-10;
+                if (calculatedValue + actualHeight > $(window).height()) {
+                    calculatedValue = $(window).height() - actualHeight - 10;
                 }
                 return calculatedValue;
             };
@@ -182,21 +205,21 @@ function leftSideBarConf(){
             //     top = windowHeight-actualHeight;
             // }
             var scrollHeight = $('.hiden-box')[0].scrollHeight;
-            var desiredWidth = $(window).width()/4*3*0.75;
+            var desiredWidth = $(window).width() / 4 * 3 * 0.75;
             $('.hiden-box').show()
                 .css({
-                    left: ($(window).width()/4),
-                    top:  top,
+                    left: ($(window).width() / 4),
+                    top: top,
                     maxHeight: maxHeight
                 }).animate({width: desiredWidth}, 0);
             // $('.hiden-box > ').find('h3').css({border: ''});
             $('.hiden-box > li').hide();
-            $('#hiden-'+num).fadeIn(0);
+            $('#hiden-' + num).fadeIn(0);
             //Detailed Position
             beginH = 0;
             console.log('side-li > li - hover-enter');
         },
-        function(){
+        function () {
             $(this).find('h3').css({border: ''})
                 .end().find('span').css({color: ""});
             hidenBoxCalculatedWidth = $('.hiden-box').width();
@@ -205,16 +228,16 @@ function leftSideBarConf(){
         }
     );
     $('.hiden-box').hover(
-        function(){
-            $('.s_'+num).addClass("sideLiHover");
+        function () {
+            $('.s_' + num).addClass("sideLiHover");
             // $('.s_'+num).find('h3').css({border: 'none'});
             $(this).show().css({width: hidenBoxCalculatedWidth});
             console.log('hiden-box-hover-enter');
         },
 
-        function(){
-            $('.s_'+num).removeClass("sideLiHover");
-            $('.s_'+num).css({
+        function () {
+            $('.s_' + num).removeClass("sideLiHover");
+            $('.s_' + num).css({
                 border: '',
                 borderRight: ''
             }).find('h3').css({border: ''})
@@ -228,11 +251,12 @@ function leftSideBarConf(){
     );
     setDefaultValueOfRoamWindow();
 }
+
 function mergeHidenBoxes() {
     var hidenBoxesArray = $('.hiden-box');
-    for (var i = 1;i < hidenBoxesArray.length; i++) {
+    for (var i = 1; i < hidenBoxesArray.length; i++) {
         var singleHidenBox = hidenBoxesArray[i];
-        for (;$($(singleHidenBox).children()).length > 0;) {
+        for (; $($(singleHidenBox).children()).length > 0;) {
             hidenBoxesArray[0].append(singleHidenBox.children[0]);
         }
         singleHidenBox.remove();
@@ -241,18 +265,19 @@ function mergeHidenBoxes() {
 
 function writeAttrsToFactors() {
     var allFactorsArr = $('.factor');
-    for (var i=0;i<allFactorsArr.length;i++) {
+    for (var i = 0; i < allFactorsArr.length; i++) {
         var singleFactor = allFactorsArr[i];
         var deviceID = $(singleFactor).parent().prev().find("h1").attr("deviceID");
         var stationID = $(singleFactor).parent().parent().parent().parent().attr("id").split("-")[1];
         var parkID = $(singleFactor).parent().parent().parent().parent().parent().parent().parent().attr("id").split("-")[1];
         // console.log(deviceID,stationID,parkID);
-        $(singleFactor).attr('deviceID',deviceID);
-        $(singleFactor).attr('stationID',stationID);
-        $(singleFactor).attr('parkID',parkID);
+        $(singleFactor).attr('deviceID', deviceID);
+        $(singleFactor).attr('stationID', stationID);
+        $(singleFactor).attr('parkID', parkID);
     }
 
 }
+
 function openCity(evt, cityName) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -266,8 +291,10 @@ function openCity(evt, cityName) {
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+
 /********************************加载实时经纬度坐标********************************/
 position(viewer);
+
 /*******************************导入json数据********************************/
 
 function getDataForHeatMap() {
@@ -585,39 +612,40 @@ function taiShiLegendDraw() {
 function taiShiLayerClick() {
 
 }
+
 //List item transform
 
 
-$(function(){
-    $('<i />',{
-        id:'home',
-        "class":"fa fa-home",
-        "aria-hidden":"true",
-        "color":'#08ABD5',
-        'background':'#888',
-        "title":"首页",
-        click:function(){
+$(function () {
+    $('<i />', {
+        id: 'home',
+        "class": "fa fa-home",
+        "aria-hidden": "true",
+        "color": '#08ABD5',
+        'background': '#888',
+        "title": "首页",
+        click: function () {
 
             viewer.zoomTo(viewer.entities);
         }
     }).appendTo("#test");
 });
 
-$(function(){
-    $('<i />',{
-        id:'3D_2D',
-        "class":"fa fa-globe",
-        "aria-hidden":"true",
-        "color":'#08ABD5',
-        'background':'#888',
-        "title":"2D/3D",
-        click:function(){
+$(function () {
+    $('<i />', {
+        id: '3D_2D',
+        "class": "fa fa-globe",
+        "aria-hidden": "true",
+        "color": '#08ABD5',
+        'background': '#888',
+        "title": "2D/3D",
+        click: function () {
 
-            if($(this).hasClass("fa-globe")){
+            if ($(this).hasClass("fa-globe")) {
                 $(this).removeClass("fa-globe");
                 $(this).addClass("fa-map-o");
                 alert("切换Cesium为2D");
-            }else{
+            } else {
                 $(this).removeClass("fa-map-o");
                 $(this).addClass("fa-globe");
                 alert("切换Cesium为3D");
@@ -628,7 +656,7 @@ $(function(){
 });
 
 
-$(function() {
+$(function () {
     // viewer.dataSources.add(Cesium.KmlDataSource.load('./json/dataLayer.json'));
     //  var promise = Cesium.GeoJsonDataSource.load(top_src);
     //promise.then(function(dataSource) {});
@@ -650,60 +678,58 @@ $(function() {
         }).appendTo("#dataTable");
         //checkbox选择加载数据事件
 
-        var layerMapper ={};
-        var $checkbox =$("li input[type=\"checkbox\"]");
-        $checkbox.click(function(){
+        var layerMapper = {};
+        var $checkbox = $("li input[type=\"checkbox\"]");
+        $checkbox.click(function () {
             var layers = viewer.scene.imageryLayers;
             var id = this.id;
-            var index = parseInt(id.substr(id.length-1,1));
+            var index = parseInt(id.substr(id.length - 1, 1));
             var key = data.categories[index];
             var contentArr = data[key];
-            var url,type,method,suffix;
+            var url, type, method, suffix;
             var i;
 
-            if(($(this).prop('checked')))
-            {
-                $(this).prop('checked',true);
+            if (($(this).prop('checked'))) {
+                $(this).prop('checked', true);
 
-                for(i=0; i<contentArr.length; i++)
-                {
+                for (i = 0; i < contentArr.length; i++) {
                     loadDataLayer(contentArr[i]);
                 }
-            }else {
+            } else {
                 $(this).prop('checked', false);
-                for(i=0;i<contentArr.length;i++)
-                {
+                for (i = 0; i < contentArr.length; i++) {
                     removeDataLayer(contentArr[i]);
                 }
             }
-            function loadDataLayer(content){
-                var currLayer,options,extent;
+
+            function loadDataLayer(content) {
+                var currLayer, options, extent;
                 //加载不同格式数据
                 if ((content.type === "png") && (content.method === "tms")) {
                     alert("影像数据数据加载");
                 }
                 else if (content.type === "kml") {
                     options = {
-                        camera : viewer.scene.camera,
-                        canvas : viewer.scene.canvas
+                        camera: viewer.scene.camera,
+                        canvas: viewer.scene.canvas
                     };
-                    extent = Cesium.Rectangle.fromDegrees(101.432053, 36.403152,102.101701, 36.96018);
+                    extent = Cesium.Rectangle.fromDegrees(101.432053, 36.403152, 102.101701, 36.96018);
                     Cesium.Camera.DEFAULT_VIEW_RECTANGLE = extent;
                     Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
                     viewer.dataSources.add(Cesium.KmlDataSource.load(content.url, options));
                     viewer.camera.setView({destination: extent});
 
                 } else if (content.type === "png") {
-                }else if(content.type==="osm")
-                {
-                    currLayer =  layers.addImageryProvider(Cesium.createOpenStreetMapImageryProvider({
-                        'url' : content.url,
-                        'fileExtension':content.suffix
+                } else if (content.type === "osm") {
+                    currLayer = layers.addImageryProvider(Cesium.createOpenStreetMapImageryProvider({
+                        'url': content.url,
+                        'fileExtension': content.suffix
                     }));
                     layerMapper[content.url] = currLayer;
                 }
             }
-            function removeDataLayer(content){
+
+            function removeDataLayer(content) {
                 if ((content.type === "png") && (content.method === "tms")) {
 
                     alert("影像数据数据加载");
@@ -711,9 +737,8 @@ $(function() {
                 else if (content.type === "kml") {
                     viewer.dataSources.removeAll();
                 } else if (content.type === "png") {
-                }else if(content.type==="osm")
-                {
-                    var layer =  layerMapper[content.url];
+                } else if (content.type === "osm") {
+                    var layer = layerMapper[content.url];
                     layers.remove(layer, false);
                 }
             }
@@ -835,7 +860,7 @@ $('<i />', {
     "color": '#08ABD5',
     'background': '#888',
     "title": "绘制多方形",
-    "html":"<img src='images/glyphicons_096_vector_path_polygon.png' class='fa drawToolBarPadding'>",
+    "html": "<img src='images/glyphicons_096_vector_path_polygon.png' class='fa drawToolBarPadding'>",
     click: function () {
         $('#addPolygon').trigger('click');
     }
@@ -850,7 +875,7 @@ $('<i />', {
     'background': '#888',
     "img": "url(images/glyphicons_097_vector_path_line.png)",
     "title": "绘制线",
-    "html":"<img src='images/glyphicons_097_vector_path_line.png' class='fa drawToolBarPadding'>",
+    "html": "<img src='images/glyphicons_097_vector_path_line.png' class='fa drawToolBarPadding'>",
     click: function () {
         $('#addPolyline').trigger('click');
     }
@@ -949,7 +974,7 @@ loadJSON(function (response) {
     // Parse JSON string into object
     leftSideBarHeaderFooter();
     jsonData = JSON.parse(response);
-    $('#sidebar').json2html(jsonData,transform.park);
+    $('#sidebar').json2html(jsonData, transform.park);
     afterLeftSidebarCreation();
     // var park, site, instrument, factor;
     // for (park in jsonData) {
@@ -966,46 +991,46 @@ loadJSON(function (response) {
 });
 
 
-    function leftSideBarHeaderFooter() {
-        //Create the list
-        $('<div class="pageHeader"><h4 class="panel-title"><a class="parkToggle">青海省甘河工业园区污染监测系统</a></h4></div>').prependTo('#sidebar');
-        $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">查询</button></div></div>').appendTo('#left-side-nav-panel');
+function leftSideBarHeaderFooter() {
+    //Create the list
+    $('<div class="pageHeader"><h4 class="panel-title"><a class="parkToggle">青海省甘河工业园区污染监测系统</a></h4></div>').prependTo('#sidebar');
+    $('<div style="position: fixed;bottom: 0; width: 25%; height:25%; background-color:#0D1C32; z-index: 9999;"><div class="datetimePickerDiv"><label>起始时间：</label><input id="startDateTimepicker" class="datetimepicker" type="text"><label>截止时间：</label><input id="endDateTimepicker" class="datetimepicker" type="text"></div><div class="submitAndFavButton"><button class="submitButton">查询</button></div></div>').appendTo('#left-side-nav-panel');
 
-        jQuery(function () {
-            var today = new Date();
-            today.setHours(today.getHours() - 1);
-            var startDate = today;
-            today = new Date();
-            jQuery('#startDateTimepicker').datetimepicker({
-                format: 'Y-m-d H:i:s',
-                lang: 'ch',
-                onShow: function (ct) {
-                    this.setOptions({
-                        maxDate: jQuery('#endDateTimepicker').val() ? jQuery('#endDateTimepicker').val() : false
-                    })
-                },
-                timePicker: true,
-                value: startDate
-            });
-
-            jQuery('#endDateTimepicker').datetimepicker({
-                format: 'Y-m-d H:i:s',
-                locale: 'ch',
-                onShow: function (ct) {
-                    this.setOptions({
-                        minDate: jQuery('#startDateTimepicker').val() ? jQuery('#startDateTimepicker').val() : false
-                    })
-                },
-                timePicker: true,
-                value: today
-            });
+    jQuery(function () {
+        var today = new Date();
+        today.setHours(today.getHours() - 1);
+        var startDate = today;
+        today = new Date();
+        jQuery('#startDateTimepicker').datetimepicker({
+            format: 'Y-m-d H:i:s',
+            lang: 'ch',
+            onShow: function (ct) {
+                this.setOptions({
+                    maxDate: jQuery('#endDateTimepicker').val() ? jQuery('#endDateTimepicker').val() : false
+                })
+            },
+            timePicker: true,
+            value: startDate
         });
-    }
+
+        jQuery('#endDateTimepicker').datetimepicker({
+            format: 'Y-m-d H:i:s',
+            locale: 'ch',
+            onShow: function (ct) {
+                this.setOptions({
+                    minDate: jQuery('#startDateTimepicker').val() ? jQuery('#startDateTimepicker').val() : false
+                })
+            },
+            timePicker: true,
+            value: today
+        });
+    });
+}
 
 function startRecordingClicks() {
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
-    handler.setInputAction(function(movement) {
-        if (isRecordingClicks){
+    handler.setInputAction(function (movement) {
+        if (isRecordingClicks) {
             var ellipsoid = Cesium.Ellipsoid.WGS84;
             var cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
             if (cartesian) {
@@ -1036,122 +1061,126 @@ function afterLeftSidebarCreation() {
     writeAttrsToFactors();
     mergeHidenBoxes();
     $($('.parkToggle')[1]).trigger('click');
-        $('.panel-heading').click(function () {
-            console.log('dsdf:' + (($(this).index() - 1) / 2 + 1));
-        });
-        $('.factor').click(function (e) {
+    $('.panel-heading').click(function () {
+        console.log('dsdf:' + (($(this).index() - 1) / 2 + 1));
+    });
+    $('.factor').click(function (e) {
 
-            var factorID = $(this).attr("factorID");
-            var deviceID = $(this).attr("deviceID");
-            var stationID = $(this).attr("stationID");
-            var parkID = $(this).attr("parkID");
+        var factorID = $(this).attr("factorID");
+        var deviceID = $(this).attr("deviceID");
+        var stationID = $(this).attr("stationID");
+        var parkID = $(this).attr("parkID");
 
-            if ($(this).hasClass("selectedFactor")) {
-                $(this).removeClass("selectedFactor");
-                var afterFilter = [];
-                afterFilter = $.grep(selectedFactorsInfo, function (obj) {
-                    console.log(obj.deviceID);
-                    if ((obj.deviceID === deviceID) && (obj.factorID === factorID) && (obj.stationID === stationID) && (obj.parkID === parkID)) {
-                        //Old factor, Remove
-                        return false;
-                    } else {
-                        //New facotor, add
-                        return true;
-                    }
-                });
-                selectedFactorsInfo = afterFilter;
-            } else {
-                $(this).addClass("selectedFactor");
-                var factorInfo = {"parkID": parkID, "stationID": stationID, "deviceID": deviceID, "factorID": factorID};
-                selectedFactorsInfo.push(factorInfo);
-            }
-            console.log("selectedFactorsInfo: " + selectedFactorsInfo);
-        });
-
-        $(".submitButton").click(function () {
-            console.log("succvvvv");
-            var startDate = document.getElementById('startDateTimepicker').value;
-            var endDate = document.getElementById('endDateTimepicker').value;
-            var stringToPost = generateDataToPost(startDate, endDate);
-            jQuery.ajax({
-                url: "http://192.168.20.59:80/postjson",
-                type: "POST",
-                data: stringToPost,
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
-                success: function (data) {
-                    displayData(data);
+        if ($(this).hasClass("selectedFactor")) {
+            $(this).removeClass("selectedFactor");
+            var afterFilter = [];
+            afterFilter = $.grep(selectedFactorsInfo, function (obj) {
+                console.log(obj.deviceID);
+                if ((obj.deviceID === deviceID) && (obj.factorID === factorID) && (obj.stationID === stationID) && (obj.parkID === parkID)) {
+                    //Old factor, Remove
+                    return false;
+                } else {
+                    //New facotor, add
+                    return true;
                 }
             });
-        });
-
-        $('#pointRoam').click(function () {
-            if (!(parseFloat($('#roamTime').val())>0 && parseFloat($('#roamHeight').val())>0)) {
-                alert('漫游时间与高度必须大于零，请检查');
-                return;
-            }
-            isRecordingClicks = true;
-            points = [];
-            indexOfPointsToFlyTo = 0;
-            startRecordingClicks();
-            alert('请开始选择点');
-        });
-        // $('#clearRoam').click(function () {
-        //     isRecordingClicks = false;
-        // });
-        $('#cancelRoam').click(function () {
-            var camera=viewer.scene.camera;
-            camera.cancelFlight();
-            points = [];
-            indexOfPointsToFlyTo = 0;
-            setDefaultValueOfRoamWindow();
-            stopRecordingClicks();
-        });
-
-        $('#loadRoam').click(function () {
-            roamDuration = $('#roamTime').val();
-            roam();
-            stopRecordingClicks();
-        });
-        $('#measureHelper').click(function () {
-            document.getElementById("pointsCount").value = points.length.toString();
-        })
-
-    }
-
-    function fly(point) {
-        var camera=viewer.scene.camera;
-        var heightOfDestnition;
-        if ($('#roamHeight').val() != 0 && $('#roamHeight').val() != null) {
-            heightOfDestnition = parseFloat($('#roamHeight').val());
+            selectedFactorsInfo = afterFilter;
         } else {
-            heightOfDestnition = viewer.camera.positionCartographic.height;
+            $(this).addClass("selectedFactor");
+            var factorInfo = {"parkID": parkID, "stationID": stationID, "deviceID": deviceID, "factorID": factorID};
+            selectedFactorsInfo.push(factorInfo);
         }
-        point = Cesium.Cartesian3.fromDegrees(point[0], point[1], heightOfDestnition);
-        camera.flyTo({
-            destination: point,
-            complete: function () {
-                // 到达位置后执行的回调函数
-                console.log('到达目的地,next!');
-                roam();
-            },
-            cancel: function () {
-                // 如果取消飞行则会调用此函数
-                console.log('飞行取消')
-            },
-            duration: roamDuration
+        console.log("selectedFactorsInfo: " + selectedFactorsInfo);
+    });
+
+    $(".submitButton").click(function () {
+        console.log("succvvvv");
+        var startDate = document.getElementById('startDateTimepicker').value;
+        var endDate = document.getElementById('endDateTimepicker').value;
+        var stringToPost = generateDataToPost(startDate, endDate);
+        jQuery.ajax({
+            url: "http://192.168.20.59:80/postjson",
+            type: "POST",
+            data: stringToPost,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                displayData(data);
+            }
         });
-    }
-    function roam() {
-        if (indexOfPointsToFlyTo<points.length) {
-            fly(points[indexOfPointsToFlyTo]);
-            indexOfPointsToFlyTo++;
-        } else if (indexOfPointsToFlyTo===points.length){
-            indexOfPointsToFlyTo = 0;
-            points = [];
-            isRecordingClicks = false;
+    });
+
+    $('#pointRoam').click(function () {
+        if (!(parseFloat($('#roamTime').val()) > 0 && parseFloat($('#roamHeight').val()) > 0)) {
+            alert('漫游时间与高度必须大于零，请检查');
+            return;
         }
+        isRecordingClicks = true;
+        points = [];
+        indexOfPointsToFlyTo = 0;
+        alert('请开始选择点');
+    });
+    // $('#clearRoam').click(function () {
+    //     isRecordingClicks = false;
+    // });
+    $('#cancelRoam').click(function () {
+        var camera = viewer.scene.camera;
+        camera.cancelFlight();
+        points = [];
+        indexOfPointsToFlyTo = 0;
+        setDefaultValueOfRoamWindow();
+        stopRecordingClicks();
+    });
+
+    $('#loadRoam').click(function () {
+        roamDuration = $('#roamTime').val();
+        roam();
+        stopRecordingClicks();
+    });
+    $('#measureHelper').click(function () {
+        document.getElementById("pointsCount").value = points.length.toString();
+    })
+    startRecordingClicks();
+}
+
+function fly(point) {
+    var camera = viewer.scene.camera;
+    var heightOfDestnition;
+    if ($('#roamHeight').val() != 0 && $('#roamHeight').val() != null) {
+        heightOfDestnition = parseFloat($('#roamHeight').val());
+    } else {
+        heightOfDestnition = viewer.camera.positionCartographic.height;
     }
+    point = Cesium.Cartesian3.fromDegrees(point[0], point[1], heightOfDestnition);
+    camera.flyTo({
+        destination: point,
+        complete: function () {
+            // 到达位置后执行的回调函数
+            console.log('到达目的地,next!');
+            roam();
+        },
+        cancel: function () {
+            // 如果取消飞行则会调用此函数
+            console.log('飞行取消')
+        },
+        duration: roamDuration
+    });
+}
+
+function roam() {
+    if (indexOfPointsToFlyTo === points.length) {
+        indexOfPointsToFlyTo = 0;
+        points = [];
+        isRecordingClicks = false;
+        setDefaultValueOfRoamWindow();
+        return;
+    }
+    if (indexOfPointsToFlyTo < points.length) {
+        fly(points[indexOfPointsToFlyTo]);
+        indexOfPointsToFlyTo++;
+    }
+}
+
 // //定义一些常量
 // var x_PI = 3.14159265358979324 * 3000.0 / 180.0;
 // var PI = 3.1415926535897932384626;
@@ -1187,11 +1216,11 @@ function afterLeftSidebarCreation() {
 //         return [lng * 2 - mglng, lat * 2 - mglat]
 // }
 
-function generateDataToPost(startDate, endDate){
-    var queryObj = {"factorsQuery":selectedFactorsInfo,"startDate":startDate,"endDate":endDate};
+function generateDataToPost(startDate, endDate) {
+    var queryObj = {"factorsQuery": selectedFactorsInfo, "startDate": startDate, "endDate": endDate};
     var tempObj = {};
-    var outputObj = {"factorsQuery":[],"startTime":startDate,"endTime":endDate};
-    for (var i = 0; i<selectedFactorsInfo.length; i++) {
+    var outputObj = {"factorsQuery": [], "startTime": startDate, "endTime": endDate};
+    for (var i = 0; i < selectedFactorsInfo.length; i++) {
         var singleFactor = selectedFactorsInfo[i];
         singleFactor["key"] = singleFactor.parkID + singleFactor.stationID + singleFactor.deviceID;
         var keyString = singleFactor["key"];
@@ -1200,17 +1229,22 @@ function generateDataToPost(startDate, endDate){
         }
         tempObj[keyString].push(singleFactor);
     }
-    for (var i = 0; i<Object.keys(tempObj).length; i++) {
+    for (var i = 0; i < Object.keys(tempObj).length; i++) {
         var factorKey = Object.keys(tempObj)[i];
         var factorsInSameDevice = tempObj[factorKey];
         var factorIDs = [];
-        for (var j=0; j<factorsInSameDevice.length; j++) {
+        for (var j = 0; j < factorsInSameDevice.length; j++) {
             factorIDs.push(factorsInSameDevice[j].factorID);
         }
         var parkID = tempObj[factorKey][0].parkID;
         var stationID = tempObj[factorKey][0].stationID;
         var deviceID = tempObj[factorKey][0].deviceID;
-        outputObj["factorsQuery"].push({"parkID":parkID,"stationID":stationID,"deviceID":deviceID,"factorID":factorIDs});
+        outputObj["factorsQuery"].push({
+            "parkID": parkID,
+            "stationID": stationID,
+            "deviceID": deviceID,
+            "factorID": factorIDs
+        });
     }
     var string = JSON.stringify(outputObj);
     console.log("jsonData:" + string);
@@ -1263,8 +1297,7 @@ function displayData(data) {
         var stationInfo = queryLonLatByStationID(stationData.stationId);
         var lon = stationInfo.Longitude;
         var lat = stationInfo.Latitude;
-        if(lon === undefined||lat === undefined)
-        {
+        if (lon === undefined || lat === undefined) {
             console.log("undefined lon lat");
         }
 
@@ -1285,20 +1318,20 @@ function displayData(data) {
 
         var stationNode = viewer.entities.add({
             name: stationData.stationName,
-            label:stationData.stationName,
+            label: stationData.stationName,
             position: heightPosition,
-            model:{
-                uri:'models/balls/30.glb',
-                scale:300
+            model: {
+                uri: 'models/balls/30.glb',
+                scale: 300
             }
         });
 
         var deviceList = stationData.deviceList;
         var radius = 0.01;
-        var devicePositionArray = getPointArrayAroundPosition(lon,lat,radius);
+        var devicePositionArray = getPointArrayAroundPosition(lon, lat, radius);
         for (var j = 0; j < deviceList.length; j++) {
             //device node
-            var deviceData  = deviceList[j];
+            var deviceData = deviceList[j];
             var degreeInterval = Cesium.Math.toRadians(360) / deviceData.factorList.length;
 
             var radians = degreeInterval * j;
@@ -1308,7 +1341,7 @@ function displayData(data) {
 
             //var endPosition = Cesium.Cartesian3.fromDegrees(log+, lat, 2*baseLineHeight);
             var vect3dPosition = getRandPosition(devicePositionArray);
-            var deviceHeight = stationLineHeight+vect3dPosition.z*111000;
+            var deviceHeight = stationLineHeight + vect3dPosition.z * 111000;
             var endPosition = Cesium.Cartesian3.fromDegrees(vect3dPosition.x, vect3dPosition.y, deviceHeight);
 
             var machinePositions = new Cesium.ConstantProperty([startPosition, endPosition]);
@@ -1333,24 +1366,24 @@ function displayData(data) {
             var scale = 0.5;
             var machineNode = viewer.entities.add({
                 name: deviceData.deviceName,
-                label:deviceData.deviceName,
+                label: deviceData.deviceName,
                 position: endPosition,
-                model:{
-                    uri:getRandomBallUrl(),
-                    scale:150
+                model: {
+                    uri: getRandomBallUrl(),
+                    scale: 150
                 }
 
             });
 
             var factorList = deviceData.factorList;
-         //   var factorPositionArray = getPointArrayAroundPosition(vect3dPosition.x, vect3dPosition.y, radius);
-            if(!stationInfo.hasOwnProperty("radarLine"))
+            //   var factorPositionArray = getPointArrayAroundPosition(vect3dPosition.x, vect3dPosition.y, radius);
+            if (!stationInfo.hasOwnProperty("radarLine"))
                 continue;
 
             /*使得直线侧移一段距离*/
             var factorLineStartPoint = convertGeo2Vector3D(stationInfo.radarLine.point1);
             var factorLineEndPoint = convertGeo2Vector3D(stationInfo.radarLine.point2);
-            var factorLineK = -1/getLineK(factorLineStartPoint,factorLineEndPoint);
+            var factorLineK = -1 / getLineK(factorLineStartPoint, factorLineEndPoint);
             var verticalLineRadius = getVerticalLineRadius(j);
 
             var solutionFlag = getSolutionFlag(j);
@@ -1370,7 +1403,7 @@ function displayData(data) {
                 var xyPosition = getCylinderPosition(factorShiftLineStartPoint,
                     factorShiftLineEndPoint,
                     k,
-                    radius*0.1);
+                    radius * 0.1);
 
                 var vectorFactorPosition = new Vector3D();
                 vectorFactorPosition.x = xyPosition.x;
@@ -1378,39 +1411,39 @@ function displayData(data) {
                 vectorFactorPosition.z = 20;
 
                 var minMax = minMaxMap[factorData.factorName];
-                var randomTimeLineIndex = Math.floor(Math.random()*(factorData.timeLineData.length-1));
-                var examData= factorData.timeLineData[randomTimeLineIndex];
-                var scaleFactor = (examData.value-minMax.min)/(minMax.max- minMax.min);
-                var cylinderHeight = scaleFactor*10000;
+                var randomTimeLineIndex = Math.floor(Math.random() * (factorData.timeLineData.length - 1));
+                var examData = factorData.timeLineData[randomTimeLineIndex];
+                var scaleFactor = (examData.value - minMax.min) / (minMax.max - minMax.min);
+                var cylinderHeight = scaleFactor * 10000;
 
-                var factorPosition = Cesium.Cartesian3.fromDegrees(vectorFactorPosition.x, vectorFactorPosition.y, vectorFactorPosition.z+cylinderHeight/2);
+                var factorPosition = Cesium.Cartesian3.fromDegrees(vectorFactorPosition.x, vectorFactorPosition.y, vectorFactorPosition.z + cylinderHeight / 2);
 
-                var colorValue = 1*scaleFactor;
+                var colorValue = 1 * scaleFactor;
                 console.log(minMax);
-                console.log("scaleFactor: "+scaleFactor);
+                console.log("scaleFactor: " + scaleFactor);
 
                 var factorEntity = viewer.entities.add({
-                    name:"factor",
+                    name: "factor",
                     position: factorPosition,
-                    cylinder:{
-                        topRadius:80,
-                        bottomRadius:80,
-                        length:cylinderHeight,
-                        material : new Cesium.Color(1,1-colorValue,1-colorValue),
-                        outline : false
+                    cylinder: {
+                        topRadius: 80,
+                        bottomRadius: 80,
+                        length: cylinderHeight,
+                        material: new Cesium.Color(1, 1 - colorValue, 1 - colorValue),
+                        outline: false
                     }
                 });
 
-                var labelPosition = Cesium.Cartesian3.fromDegrees(vectorFactorPosition.x, vectorFactorPosition.y, vectorFactorPosition.z + cylinderHeight/2 + cylinderHeight*0.5+20);
+                var labelPosition = Cesium.Cartesian3.fromDegrees(vectorFactorPosition.x, vectorFactorPosition.y, vectorFactorPosition.z + cylinderHeight / 2 + cylinderHeight * 0.5 + 20);
 
                 var labelEntity = viewer.entities.add({
-                    position:labelPosition,
-                    label:{
+                    position: labelPosition,
+                    label: {
                         id: factorData.factorName,
-                        text:factorData.factorName,
-                        font:'30px YaHei',
-                        fillColor:Cesium.Color.AQUA,
-                        scaleByDistance:new Cesium.NearFarScalar(1.5e2, 1.5,20000, 0.0)
+                        text: factorData.factorName,
+                        font: '30px YaHei',
+                        fillColor: Cesium.Color.AQUA,
+                        scaleByDistance: new Cesium.NearFarScalar(1.5e2, 1.5, 20000, 0.0)
                     }
                 });
             }
