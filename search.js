@@ -1143,7 +1143,7 @@ function afterLeftSidebarCreation() {
     startRecordingClicks();
 }
 
-function fly(point) {
+function fly(previousPoint, point) {
     var camera = viewer.scene.camera;
     var heightOfDestnition;
     if ($('#roamHeight').val() != 0 && $('#roamHeight').val() != null) {
@@ -1151,9 +1151,31 @@ function fly(point) {
     } else {
         heightOfDestnition = viewer.camera.positionCartographic.height;
     }
+    var oriPointValue = point;
     point = Cesium.Cartesian3.fromDegrees(point[0], point[1], heightOfDestnition);
+    if (previousPoint === undefined) {
+        camera.flyTo({
+            destination: point,
+            complete: function () {
+                // 到达位置后执行的回调函数
+                console.log('到达目的地,next!');
+                roam();
+            },
+            cancel: function () {
+                // 如果取消飞行则会调用此函数
+                console.log('飞行取消')
+            },
+            duration: roamDuration
+        });
+        return;
+    }
     camera.flyTo({
         destination: point,
+        orientation : {
+            heading : viewer.camera.heading+calculateAngle(previousPoint,oriPointValue)
+            // pitch: Cesium.Math.toRadians(-50),
+            // heading: Cesium.Math.toRadians(80)
+        },
         complete: function () {
             // 到达位置后执行的回调函数
             console.log('到达目的地,next!');
@@ -1176,9 +1198,22 @@ function roam() {
         return;
     }
     if (indexOfPointsToFlyTo < points.length) {
-        fly(points[indexOfPointsToFlyTo]);
+        var originPoint;
+        if (indexOfPointsToFlyTo===0){
+            originPoint = undefined;
+        } else {
+          originPoint  = points[indexOfPointsToFlyTo - 1];
+        }
+        fly(originPoint,points[indexOfPointsToFlyTo]);
         indexOfPointsToFlyTo++;
     }
+}
+
+function calculateAngle(orig, dest) {
+    var diff_x = dest[0] - orig[0],
+        diff_y = dest[1] - orig[1];
+    //返回角度,不是弧度
+    return Math.atan(diff_y/diff_x);
 }
 
 // //定义一些常量
