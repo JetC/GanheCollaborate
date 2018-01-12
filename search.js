@@ -1086,10 +1086,15 @@ function afterLeftSidebarCreation() {
         });
 
         $('#pointRoam').click(function () {
+            if (!(parseFloat($('#roamTime').val())>0 && parseFloat($('#roamHeight').val())>0)) {
+                alert('漫游时间与高度必须大于零，请检查');
+                return;
+            }
             isRecordingClicks = true;
             points = [];
             indexOfPointsToFlyTo = 0;
             startRecordingClicks();
+            alert('请开始选择点');
         });
         // $('#clearRoam').click(function () {
         //     isRecordingClicks = false;
