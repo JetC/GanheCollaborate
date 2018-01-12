@@ -200,7 +200,7 @@ var DrawHelper = (function() {
     }
 
     var material = Cesium.Material.fromType(Cesium.Material.ColorType);
-    material.uniforms.color = new Cesium.Color(0.4, 0.5, 0.3, 0.7);
+    material.uniforms.color = new Cesium.Color(1, 0, 0, 0.5);
 
     var defaultShapeOptions = {
         ellipsoid: Cesium.Ellipsoid.WGS84,

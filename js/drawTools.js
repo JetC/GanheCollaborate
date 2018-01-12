@@ -6,6 +6,7 @@ function draw(bufferPrimitives,visible){
         //var turf=new turf();
        var scene = viewer.scene;
        var myPrimitives = [];
+       var myMarkers = [];
        var drawHelper = new DrawHelper(viewer.cesiumWidget,bufferPrimitives,turf);
         if(!visible){
             var toolbar = drawHelper.addToolbar(document.getElementById("toolbar1"), {
@@ -22,7 +23,6 @@ function draw(bufferPrimitives,visible){
 
             var b = new Cesium.BillboardCollection();
             scene.primitives.add(b);
-            myPrimitives.push(b);
             var billboard = b.add({
                 show : true,
                 position : event.position,
@@ -35,6 +35,7 @@ function draw(bufferPrimitives,visible){
                 color : new Cesium.Color(1.0, 1.0, 1.0, 1.0)
             });
             billboard.setEditable();
+            myMarkers.push(b);
         });
         toolbar.addListener('polylineCreated', function(event) {
 
@@ -57,8 +58,6 @@ function draw(bufferPrimitives,visible){
             scene.primitives.add(polygon);
             myPrimitives.push(polygon);
             polygon.setEditable();
-
-
         });
         toolbar.addListener('circleCreated', function(event) {
 
@@ -89,6 +88,10 @@ function draw(bufferPrimitives,visible){
                var primitiveToRemove = myPrimitives.pop();
                primitiveToRemove.setEditMode(false);
                scene.primitives.remove(primitiveToRemove);
+           }
+           for (;myMarkers.length>0;) {
+               var markerToRemove = myMarkers.pop();
+               scene.primitives.remove(markerToRemove);
            }
         })
        })

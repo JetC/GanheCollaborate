@@ -815,18 +815,18 @@ $('<i />', {
     }
 }).appendTo("#drawToolsContainer");
 
-$('<i />', {
-    id: 'drawPolygon',
-    "class": "toolsContainer",
-    "aria-hidden": "true",
-    "color": '#08ABD5',
-    'background': '#888',
-    "title": "绘制圆形",
-    "html":"<img src='images/glyphicons_095_vector_path_circle.png' class='fa drawToolBarPadding'>",
-    click: function () {
-        $('#addCircle').trigger('click');
-    }
-}).appendTo("#drawToolsContainer");
+// $('<i />', {
+//     id: 'drawPolygon',
+//     "class": "toolsContainer",
+//     "aria-hidden": "true",
+//     "color": '#08ABD5',
+//     'background': '#888',
+//     "title": "绘制圆形",
+//     "html":"<img src='images/glyphicons_095_vector_path_circle.png' class='fa drawToolBarPadding'>",
+//     click: function () {
+//         $('#addCircle').trigger('click');
+//     }
+// }).appendTo("#drawToolsContainer");
 
 $('<i />', {
     id: 'drawExtent',
