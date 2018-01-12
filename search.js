@@ -822,7 +822,7 @@ $('<i />', {
     "color": '#08ABD5',
     'background': '#888',
     "title": "绘制圆形",
-    "html":"<img src='images/glyphicons_095_vector_path_circle.png' class='fa'>",
+    "html":"<img src='images/glyphicons_095_vector_path_circle.png' class='fa drawToolBarPadding'>",
     click: function () {
         $('#addCircle').trigger('click');
     }
@@ -835,7 +835,7 @@ $('<i />', {
     "color": '#08ABD5',
     'background': '#888',
     "title": "绘制多方形",
-    "html":"<img src='images/glyphicons_096_vector_path_polygon.png' class='fa'>",
+    "html":"<img src='images/glyphicons_096_vector_path_polygon.png' class='fa drawToolBarPadding'>",
     click: function () {
         $('#addPolygon').trigger('click');
     }
@@ -850,7 +850,7 @@ $('<i />', {
     'background': '#888',
     "img": "url(images/glyphicons_097_vector_path_line.png)",
     "title": "绘制线",
-    "html":"<img src='images/glyphicons_097_vector_path_line.png' class='fa'>",
+    "html":"<img src='images/glyphicons_097_vector_path_line.png' class='fa drawToolBarPadding'>",
     click: function () {
         $('#addPolyline').trigger('click');
     }

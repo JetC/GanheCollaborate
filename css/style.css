@@ -1969,3 +1969,13 @@ html
 {
     overflow: -moz-scrollbars-none;
 }
+
+.drawToolBarPadding {
+    /*margin: 3px;*/
+}
+
+input.form-control {
+    box-sizing: border-box;
+    width: 100%;
+    height: 45px;
+}
