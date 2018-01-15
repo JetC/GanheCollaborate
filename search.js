@@ -75,7 +75,8 @@ var points = [];
 var indexOfPointsToFlyTo = 0;
 var isRecordingClicks = false;
 var roamDuration = 5;
-
+var isDrawingRoamRoute = false;
+var roamRouteMarkers = [];
 
 providerViewModels.push(new Cesium.ProviderViewModel({
     name: 'Bing Maps Aerial with Labels',
@@ -1042,6 +1043,25 @@ function startRecordingClicks() {
                 console.log(longitude + ', ' + latitude);
             }
         }
+        if (isDrawingRoamRoute){
+            var scene = viewer.scene;
+            var b = new Cesium.BillboardCollection();
+            scene.primitives.add(b);
+            var cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
+            var billboard = b.add({
+                show : true,
+                position : cartesian,
+                pixelOffset : new Cesium.Cartesian2(0, 0),
+                eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0),
+                horizontalOrigin : Cesium.HorizontalOrigin.CENTER,
+                verticalOrigin : Cesium.VerticalOrigin.CENTER,
+                scale : 1.0,
+                image: 'images/glyphicons_242_google_maps.png',
+                color : new Cesium.Color(1.0, 1.0, 1.0, 1.0)
+            });
+            // billboard.setEditable();
+            roamRouteMarkers.push(b);
+        }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
 
@@ -1119,6 +1139,7 @@ function afterLeftSidebarCreation() {
         points = [];
         indexOfPointsToFlyTo = 0;
         alert('请开始选择点');
+        isDrawingRoamRoute = true;
     });
     // $('#clearRoam').click(function () {
     //     isRecordingClicks = false;
@@ -1130,12 +1151,15 @@ function afterLeftSidebarCreation() {
         indexOfPointsToFlyTo = 0;
         setDefaultValueOfRoamWindow();
         stopRecordingClicks();
+        isDrawingRoamRoute = false;
     });
 
     $('#loadRoam').click(function () {
         roamDuration = $('#roamTime').val();
         roam();
         stopRecordingClicks();
+        isDrawingRoamRoute = false;
+
     });
     $('#measureHelper').click(function () {
         document.getElementById("pointsCount").value = points.length.toString();
