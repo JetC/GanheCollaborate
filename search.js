@@ -1067,8 +1067,8 @@ function startRecordingClicks() {
 
 function setDefaultValueOfRoamWindow() {
     document.getElementById("pointsCount").value = "0";
-    document.getElementById("roamTime").value = "3";
-    document.getElementById("roamHeight").value = "10000";
+    document.getElementById("roamTime").value = "7";
+    document.getElementById("roamHeight").value = "100";
 }
 
 function stopRecordingClicks() {
@@ -1199,6 +1199,9 @@ function fly(previousPoint, point) {
     if (previousPoint === undefined) {
         camera.flyTo({
             destination: point,
+            orientation:{
+                    pitch: 0.0
+            },
             complete: function () {
                 // 到达位置后执行的回调函数
                 console.log('到达目的地,next!');
@@ -1218,7 +1221,7 @@ function fly(previousPoint, point) {
         destination: point,
         orientation: {
                 heading : calculateAngle(previousPoint,oriPointValue), // east, default value is 0.0 (0north;90east)
-                // pitch : Cesium.Math.toRadians(-30),    // default value (-90looking down)
+                pitch : 0.0,    // default value (-90looking down)
                 // roll : 0.0                             // default value
             },
         complete: function () {
