@@ -1076,6 +1076,14 @@ function stopRecordingClicks() {
     handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
 
+function removeRoamRouteMarkers() {
+    var scene = viewer.scene;
+    for (;roamRouteMarkers.length>0;) {
+        var markerToRemove = roamRouteMarkers.pop();
+        scene.primitives.remove(markerToRemove);
+    }
+}
+
 function afterLeftSidebarCreation() {
     leftSideBarConf();
     writeAttrsToFactors();
@@ -1152,6 +1160,7 @@ function afterLeftSidebarCreation() {
         setDefaultValueOfRoamWindow();
         stopRecordingClicks();
         isDrawingRoamRoute = false;
+        removeRoamRouteMarkers();
     });
 
     $('#loadRoam').click(function () {
@@ -1159,7 +1168,7 @@ function afterLeftSidebarCreation() {
         roam();
         stopRecordingClicks();
         isDrawingRoamRoute = false;
-
+        removeRoamRouteMarkers();
     });
     $('#measureHelper').click(function () {
         document.getElementById("pointsCount").value = points.length.toString();
@@ -1207,7 +1216,7 @@ function fly(previousPoint, point) {
         destination: point,
         orientation: {
                 heading : calculateAngle(previousPoint,oriPointValue), // east, default value is 0.0 (0north;90east)
-                pitch : Cesium.Math.toRadians(-45),    // default value (-90looking down)
+                pitch : Cesium.Math.toRadians(-70),    // default value (-90looking down)
                 roll : 0.0                             // default value
             },
         complete: function () {
