@@ -651,7 +651,7 @@ div.tab button.active {
     height: 420px;
 }
 .cell-box{
-    width: 46%;
+    /*width: 46%;*/
     padding: 0 8px;
     /* border-bottom: 1px dashed #aaaaaa; */
     /* background-color: rgba(255,255,255,0.4); */
