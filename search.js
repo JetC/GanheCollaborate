@@ -1153,6 +1153,15 @@ function fly(previousPoint, point) {
     }
     var oriPointValue = point;
     point = Cesium.Cartesian3.fromDegrees(point[0], point[1], heightOfDestnition);
+    // viewer.camera.setView({
+    //     destination : point,
+    //     orientation: {
+    //         heading : Cesium.Math.toRadians(90.0), // east, default value is 0.0 (north)
+    //         pitch : Cesium.Math.toRadians(-90),    // default value (looking down)
+    //         roll : 0.0                             // default value
+    //     }
+    // });
+
     if (previousPoint === undefined) {
         camera.flyTo({
             destination: point,
@@ -1169,13 +1178,14 @@ function fly(previousPoint, point) {
         });
         return;
     }
+
     camera.flyTo({
         destination: point,
-        orientation : {
-            heading : viewer.camera.heading+calculateAngle(previousPoint,oriPointValue)
-            // pitch: Cesium.Math.toRadians(-50),
-            // heading: Cesium.Math.toRadians(80)
-        },
+        orientation: {
+                heading : calculateAngle(previousPoint,oriPointValue), // east, default value is 0.0 (0north;90east)
+                pitch : Cesium.Math.toRadians(-45),    // default value (-90looking down)
+                roll : 0.0                             // default value
+            },
         complete: function () {
             // 到达位置后执行的回调函数
             console.log('到达目的地,next!');
@@ -1210,10 +1220,24 @@ function roam() {
 }
 
 function calculateAngle(orig, dest) {
-    var diff_x = dest[0] - orig[0],
-        diff_y = dest[1] - orig[1];
+    // var diff_x = dest[0] - orig[0],
+    //     diff_y = dest[1] - orig[1];
     //返回角度,不是弧度
-    return Math.atan(diff_y/diff_x);
+    // var diff = Math.atan(diff_y/diff_x);
+    // var toAxis_x = dest[0]-orig[0],
+    //     toAxis_y = dest[1]-orig[1];
+    // var toAxis = Math.atan(toAxis_x/toAxis_y);
+    var lat1 = orig[1], long1 = orig[0], lat2=dest[1], long2=dest[0];
+    dLon = (long2 - long1);
+    y = Math.sin(dLon) * Math.cos(lat2);
+    x = Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1)
+        * Math.cos(lat2) * Math.cos(dLon);
+    brng = Math.atan2(y, x);
+    // brng = Math.toDegree(brng);
+    // brng = (brng + 360) % 360;
+    // brng = 360 - brng; // count degrees counter-clockwise - remove to make clockwise
+
+    return brng;
 }
 
 // //定义一些常量
