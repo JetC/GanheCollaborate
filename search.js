@@ -74,7 +74,7 @@ var providerViewModels = [];
 var points = [];
 var indexOfPointsToFlyTo = 0;
 var isRecordingClicks = false;
-var roamDuration = 5;
+var roamDuration;
 var isDrawingRoamRoute = false;
 var roamRouteMarkers = [];
 
@@ -1057,7 +1057,7 @@ function startRecordingClicks() {
                 verticalOrigin : Cesium.VerticalOrigin.CENTER,
                 scale : 1.0,
                 image: 'images/glyphicons_242_google_maps.png',
-                color : new Cesium.Color(1.0, 1.0, 1.0, 1.0)
+                color : new Cesium.Color(0.0, 1.0, 0.0, 1.0)
             });
             // billboard.setEditable();
             roamRouteMarkers.push(b);
@@ -1067,8 +1067,8 @@ function startRecordingClicks() {
 
 function setDefaultValueOfRoamWindow() {
     document.getElementById("pointsCount").value = "0";
-    document.getElementById("roamTime").value = "5";
-    document.getElementById("roamHeight").value = "1000";
+    document.getElementById("roamTime").value = "3";
+    document.getElementById("roamHeight").value = "10000";
 }
 
 function stopRecordingClicks() {
@@ -1169,6 +1169,7 @@ function afterLeftSidebarCreation() {
         stopRecordingClicks();
         isDrawingRoamRoute = false;
         removeRoamRouteMarkers();
+        $('#closeRoam').trigger('click');
     });
     $('#measureHelper').click(function () {
         document.getElementById("pointsCount").value = points.length.toString();
@@ -1207,7 +1208,8 @@ function fly(previousPoint, point) {
                 // 如果取消飞行则会调用此函数
                 console.log('飞行取消')
             },
-            duration: roamDuration
+            duration: roamDuration,
+            maximumHeight: camera.positionCartographic.height
         });
         return;
     }
@@ -1216,8 +1218,8 @@ function fly(previousPoint, point) {
         destination: point,
         orientation: {
                 heading : calculateAngle(previousPoint,oriPointValue), // east, default value is 0.0 (0north;90east)
-                pitch : Cesium.Math.toRadians(-70),    // default value (-90looking down)
-                roll : 0.0                             // default value
+                // pitch : Cesium.Math.toRadians(-30),    // default value (-90looking down)
+                // roll : 0.0                             // default value
             },
         complete: function () {
             // 到达位置后执行的回调函数
@@ -1228,7 +1230,8 @@ function fly(previousPoint, point) {
             // 如果取消飞行则会调用此函数
             console.log('飞行取消')
         },
-        duration: roamDuration
+        duration: roamDuration,
+        maximumHeight: camera.positionCartographic.height
     });
 }
 
