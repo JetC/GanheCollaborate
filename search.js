@@ -178,40 +178,40 @@ function leftSideBarConf() {
             var siteIndex = $(this).index();
             var liTop = $(this).offset().top;
             console.log("top:" + liTop);
-            // var hidenBoxHeight = $(window).height()/2;
-            var maxHeight = $(window).height() * 0.75;
+            var hidenBoxHeight = $(window).height()*0.75;
+            // var maxHeight = $(window).height() * 0.75;
 
-            $('.hiden-box').show()
-                .css({
-                    top: "-10000px",
-                    left: ($(window).width() / 4),
-                    width: $(window).width() * 0.75,
-                    maxHeight: maxHeight
-                });
-            var actualHeight = $('.hiden-box').height();
-            console.log("actualHeight:" + actualHeight);
-
-            var top = function () {
-                var calculatedValue = $('.s_' + num).offset().top - 20;
-                if (calculatedValue < 0) {
-                    calculatedValue += 20;
-                }
-                if (calculatedValue + actualHeight > $(window).height()) {
-                    calculatedValue = $(window).height() - actualHeight - 10;
-                }
-                return calculatedValue;
-            };
-
-            // if (top + actualHeight > windowHeight) {
-            //     top = windowHeight-actualHeight;
-            // }
-            var scrollHeight = $('.hiden-box')[0].scrollHeight;
+            // $('.hiden-box').show()
+            //     .css({
+            //         top: "-10000px",
+            //         left: ($(window).width() / 4),
+            //         width: $(window).width() * 0.75,
+            //         maxHeight: maxHeight
+            //     });
+            // var actualHeight = $('.hiden-box').height();
+            // console.log("actualHeight:" + actualHeight);
+            //
+            // var top = function () {
+            //     var calculatedValue = $('.s_' + num).offset().top - 20;
+            //     if (calculatedValue < 0) {
+            //         calculatedValue += 20;
+            //     }
+            //     if (calculatedValue + actualHeight > $(window).height()) {
+            //         calculatedValue = $(window).height() - actualHeight - 10;
+            //     }
+            //     return calculatedValue;
+            // };
+            //
+            // // if (top + actualHeight > windowHeight) {
+            // //     top = windowHeight-actualHeight;
+            // // }
+            // var scrollHeight = $('.hiden-box')[0].scrollHeight;
             var desiredWidth = $(window).width() / 4 * 3 * 0.75;
             $('.hiden-box').show()
                 .css({
                     left: ($(window).width() / 4),
-                    top: top,
-                    maxHeight: maxHeight
+                    top: 10,
+                    height: hidenBoxHeight
                 }).animate({width: desiredWidth}, 0);
             // $('.hiden-box > ').find('h3').css({border: ''});
             $('.hiden-box > li').hide();
@@ -262,6 +262,7 @@ function mergeHidenBoxes() {
         }
         singleHidenBox.remove();
     }
+    $('#sidebar').prepend($('.hiden-box')[0]);
 }
 
 function writeAttrsToFactors() {
