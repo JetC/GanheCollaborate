@@ -13,7 +13,7 @@ var transform = {
         }]
     },
         {
-            "<>": "div", "class": "sidebar-info panel-collapse collapse", "id": "collapse-${parkID}",
+            "<>": "div", "class": "sidebar-info panel-collapse collapse in", "id": "collapse-${parkID}", "href": "#collapse-${parkID}", "aria-expanded": true,
             "html": [{
                 "<>": "div", "class": "panel-body", "html": function () {
                     var side_li_content = "<ul class=\"side-li\">";
@@ -1079,7 +1079,7 @@ function afterLeftSidebarCreation() {
     leftSideBarConf();
     writeAttrsToFactors();
     mergeHidenBoxes();
-    $($('.parkToggle')[1]).trigger('click');
+    // $($('.parkToggle')[1]).trigger('click');
     $('.panel-heading').click(function () {
         console.log('dsdf:' + (($(this).index() - 1) / 2 + 1));
     });
