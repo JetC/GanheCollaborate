@@ -625,7 +625,7 @@ $(function () {
         "aria-hidden": "true",
         "color": '#08ABD5',
         'background': '#888',
-        "title": "首页",
+        "title": "返回园区总览",
         click: function () {
 
             viewer.zoomTo(viewer.entities);
@@ -861,7 +861,7 @@ $('<i />', {
     "aria-hidden": "true",
     "color": '#08ABD5',
     'background': '#888',
-    "title": "绘制多方形",
+    "title": "绘制多边形",
     "html": "<img src='images/glyphicons_096_vector_path_polygon.png' class='fa drawToolBarPadding'>",
     click: function () {
         $('#addPolygon').trigger('click');
@@ -889,7 +889,7 @@ $('<i />', {
     "aria-hidden": "true",
     "color": '#08ABD5',
     'background': '#888',
-    "title": "图标",
+    "title": "添加图标",
     click: function () {
         $('#addMarker').trigger('click');
     }
@@ -973,23 +973,10 @@ $(function () {
 });
 
 loadJSON(function (response) {
-    // Parse JSON string into object
     leftSideBarHeaderFooter();
     jsonData = JSON.parse(response);
     $('#sidebar').json2html(jsonData, transform.park);
     afterLeftSidebarCreation();
-    // var park, site, instrument, factor;
-    // for (park in jsonData) {
-    //     for (site in jsonData[park]["stations"]) {
-    //         for (instrument in jsonData[park]["stations"][site]["device"]) {
-    //             for (factor in jsonData[park]["stations"][site]["device"][instrument]["factor"]) {
-    //                 jsonData[park]["stations"][site]["device"][instrument]["factor"].sort(function(a,b){
-    //                     return a["name"].localeCompare(b["name"], 'zh-Hans-CN', {sensitivity: 'accent'});
-    //                 });
-    //             }
-    //         }
-    //     }
-    // }
 });
 
 
@@ -1026,6 +1013,7 @@ function leftSideBarHeaderFooter() {
             timePicker: true,
             value: today
         });
+        jQuery.datetimepicker.setLocale('ch');
     });
 }
 
@@ -1057,7 +1045,9 @@ function startRecordingClicks() {
                 horizontalOrigin : Cesium.HorizontalOrigin.CENTER,
                 verticalOrigin : Cesium.VerticalOrigin.CENTER,
                 scale : 1.0,
-                image: 'images/glyphicons_242_google_maps.png',
+                image: 'images/marker-stroked.png',
+                width: 30,
+                height: 30,
                 color : new Cesium.Color(0.0, 1.0, 0.0, 1.0)
             });
             // billboard.setEditable();
@@ -1147,7 +1137,7 @@ function afterLeftSidebarCreation() {
         isRecordingClicks = true;
         points = [];
         indexOfPointsToFlyTo = 0;
-        alert('请开始选择点');
+        alert('请开始选择点，使用左键点击即可');
         isDrawingRoamRoute = true;
     });
     // $('#clearRoam').click(function () {
@@ -1170,11 +1160,19 @@ function afterLeftSidebarCreation() {
         stopRecordingClicks();
         isDrawingRoamRoute = false;
         removeRoamRouteMarkers();
-        $('#closeRoam').trigger('click');
+        $('#roamModal').modal('hide');
     });
     $('#measureHelper').click(function () {
         document.getElementById("pointsCount").value = points.length.toString();
-    })
+    });
+    $('.toolsContainer').click(function () {
+        stopRecordingClicks();
+        isDrawingRoamRoute = false;
+        removeRoamRouteMarkers();
+        indexOfPointsToFlyTo = 0;
+        points = [];
+        setDefaultValueOfRoamWindow();
+    });
     startRecordingClicks();
 }
 

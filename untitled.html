@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+</head>
+<body>
+	<input type="" id="test" name="">
+</body>
+<script type="text/javascript">
+	function loadJSON(callback) {
+    var xobj = new XMLHttpRequest();
+	    xobj.overrideMimeType("application/json");
+	    xobj.open('GET', 'ParkStructure.json', true); // Replace 'my_data' with the path to your file
+	    xobj.onreadystatechange = function () {
+	        if (xobj.readyState == 4 && xobj.status == "200") {
+	            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+	            callback(xobj.responseText);
+	        }
+	    };
+	    xobj.send(null);
+	}
+	loadJSON(function(response){
+		var jsonData;
+		jsonData = JSON.parse(response);
+	    var park, site, instrument, factor;
+	    for (park in jsonData) {
+	        for (site in jsonData[park]["stations"]) {
+	            for (instrument in jsonData[park]["stations"][site]["device"]) {
+	                for (factor in jsonData[park]["stations"][site]["device"][instrument]["factor"]) {
+	                    jsonData[park]["stations"][site]["device"][instrument]["factor"].sort(function(a,b){
+	                        return a["name"].localeCompare(b["name"], 'zh-Hans-CN', {sensitivity: 'accent'});
+	                    });
+	                }
+	            }
+	        }
+	    }
+		// document.write(jsonData);
+		document.getElementById('test').value = JSON.stringify(jsonData);
+		console.log(JSON.stringify(jsonData));
+	})
+	
+</script>
+</html>

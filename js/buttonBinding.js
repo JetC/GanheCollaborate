@@ -38,5 +38,6 @@ function settingFunc() {
                 scene.camera.flyTo({destination: Cesium.Cartesian3.fromDegrees(lon, lat, height)})
             }
         }
+        $('#flyModal').modal('hide');
     });
 }
