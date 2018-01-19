@@ -77,6 +77,11 @@ var isRecordingClicks = false;
 var roamDuration;
 var isDrawingRoamRoute = false;
 var roamRouteMarkers = [];
+var nameOverlay;
+var highlighted = {
+    feature: undefined,
+    originalColor: new Cesium.Color()
+};
 
 providerViewModels.push(new Cesium.ProviderViewModel({
     name: 'Bing Maps Aerial with Labels',
@@ -1032,35 +1037,66 @@ function startRecordingClicks() {
                 console.log(longitude + ', ' + latitude);
             }
         }
-        if (isDrawingRoamRoute){
+        if (isDrawingRoamRoute) {
             var scene = viewer.scene;
             var b = new Cesium.BillboardCollection();
             scene.primitives.add(b);
             var cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
             var billboard = b.add({
-                show : true,
-                position : cartesian,
-                pixelOffset : new Cesium.Cartesian2(0, 0),
-                eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0),
-                horizontalOrigin : Cesium.HorizontalOrigin.CENTER,
-                verticalOrigin : Cesium.VerticalOrigin.CENTER,
-                scale : 1.0,
+                show: true,
+                position: cartesian,
+                pixelOffset: new Cesium.Cartesian2(0, 0),
+                eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0),
+                horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+                verticalOrigin: Cesium.VerticalOrigin.CENTER,
+                scale: 1.0,
                 image: 'images/marker-stroked.png',
                 width: 30,
                 height: 30,
-                color : new Cesium.Color(0.0, 1.0, 0.0, 1.0)
+                color: new Cesium.Color(0.0, 1.0, 0.0, 1.0),
+                id: roamRouteMarkers.length+1
             });
             // billboard.setEditable();
             roamRouteMarkers.push(b);
+            var labels = scene.primitives.add(new Cesium.LabelCollection());
+            labels.add({
+                    text: '55522233',
+                    position: cartesian
+            });
+
         }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
-}
+    handler.setInputAction(function onMouseMove(movement) {
+        if (!isDrawingRoamRoute) {
+            return;
+        }
+        // If a feature was previously highlighted, undo the highlight
+        if (Cesium.defined(highlighted.feature)) {
+            highlighted.feature.color = highlighted.originalColor;
+            highlighted.feature = undefined;
+        }
 
+        // Pick a new feature
+        var pickedFeature = viewer.scene.pick(movement.endPosition);
+        if (!Cesium.defined(pickedFeature)) {
+            nameOverlay.style.display = 'none';
+            return;
+        }
+
+        // A feature was picked, so show it's overlay content
+        nameOverlay.style.display = 'block';
+        nameOverlay.style.bottom = viewer.canvas.clientHeight - movement.endPosition.y + 'px';
+        nameOverlay.style.left = movement.endPosition.x + 'px';
+        var name = pickedFeature.id;
+        nameOverlay.textContent = name;
+    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+}
 function setDefaultValueOfRoamWindow() {
     document.getElementById("pointsCount").value = "0";
     document.getElementById("roamTime").value = "7";
     document.getElementById("roamHeight").value = "100";
 }
+
 
 function stopRecordingClicks() {
     var handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas);
@@ -1073,6 +1109,19 @@ function removeRoamRouteMarkers() {
         var markerToRemove = roamRouteMarkers.pop();
         scene.primitives.remove(markerToRemove);
     }
+}
+
+function setNameOverlay() {
+    nameOverlay = document.createElement('div');
+    viewer.container.appendChild(nameOverlay);
+    nameOverlay.className = 'backdrop';
+    nameOverlay.style.display = 'none';
+    nameOverlay.style.position = 'absolute';
+    nameOverlay.style.bottom = '0';
+    nameOverlay.style.left = '0';
+    nameOverlay.style['pointer-events'] = 'none';
+    nameOverlay.style.padding = '4px';
+    nameOverlay.style.backgroundColor = 'black';
 }
 
 function afterLeftSidebarCreation() {
@@ -1174,6 +1223,7 @@ function afterLeftSidebarCreation() {
         setDefaultValueOfRoamWindow();
     });
     startRecordingClicks();
+    setNameOverlay();
 }
 
 function fly(previousPoint, point) {
