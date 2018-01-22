@@ -1038,20 +1038,29 @@ function startRecordingClicks() {
             scene.primitives.add(b);
             var cartesian = viewer.camera.pickEllipsoid(movement.position, ellipsoid);
             var billboard = b.add({
-                show : true,
-                position : cartesian,
-                pixelOffset : new Cesium.Cartesian2(0, 0),
-                eyeOffset : new Cesium.Cartesian3(0.0, 0.0, 0.0),
-                horizontalOrigin : Cesium.HorizontalOrigin.CENTER,
-                verticalOrigin : Cesium.VerticalOrigin.CENTER,
-                scale : 1.0,
-                image: 'images/marker-stroked.png',
+                show: true,
+                position: cartesian,
+                pixelOffset: new Cesium.Cartesian2(0, 0),
+                eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0),
+                horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+                verticalOrigin: Cesium.VerticalOrigin.CENTER,
+                scale: 1.0,
+                image: 'images/marker.png',
                 width: 30,
                 height: 30,
                 color : new Cesium.Color(0.0, 1.0, 0.0, 1.0)
             });
             // billboard.setEditable();
             roamRouteMarkers.push(b);
+            var labels = scene.primitives.add(new Cesium.LabelCollection());
+            labels.add({
+                    text: ((roamRouteMarkers.length+1)/2).toString(),
+                    position: cartesian,
+                    fillColor :  Cesium.Color.BLACK,
+                    pixelOffset : new Cesium.Cartesian2(0, -9)
+            });
+            roamRouteMarkers.push(labels);
+
         }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
