@@ -177,7 +177,7 @@ function leftSideBarConf() {
             var parkIndex = ($(this).parent().parent().parent().index() - 2) / 2;
             var siteIndex = $(this).index();
             var liTop = $(this).offset().top;
-            console.log("top:" + liTop);
+            // console.log("top:" + liTop);
             var hidenBoxHeight = $(window).height()*0.75;
             // var maxHeight = $(window).height() * 0.75;
 
@@ -218,14 +218,14 @@ function leftSideBarConf() {
             $('#hiden-' + num).fadeIn(0);
             //Detailed Position
             beginH = 0;
-            console.log('side-li > li - hover-enter');
+            // console.log('side-li > li - hover-enter');
         },
         function () {
             $(this).find('h3').css({border: ''})
                 .end().find('span').css({color: ""});
             hidenBoxCalculatedWidth = $('.hiden-box').width();
             $('.hiden-box').hide().css({width: '0'});
-            console.log('side-li > li - hover-exit');
+            // console.log('side-li > li - hover-exit');
         }
     );
     $('.hiden-box').hover(
@@ -233,7 +233,7 @@ function leftSideBarConf() {
             $('.s_' + num).addClass("sideLiHover");
             // $('.s_'+num).find('h3').css({border: 'none'});
             $(this).show().css({width: hidenBoxCalculatedWidth});
-            console.log('hiden-box-hover-enter');
+            // console.log('hiden-box-hover-enter');
         },
 
         function () {
@@ -247,7 +247,7 @@ function leftSideBarConf() {
             $(this).animate({
                 width: 0
             }, 0).hide(0);
-            console.log('hiden-box-hover-exit');
+            // console.log('hiden-box-hover-exit');
         }
     );
     setDefaultValueOfRoamWindow();
@@ -1090,7 +1090,7 @@ function afterLeftSidebarCreation() {
     mergeHidenBoxes();
     // $($('.parkToggle')[1]).trigger('click');
     $('.panel-heading').click(function () {
-        console.log('dsdf:' + (($(this).index() - 1) / 2 + 1));
+        // console.log('dsdf:' + (($(this).index() - 1) / 2 + 1));
     });
     $('.factor').click(function (e) {
 
@@ -1103,7 +1103,7 @@ function afterLeftSidebarCreation() {
             $(this).removeClass("selectedFactor");
             var afterFilter = [];
             afterFilter = $.grep(selectedFactorsInfo, function (obj) {
-                console.log(obj.deviceID);
+                // console.log(obj.deviceID);
                 if ((obj.deviceID === deviceID) && (obj.factorID === factorID) && (obj.stationID === stationID) && (obj.parkID === parkID)) {
                     //Old factor, Remove
                     return false;
@@ -1118,11 +1118,11 @@ function afterLeftSidebarCreation() {
             var factorInfo = {"parkID": parkID, "stationID": stationID, "deviceID": deviceID, "factorID": factorID};
             selectedFactorsInfo.push(factorInfo);
         }
-        console.log("selectedFactorsInfo: " + selectedFactorsInfo);
+        // console.log("selectedFactorsInfo: " + selectedFactorsInfo);
     });
 
     $(".submitButton").click(function () {
-        console.log("succvvvv");
+        // console.log("succvvvv");
         var startDate = document.getElementById('startDateTimepicker').value;
         var endDate = document.getElementById('endDateTimepicker').value;
         var stringToPost = generateDataToPost(startDate, endDate);
@@ -1353,7 +1353,7 @@ function generateDataToPost(startDate, endDate) {
         });
     }
     var string = JSON.stringify(outputObj);
-    console.log("jsonData:" + string);
+    // console.log("jsonData:" + string);
     return string;
 }
 
